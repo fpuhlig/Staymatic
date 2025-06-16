@@ -16,9 +16,11 @@ app.use(cookieParser());
 // Routes
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import healthRouter from './routes/health';
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/', healthRouter);
 
 // Error handling
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
