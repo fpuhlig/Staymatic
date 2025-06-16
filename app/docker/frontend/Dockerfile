@@ -2,27 +2,27 @@
 FROM node:20-alpine
 
 # Set the working directory in the container
-WORKDIR /app/frontend
+WORKDIR /app
 
-# Copy package.json and yarn.lock for dependency installation
-COPY app/frontend/package.json ./package.json
-COPY app/yarn.lock ../yarn.lock
-COPY app/.yarnrc.yml ../.yarnrc.yml
-COPY app/package.json ../package.json
+# Copy root package files first
+COPY package.json .
+COPY yarn.lock .
+COPY .yarnrc.yml .
+
+# Copy frontend package files
+COPY frontend/package.json ./frontend/
 
 # Install dependencies using Yarn (respecting workspaces)
 RUN yarn install --immutable
 
-# Copy the rest of the application code
-COPY app/frontend/ .
-COPY app/backend/ ../backend/
-COPY app/package.json ../package.json
+# Copy the application code
+COPY frontend/ ./frontend/
 
 # Build the Next.js application
-RUN yarn build
+RUN yarn workspace @staymatic/frontend build
 
 # Expose the port Next.js runs on
 EXPOSE 3000
 
 # Run the Next.js application
-CMD ["yarn", "start"] 
+CMD ["yarn", "workspace", "@staymatic/frontend", "start"] 

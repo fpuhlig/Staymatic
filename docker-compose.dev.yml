@@ -1,8 +1,8 @@
 services:
   frontend:
     build:
-      context: .
-      dockerfile: app/docker/frontend/Dockerfile
+      context: ./app
+      dockerfile: docker/frontend/Dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -12,11 +12,12 @@ services:
       - NODE_ENV=development
     depends_on:
       - backend
+    command: yarn workspace @staymatic/frontend dev
 
   backend:
     build:
-      context: .
-      dockerfile: app/docker/backend/Dockerfile
+      context: ./app
+      dockerfile: docker/backend/Dockerfile
     ports:
       - "3001:3001"
     volumes:
@@ -24,4 +25,4 @@ services:
       - /app/backend/node_modules
     environment:
       - NODE_ENV=development
-    command: yarn dev 
+    command: yarn workspace @staymatic/backend dev 

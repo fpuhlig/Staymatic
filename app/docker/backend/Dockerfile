@@ -2,25 +2,27 @@
 FROM node:20-alpine
 
 # Set the working directory in the container
-WORKDIR /app/backend
+WORKDIR /app
 
-# Copy package.json and yarn.lock for dependency installation
-COPY app/backend/package.json ./package.json
-COPY app/yarn.lock ../yarn.lock
-COPY app/.yarnrc.yml ../.yarnrc.yml
-COPY app/package.json ../package.json
+# Copy root package files first
+COPY package.json .
+COPY yarn.lock .
+COPY .yarnrc.yml .
+
+# Copy backend package files
+COPY backend/package.json ./backend/
 
 # Install dependencies using Yarn (respecting workspaces)
 RUN yarn install --immutable
 
-# Copy the rest of the application code
-COPY app/backend/ .
+# Copy the application code
+COPY backend/ ./backend/
 
 # Build the TypeScript application
-RUN yarn build
+RUN yarn workspace @staymatic/backend build
 
 # Expose the port Express.js runs on
 EXPOSE 3001
 
 # Run the Express.js application
-CMD ["yarn", "start"] 
+CMD ["yarn", "workspace", "@staymatic/backend", "start"] 
