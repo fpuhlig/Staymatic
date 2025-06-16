@@ -9,20 +9,20 @@ COPY package.json .
 COPY yarn.lock .
 COPY .yarnrc.yml .
 
-# Copy frontend package files
+# Copy frontend and shared package files
 COPY frontend/package.json ./frontend/
+COPY shared/package.json ./shared/
 
 # Install dependencies using Yarn (respecting workspaces)
 RUN yarn install --immutable
 
-# Copy the application code
+# Copy the application code, shared code and config files
 COPY frontend/ ./frontend/
+COPY shared/ ./shared/
+COPY config/ ./config/
 
-# Build the Next.js application
-RUN yarn workspace @staymatic/frontend build
-
-# Expose the port Next.js runs on
+# Expose the port Next.js dev server runs on
 EXPOSE 3000
 
-# Run the Next.js application
-CMD ["yarn", "workspace", "@staymatic/frontend", "start"] 
+# Run the Next.js development server
+CMD ["yarn", "workspace", "@staymatic/frontend", "dev"] 
