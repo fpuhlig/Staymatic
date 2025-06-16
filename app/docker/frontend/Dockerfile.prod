@@ -1,0 +1,61 @@
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy root package files
+COPY package.json yarn.lock .yarnrc.yml ./
+
+# Copy workspace package files
+COPY frontend/package.json ./frontend/
+COPY shared/package.json ./shared/
+
+# Install dependencies
+RUN yarn install --immutable
+
+# Copy source code
+COPY frontend/ ./frontend/
+COPY shared/ ./shared/
+COPY config/ ./config/
+
+# Build the application
+RUN set -e && \
+    echo "Building shared module..." && \
+    cd shared && \
+    yarn build && \
+    ls -la && \
+    echo "Building frontend..." && \
+    cd ../frontend && \
+    yarn build && \
+    ls -la && \
+    echo "Build complete"
+
+# Production stage
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Copy root package files
+COPY package.json yarn.lock .yarnrc.yml ./
+
+# Copy workspace package files
+COPY frontend/package.json ./frontend/
+COPY shared/package.json ./shared/
+
+# Install production dependencies only
+RUN yarn install --immutable --production
+
+# Copy built application from builder
+COPY --from=builder /app/frontend/.next ./frontend/.next
+COPY --from=builder /app/frontend/public ./frontend/public
+COPY --from=builder /app/shared/dist ./shared/dist
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Expose the port
+EXPOSE 3000
+
+# Start the application
+CMD ["yarn", "workspace", "@staymatic/frontend", "start"] 
