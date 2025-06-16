@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: app/docker/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/frontend:/app/frontend
+      - /app/frontend/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: app/docker/backend/Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./app/backend:/app/backend
+      - /app/backend/node_modules
+    environment:
+      - NODE_ENV=development
+    command: yarn dev 
