@@ -7,7 +7,10 @@
   ],
   "scripts": {
     "build": "yarn workspaces run build",
-    "dev": "yarn workspaces run dev",
+    "dev": "concurrently \"yarn workspace @staymatic/frontend dev\" \"yarn workspace @staymatic/backend dev\"",
     "test": "yarn workspaces run test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
-} 
+}
