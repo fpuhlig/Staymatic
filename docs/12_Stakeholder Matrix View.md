@@ -3,7 +3,7 @@
 | Einfluss ↓ \ Bedeutung → | Niedrig (0–1) | Mittel (1–2) | Hoch (2–3) |
 |:---------------------:|:-------------:|:------------:|:----------:|
 | **Niedrig (0–1)** | – | **Customer Support**<br />• Nutzer-Hilfe<br />• FAQ-Management<br />• Support-Tickets<br /><br />**Lokale Anbieter**<br />• Werbepartnerschaften<br />• Aktivitäten-Integration | – |
-| **Mittel (1–2)** | **AI-/OpenAI-Provider**<br />• Tech-Kick-offs<br />• SLAs<br />• API-Integration<br /><br />**Payment Gateway**<br />• Transaktionssicherheit<br />• Zahlungsabwicklung | **Admins & Moderatoren**<br />• Plattform-Überwachung<br />• Sicherheit & Support<br />• Nutzer-Management<br /><br />**Wettbewerber**<br />• Marktanalyse<br />• Feature-Vergleich | **Vermieter (Hosts)**<br />• Apartment-Listings<br />• Buchungsverwaltung<br />• Einnahmen<br /><br />**Mieter (Guests)**<br />• Buchungen<br />• Bewertungen<br />• Feedback |
+| **Mittel (1–2)** | **OpenRouter Provider**<br />• Tech-Kick-offs<br />• SLAs<br />• API-Integration<br /><br />**Payment Gateway**<br />• Transaktionssicherheit<br />• Zahlungsabwicklung | **Admins & Moderatoren**<br />• Plattform-Überwachung<br />• Sicherheit & Support<br />• Nutzer-Management<br /><br />**Wettbewerber**<br />• Marktanalyse<br />• Feature-Vergleich | **Vermieter (Hosts)**<br />• Apartment-Listings<br />• Buchungsverwaltung<br />• Einnahmen<br /><br />**Mieter (Guests)**<br />• Buchungen<br />• Bewertungen<br />• Feedback |
 | **Hoch (2–3)** | – | **Regulatorische Behörden**<br />• Compliance & DSGVO<br />• Rechtliche Freigaben<br />• Audit-Berichte | **Entwicklungsteam**<br />• Daily Stand-ups<br />• Scrum-Meetings<br />• Code-Reviews<br /><br />**Investoren**<br />• Steering-Committee<br />• Finanzielle Ziele<br />• Wachstumsstrategie |
 
 ---

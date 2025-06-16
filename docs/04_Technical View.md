@@ -16,12 +16,12 @@
   - MongoDB for flexible data storage
 
 - **AI Component:**
-  - Integration of ChatGPT/OpenAI API
+  - Integration of OpenRouter API for flexible model switching
   - Simple API requests for AI functionalities
 
 ### 2. What interfaces and constraints exist?
 - **External APIs:**
-  - ChatGPT/OpenAI API for AI functions
+  - OpenRouter API for AI functions
 
 ### 3. What applications and data are needed?
 - **Applications:**

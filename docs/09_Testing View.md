@@ -4,7 +4,7 @@
 - **Frontend:** Next.js (React), shadcn/ui, TypeScript
 - **Backend:** Node.js with Express.js, RESTful API
 - **Database:** MongoDB (Dockerized)
-- **AI Integration:** OpenAI/ChatGPT API
+- **AI Integration:** OpenRouter API
 
 ---
 
