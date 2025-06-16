@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import app from '../app';
 import debug from 'debug';
 import http from 'http';
@@ -17,14 +19,16 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 // Normalize a port into a number, string, or false
-function normalizePort(val: string) {
+function normalizePort(val: string): number | string | false {
   const port = parseInt(val, 10);
 
   if (isNaN(port)) {
+    // named pipe
     return val;
   }
 
   if (port >= 0) {
+    // port number
     return port;
   }
 
@@ -32,7 +36,7 @@ function normalizePort(val: string) {
 }
 
 // Event listener for HTTP server "error" event
-function onError(error: NodeJS.ErrnoException) {
+function onError(error: NodeJS.ErrnoException): void {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -57,11 +61,10 @@ function onError(error: NodeJS.ErrnoException) {
 }
 
 // Event listener for HTTP server "listening" event
-function onListening() {
+function onListening(): void {
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
-    : 'port ' + addr?.port;
+    : 'port ' + (addr?.port || '');
   debugLog('Listening on ' + bind);
-  console.log('Server is running on port', port);
 } 
