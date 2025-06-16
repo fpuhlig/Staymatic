@@ -1,8 +1,7 @@
 {
-  "extends": "../config/typescript/backend.json",
+  "extends": "./base.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "rootDir": "./src",
+    "module": "CommonJS",
     "outDir": "./dist",
     "paths": {
       "@/*": ["./src/*"],
