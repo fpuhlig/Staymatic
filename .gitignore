@@ -1,19 +1,21 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
+node_modules
+.pnp
 .pnp.js
 
 # testing
-/coverage
+coverage
+.nyc_output
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
-/build
+build
+dist
 
 # misc
 .DS_Store
@@ -35,3 +37,33 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .aider*
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# MongoDB
+data/db
+
+# Docker
+.docker
+
+# Logs
+logs
+*.log
+
+# Cache
+.cache
+.eslintcache
+.stylelintcache
+
+# Temporary files
+*.tmp
+*.temp
+.temp
+.tmp
+
+# System Files
+Thumbs.db

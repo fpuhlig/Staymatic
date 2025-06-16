@@ -1,0 +1,13 @@
+{
+  "name": "staymatic",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "dev": "yarn workspaces run dev",
+    "test": "yarn workspaces run test"
+  }
+} 
