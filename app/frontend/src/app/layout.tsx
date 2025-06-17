@@ -1,27 +1,25 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: "Staymatic",
-  description: "Your next stay, simplified",
+  title: 'Staymatic',
+  description: 'Your next stay, simplified',
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
-      </body>
-    </html>
-  );
-}
+}>) => (
+  <html lang="en">
+    <body className={`${inter.variable} font-sans antialiased`}>{children}</body>
+  </html>
+);
+
+export default RootLayout;
