@@ -28,12 +28,12 @@ app.use('/users', usersController.router);
 app.use('/', healthController.router);
 
 // Error handling
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.status(err.status || 500);
+app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  res.status(500);
   res.json({
     message: err.message,
-    error: process.env.NODE_ENV === 'development' ? err : {}
+    error: process.env.NODE_ENV === 'development' ? err : {},
   });
 });
 
-export default app; 
+export default app;

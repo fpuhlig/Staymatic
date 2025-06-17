@@ -9,10 +9,10 @@ export class UsersController {
   }
 
   private initializeRoutes(): void {
-    this.router.get('/', this.getUsers);
+    this.router.get('/', UsersController.getUsers);
   }
 
-  private getUsers = (req: Request, res: Response): void => {
+  private static getUsers = (req: Request, res: Response): void => {
     res.json({ message: 'Users endpoint' });
   };
-} 
+}

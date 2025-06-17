@@ -9,10 +9,10 @@ export class IndexController {
   }
 
   private initializeRoutes(): void {
-    this.router.get('/', this.getIndex);
+    this.router.get('/', IndexController.getIndex);
   }
 
-  private getIndex = (req: Request, res: Response): void => {
+  private static getIndex = (req: Request, res: Response): void => {
     res.json({ message: 'Welcome to Staymatic API' });
   };
-} 
+}

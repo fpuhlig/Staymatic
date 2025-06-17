@@ -9,10 +9,10 @@ export class HealthController {
   }
 
   private initializeRoutes(): void {
-    this.router.get('/health', this.getHealth);
+    this.router.get('/health', HealthController.getHealth);
   }
 
-  private getHealth = (req: Request, res: Response): void => {
+  private static getHealth = (req: Request, res: Response): void => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
   };
-} 
+}
