@@ -34,7 +34,7 @@
   },
   "lint-staged": {
     "app/frontend/**/*.{ts,tsx,js,jsx}": [
-      "yarn workspace @staymatic/frontend lint:fix --"
+      "cd app/frontend && yarn lint:fix"
     ],
     "app/backend/**/*.{ts,js}": [
       "yarn workspace @staymatic/backend lint:fix --"

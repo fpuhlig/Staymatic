@@ -1,7 +1,7 @@
-export default function Page() {
+export default function Home() {
   return (
-    <main>
-      <h1>Staymatic</h1>
-    </main>
+    <div>
+      <h1>Welcome</h1>
+    </div>
   );
 }
