@@ -9,20 +9,17 @@ COPY package.json .
 COPY yarn.lock .
 COPY .yarnrc.yml .
 
-# Copy backend and shared package files (from app subdirectories)
-COPY app/backend/package.json ./backend/
-COPY app/shared/package.json ./shared/
+# Create app directory structure and copy only needed workspaces
+RUN mkdir -p app
+COPY app/backend/ ./app/backend/
+COPY app/shared/ ./app/shared/
+COPY app/config/ ./app/config/
 
 # Install dependencies using Yarn (respecting workspaces)
 RUN yarn install --immutable
 
-# Copy the application code, shared code and config files
-COPY app/backend/ ./backend/
-COPY app/shared/ ./shared/
-COPY app/config/ ./config/
-
-# Expose the port Express.js runs on
+# Expose the port the app runs on
 EXPOSE 3001
 
-# Run the Express.js development server
+# Run the backend development server
 CMD ["yarn", "workspace", "@staymatic/backend", "dev"] 

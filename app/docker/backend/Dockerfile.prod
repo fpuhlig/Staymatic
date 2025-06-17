@@ -6,22 +6,19 @@ WORKDIR /app
 # Copy root package files (from root directory)
 COPY package.json yarn.lock .yarnrc.yml ./
 
-# Copy workspace package files (from app subdirectories)
-COPY app/backend/package.json ./backend/
-COPY app/shared/package.json ./shared/
+# Create app directory structure and copy only needed workspaces
+RUN mkdir -p app
+COPY app/backend/ ./app/backend/
+COPY app/shared/ ./app/shared/
+COPY app/config/ ./app/config/
 
 # Install dependencies
 RUN yarn install --immutable
 
-# Copy source code
-COPY app/backend/ ./backend/
-COPY app/shared/ ./shared/
-COPY app/config/ ./config/
-
 # Build the application
 RUN set -e && \
     echo "Building shared module..." && \
-    cd shared && \
+    cd app/shared && \
     yarn build && \
     ls -la && \
     echo "Building backend..." && \
@@ -38,16 +35,17 @@ WORKDIR /app
 # Copy root package files (from root directory)
 COPY package.json yarn.lock .yarnrc.yml ./
 
-# Copy workspace package files (from app subdirectories)
-COPY app/backend/package.json ./backend/
-COPY app/shared/package.json ./shared/
+# Create app directory structure and copy only needed workspaces
+RUN mkdir -p app
+COPY app/backend/ ./app/backend/
+COPY app/shared/ ./app/shared/
 
 # Install production dependencies only
 RUN yarn install --immutable --production
 
 # Copy built application from builder
-COPY --from=builder /app/backend/dist ./backend/dist
-COPY --from=builder /app/shared/dist ./shared/dist
+COPY --from=builder /app/app/backend/dist ./app/backend/dist
+COPY --from=builder /app/app/shared/dist ./app/shared/dist
 
 # Set environment variables
 ENV NODE_ENV=production
