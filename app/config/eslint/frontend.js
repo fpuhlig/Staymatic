@@ -8,6 +8,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
   ],
+  ignorePatterns: ['tailwind.config.ts'],
   settings: {
     react: {
       version: 'detect',
@@ -26,4 +27,4 @@ module.exports = {
       },
     ],
   },
-}; 
+};
