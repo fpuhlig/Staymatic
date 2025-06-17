@@ -33,13 +33,13 @@
     "typescript": "5.4.5"
   },
   "lint-staged": {
-    "frontend/**/*.{ts,tsx,js,jsx}": [
+    "app/frontend/**/*.{ts,tsx,js,jsx}": [
       "yarn workspace @staymatic/frontend lint:fix --"
     ],
-    "backend/**/*.{ts,js}": [
+    "app/backend/**/*.{ts,js}": [
       "yarn workspace @staymatic/backend lint:fix --"
     ],
-    "shared/**/*.{ts,js}": [
+    "app/shared/**/*.{ts,js}": [
       "yarn workspace @staymatic/shared lint:fix --"
     ],
     "*.{json,md}": [
