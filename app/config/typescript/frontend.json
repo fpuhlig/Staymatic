@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "preserve",
+    "jsxImportSource": "react",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowJs": true,
