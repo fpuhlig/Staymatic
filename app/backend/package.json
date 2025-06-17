@@ -7,7 +7,8 @@
     "dev": "tsc -w & nodemon dist/bin/www.js",
     "build": "rm -rf dist && tsc",
     "test": "jest",
-    "lint": "eslint . --ext .ts --config ../config/eslint/backend.js"
+    "lint": "eslint . --ext .ts --config ../config/eslint/backend.js",
+    "lint:fix": "eslint . --ext .ts --config ../config/eslint/backend.js --fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.6",
