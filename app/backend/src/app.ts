@@ -2,7 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import path from 'path';
+
+// Import controllers
+import { IndexController } from './controllers/index.controller';
+import { UsersController } from './controllers/users.controller';
+import { HealthController } from './controllers/health.controller';
 
 const app = express();
 
@@ -13,14 +17,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Routes
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
-import healthRouter from './routes/health';
+// Initialize controllers
+const indexController = new IndexController();
+const usersController = new UsersController();
+const healthController = new HealthController();
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/', healthRouter);
+// Routes
+app.use('/', indexController.router);
+app.use('/users', usersController.router);
+app.use('/', healthController.router);
 
 // Error handling
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
