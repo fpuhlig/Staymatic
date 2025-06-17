@@ -26,5 +26,14 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    'import/prefer-default-export': ['error', { target: 'any' }],
   },
+  overrides: [
+    {
+      files: ['**/api/**/*.ts'],
+      rules: {
+        'import/prefer-default-export': 'off',
+      },
+    },
+  ],
 };
