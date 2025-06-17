@@ -6,7 +6,8 @@
     "start": "node dist/bin/www.js",
     "dev": "tsc -w & nodemon dist/bin/www.js",
     "build": "rm -rf dist && tsc",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . --ext .ts --config ../config/eslint/backend.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.6",
@@ -28,6 +29,6 @@
     "jest": "^29.7.0",
     "nodemon": "^3.0.3",
     "ts-jest": "^29.1.2",
-    "typescript": "^5.3.3"
+    "typescript": "5.4.5"
   }
 }
