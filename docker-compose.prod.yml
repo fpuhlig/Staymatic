@@ -1,8 +1,8 @@
 services:
   frontend:
     build:
-      context: ./app
-      dockerfile: docker/frontend/Dockerfile.prod
+      context: .
+      dockerfile: app/docker/frontend/Dockerfile.prod
     ports:
       - "3000:3000"
     environment:
@@ -19,8 +19,8 @@ services:
 
   backend:
     build:
-      context: ./app
-      dockerfile: docker/backend/Dockerfile.prod
+      context: .
+      dockerfile: app/docker/backend/Dockerfile.prod
     ports:
       - "3001:3001"
     environment:

@@ -1,8 +1,8 @@
 services:
   frontend:
     build:
-      context: ./app
-      dockerfile: docker/frontend/Dockerfile
+      context: .
+      dockerfile: app/docker/frontend/Dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -20,8 +20,8 @@ services:
 
   backend:
     build:
-      context: ./app
-      dockerfile: docker/backend/Dockerfile
+      context: .
+      dockerfile: app/docker/backend/Dockerfile
     ports:
       - "3001:3001"
     volumes:

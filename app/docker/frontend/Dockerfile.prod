@@ -3,20 +3,20 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy root package files
+# Copy root package files (from root directory)
 COPY package.json yarn.lock .yarnrc.yml ./
 
-# Copy workspace package files
-COPY frontend/package.json ./frontend/
-COPY shared/package.json ./shared/
+# Copy workspace package files (from app subdirectories)
+COPY app/frontend/package.json ./frontend/
+COPY app/shared/package.json ./shared/
 
 # Install dependencies
 RUN yarn install --immutable
 
 # Copy source code
-COPY frontend/ ./frontend/
-COPY shared/ ./shared/
-COPY config/ ./config/
+COPY app/frontend/ ./frontend/
+COPY app/shared/ ./shared/
+COPY app/config/ ./config/
 
 # Build the application
 RUN set -e && \
@@ -35,12 +35,12 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Copy root package files
+# Copy root package files (from root directory)
 COPY package.json yarn.lock .yarnrc.yml ./
 
-# Copy workspace package files
-COPY frontend/package.json ./frontend/
-COPY shared/package.json ./shared/
+# Copy workspace package files (from app subdirectories)
+COPY app/frontend/package.json ./frontend/
+COPY app/shared/package.json ./shared/
 
 # Install production dependencies only
 RUN yarn install --immutable --production
