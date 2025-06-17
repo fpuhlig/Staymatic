@@ -2,9 +2,9 @@
   "name": "staymatic-monorepo",
   "private": true,
   "workspaces": [
-    "frontend",
-    "backend",
-    "shared"
+    "app/frontend",
+    "app/backend",
+    "app/shared"
   ],
   "scripts": {
     "build": "yarn workspaces run build",
@@ -46,4 +46,4 @@
       "prettier --write"
     ]
   }
-} 
+}
