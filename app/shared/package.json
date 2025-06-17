@@ -6,6 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts --config ../config/eslint/base.js"
+  },
+  "devDependencies": {
+    "typescript": "5.4.5"
   }
-} 
+}
