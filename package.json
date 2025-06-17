@@ -1,0 +1,49 @@
+{
+  "name": "staymatic-monorepo",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "dev": "concurrently \"yarn workspace @staymatic/frontend dev\" \"yarn workspace @staymatic/backend dev\"",
+    "test": "yarn workspaces run test",
+    "lint": "yarn workspaces run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --config ./app/config/prettier/index.js",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "concurrently": "^9.1.2",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "typescript": "5.4.5"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx,js,jsx}": [
+      "yarn workspace @staymatic/frontend lint:fix --"
+    ],
+    "backend/**/*.{ts,js}": [
+      "yarn workspace @staymatic/backend lint:fix --"
+    ],
+    "shared/**/*.{ts,js}": [
+      "yarn workspace @staymatic/shared lint:fix --"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
+} 
