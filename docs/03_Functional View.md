@@ -9,9 +9,11 @@
 - **What quality features must the solution provide?**
 
 ## Non-functional Requirements
+
 - **Data Protection:** GDPR compliance, secure storage and processing of personal data
 - **Performance:** Fast loading times, high availability
 - **Availability:** 24/7 accessibility, automatic backups
 
 ## Onboarding
-- New users are introduced to the main features through guided onboarding (e.g., tour, help texts) 
+
+- New users are introduced to the main features through guided onboarding (e.g., tour, help texts)

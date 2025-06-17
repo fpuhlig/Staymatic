@@ -12,13 +12,13 @@ Below is a graphical representation of the project phases, organized as a phase-
 
 The following roles are essential for the Staymatic project:
 
-*   Project Leader/Manager
-*   Software Developers (Frontend & Backend)
-*   AI/Machine Learning Engineer
-*   Quality Assurance (QA) Engineer/Tester
-*   UI/UX Designer
-*   DevOps Engineer
-*   Database Administrator (DBA)
-*   Security Specialist
-*   Stakeholder Representative
-*   Technical Writer/Documentarian
+- Project Leader/Manager
+- Software Developers (Frontend & Backend)
+- AI/Machine Learning Engineer
+- Quality Assurance (QA) Engineer/Tester
+- UI/UX Designer
+- DevOps Engineer
+- Database Administrator (DBA)
+- Security Specialist
+- Stakeholder Representative
+- Technical Writer/Documentarian

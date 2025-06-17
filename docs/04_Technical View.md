@@ -3,16 +3,20 @@
 ## How should the solution work?
 
 ### 1. How is the system structured and built?
+
 - **Frontend:**
+
   - Next.js-based web application
   - Responsive design for desktop and mobile
   - shadcn/ui as UI Library
 
 - **Backend:**
+
   - Node.js with Express.js as API server
   - RESTful API for main functionalities
 
 - **Database:**
+
   - MongoDB for flexible data storage
 
 - **AI Component:**
@@ -20,11 +24,14 @@
   - Simple API requests for AI functionalities
 
 ### 2. What interfaces and constraints exist?
+
 - **External APIs:**
   - OpenRouter API for AI functions
 
 ### 3. What applications and data are needed?
+
 - **Applications:**
+
   - Web application
   - Admin dashboard
   - Host portal
@@ -36,6 +43,7 @@
   - Ratings and reviews
 
 ### 4. What does the infrastructure look like?
+
 - **Docker Containers:**
   - Frontend container (Next.js)
   - Backend container (Node.js/Express)
@@ -45,6 +53,7 @@
   - Horizontal and vertical scaling possible
 
 ### 5. What standards are set?
+
 - **Code Standards:**
   - ESLint for JavaScript/TypeScript
 - **Security Best Practices:**
@@ -53,7 +62,9 @@
   - Secure storage of secrets (.env, Vault)
 
 ### 6. How are quality requirements achieved?
+
 - **Performance:**
+
   - Loading times < 2 seconds
   - 99.9% uptime
   - < 100ms API response time
