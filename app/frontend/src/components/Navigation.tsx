@@ -11,43 +11,53 @@ export const Navigation = () => {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14">
+    <nav className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-14 items-center justify-between">
           {/* Desktop Navigation */}
-          <div className="hidden md:flex justify-center items-center w-full">
+          <div className="hidden w-full items-center justify-center md:flex">
             <div className="flex space-x-8">
-              <NavLink href="#" className="px-3 py-2 rounded-xl">
+              <NavLink href="#" className="rounded-xl px-3 py-2">
                 Home
               </NavLink>
-              <NavLink href="#" className="px-3 py-2 rounded-xl">
+              <NavLink href="#" className="rounded-xl px-3 py-2">
                 Properties
               </NavLink>
-              <NavLink href="#" className="px-3 py-2 rounded-xl">
+              <NavLink href="#" className="rounded-xl px-3 py-2">
                 About
               </NavLink>
-              <NavLink href="#" className="px-3 py-2 rounded-xl">
+              <NavLink href="#" className="rounded-xl px-3 py-2">
                 Contact
               </NavLink>
-              <NavLink href="#" className="px-3 py-2 rounded-xl">
+              <NavLink href="#" className="rounded-xl px-3 py-2">
                 Help
               </NavLink>
             </div>
           </div>
 
           {/* Mobile Navigation */}
-          <div className="md:hidden flex justify-end items-center w-full">
+          <div className="flex w-full items-center justify-end md:hidden">
             {/* Hamburger Button */}
             <button
               onClick={toggleMenu}
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-xl transition-colors duration-200"
+              className="rounded-xl p-2 text-gray-700 transition-colors duration-200 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
               aria-label="Toggle menu"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {isOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
               </svg>
             </button>
@@ -56,39 +66,39 @@ export const Navigation = () => {
 
         {/* Mobile Dropdown Menu */}
         {isOpen && (
-          <div className="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="border-t border-gray-200 bg-white md:hidden dark:border-gray-700 dark:bg-gray-900">
+            <div className="space-y-1 px-2 pb-3 pt-2">
               <NavLink
                 href="#"
-                className="block px-3 py-2 rounded-xl"
+                className="block rounded-xl px-3 py-2"
                 onClick={() => setIsOpen(false)}
               >
                 Home
               </NavLink>
               <NavLink
                 href="#"
-                className="block px-3 py-2 rounded-xl"
+                className="block rounded-xl px-3 py-2"
                 onClick={() => setIsOpen(false)}
               >
                 Properties
               </NavLink>
               <NavLink
                 href="#"
-                className="block px-3 py-2 rounded-xl"
+                className="block rounded-xl px-3 py-2"
                 onClick={() => setIsOpen(false)}
               >
                 About
               </NavLink>
               <NavLink
                 href="#"
-                className="block px-3 py-2 rounded-xl"
+                className="block rounded-xl px-3 py-2"
                 onClick={() => setIsOpen(false)}
               >
                 Contact
               </NavLink>
               <NavLink
                 href="#"
-                className="block px-3 py-2 rounded-xl"
+                className="block rounded-xl px-3 py-2"
                 onClick={() => setIsOpen(false)}
               >
                 Help
@@ -99,4 +109,4 @@ export const Navigation = () => {
       </div>
     </nav>
   );
-}; 
+};

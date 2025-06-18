@@ -5,4 +5,4 @@ export { Navigation } from './Navigation';
 export { Footer } from './Footer';
 export { DarkModeToggle } from './DarkModeToggle';
 export { NavLink } from './NavLink';
-export { FooterLink } from './FooterLink'; 
+export { FooterLink } from './FooterLink';

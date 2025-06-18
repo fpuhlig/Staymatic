@@ -4,7 +4,8 @@ export const mockProperties: Property[] = [
   {
     id: '1',
     title: 'Luxurious Downtown Apartment',
-    description: 'Modern apartment in the heart of the city with stunning skyline views and premium amenities.',
+    description:
+      'Modern apartment in the heart of the city with stunning skyline views and premium amenities.',
     imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
     location: {
       address: '123 Main Street',
@@ -26,7 +27,8 @@ export const mockProperties: Property[] = [
   {
     id: '2',
     title: 'Cozy Mountain Cabin',
-    description: 'Peaceful retreat in the Austrian Alps with breathtaking mountain views and hiking trails nearby.',
+    description:
+      'Peaceful retreat in the Austrian Alps with breathtaking mountain views and hiking trails nearby.',
     imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop',
     location: {
       address: '456 Alpine Road',
@@ -48,7 +50,8 @@ export const mockProperties: Property[] = [
   {
     id: '3',
     title: 'Historic City Center Hotel',
-    description: 'Charming boutique hotel in a restored 18th-century building with elegant rooms and traditional architecture.',
+    description:
+      'Charming boutique hotel in a restored 18th-century building with elegant rooms and traditional architecture.',
     imageUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop',
     location: {
       address: '789 Historic Plaza',
@@ -70,7 +73,8 @@ export const mockProperties: Property[] = [
   {
     id: '4',
     title: 'Lakeside Villa with Pool',
-    description: 'Stunning lakefront property with private pool, garden, and direct lake access. Perfect for families.',
+    description:
+      'Stunning lakefront property with private pool, garden, and direct lake access. Perfect for families.',
     imageUrl: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=600&fit=crop',
     location: {
       address: '321 Lakeshore Drive',
@@ -92,7 +96,8 @@ export const mockProperties: Property[] = [
   {
     id: '5',
     title: 'Modern Business Hotel',
-    description: 'Contemporary hotel designed for business travelers with meeting rooms and high-speed internet.',
+    description:
+      'Contemporary hotel designed for business travelers with meeting rooms and high-speed internet.',
     imageUrl: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=600&fit=crop',
     location: {
       address: '654 Business District',
@@ -114,7 +119,8 @@ export const mockProperties: Property[] = [
   {
     id: '6',
     title: 'Romantic Countryside B&B',
-    description: 'Intimate bed & breakfast surrounded by vineyards and rolling hills. Includes homemade breakfast.',
+    description:
+      'Intimate bed & breakfast surrounded by vineyards and rolling hills. Includes homemade breakfast.',
     imageUrl: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&h=600&fit=crop',
     location: {
       address: '987 Vineyard Lane',
@@ -133,4 +139,4 @@ export const mockProperties: Property[] = [
     createdAt: new Date('2024-01-12'),
     updatedAt: new Date('2024-01-12'),
   },
-]; 
+];

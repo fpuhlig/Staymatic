@@ -34,16 +34,19 @@
   },
   "lint-staged": {
     "app/frontend/**/*.{ts,tsx,js,jsx}": [
+      "prettier --write --config ./app/config/prettier/index.js",
       "cd app/frontend && yarn lint:fix"
     ],
     "app/backend/**/*.{ts,js}": [
+      "prettier --write --config ./app/config/prettier/index.js",
       "yarn workspace @staymatic/backend lint:fix --"
     ],
     "app/shared/**/*.{ts,js}": [
+      "prettier --write --config ./app/config/prettier/index.js",
       "yarn workspace @staymatic/shared lint:fix --"
     ],
     "*.{json,md}": [
-      "prettier --write"
+      "prettier --write --config ./app/config/prettier/index.js"
     ]
   }
 }

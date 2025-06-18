@@ -17,9 +17,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Header />
         <Navigation />
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
