@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { NavLink } from './NavLink';
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,21 +17,21 @@ export const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex justify-center items-center w-full">
             <div className="flex space-x-8">
-              <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200">
+              <NavLink href="#" className="px-3 py-2 rounded-xl">
                 Home
-              </a>
-              <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200">
+              </NavLink>
+              <NavLink href="#" className="px-3 py-2 rounded-xl">
                 Properties
-              </a>
-              <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200">
+              </NavLink>
+              <NavLink href="#" className="px-3 py-2 rounded-xl">
                 About
-              </a>
-              <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200">
+              </NavLink>
+              <NavLink href="#" className="px-3 py-2 rounded-xl">
                 Contact
-              </a>
-              <a href="#" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200">
+              </NavLink>
+              <NavLink href="#" className="px-3 py-2 rounded-xl">
                 Help
-              </a>
+              </NavLink>
             </div>
           </div>
 
@@ -57,41 +58,41 @@ export const Navigation = () => {
         {isOpen && (
           <div className="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <a
+              <NavLink
                 href="#"
-                className="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200"
+                className="block px-3 py-2 rounded-xl"
                 onClick={() => setIsOpen(false)}
               >
                 Home
-              </a>
-              <a
+              </NavLink>
+              <NavLink
                 href="#"
-                className="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200"
+                className="block px-3 py-2 rounded-xl"
                 onClick={() => setIsOpen(false)}
               >
                 Properties
-              </a>
-              <a
+              </NavLink>
+              <NavLink
                 href="#"
-                className="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200"
+                className="block px-3 py-2 rounded-xl"
                 onClick={() => setIsOpen(false)}
               >
                 About
-              </a>
-              <a
+              </NavLink>
+              <NavLink
                 href="#"
-                className="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200"
+                className="block px-3 py-2 rounded-xl"
                 onClick={() => setIsOpen(false)}
               >
                 Contact
-              </a>
-              <a
+              </NavLink>
+              <NavLink
                 href="#"
-                className="block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-xl font-medium transition-colors duration-200"
+                className="block px-3 py-2 rounded-xl"
                 onClick={() => setIsOpen(false)}
               >
                 Help
-              </a>
+              </NavLink>
             </div>
           </div>
         )}
