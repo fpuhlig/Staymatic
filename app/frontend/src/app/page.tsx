@@ -1,7 +1,6 @@
+import { mockProperties } from '../../../shared/src';
+import { PropertyGrid } from '../components';
+
 export default function Home() {
-  return (
-    <div>
-      <h1>Welcome</h1>
-    </div>
-  );
+  return <PropertyGrid properties={mockProperties} />;
 }

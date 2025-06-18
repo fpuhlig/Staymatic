@@ -13,6 +13,7 @@ module.exports = {
     'prettier',
   ],
   plugins: ['@typescript-eslint', 'import'],
+  ignorePatterns: ['dist/', '*.d.ts'],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
