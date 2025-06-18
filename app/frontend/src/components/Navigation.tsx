@@ -17,7 +17,7 @@ export const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden w-full items-center justify-center md:flex">
             <div className="flex space-x-8">
-              <NavLink href="#" className="rounded-xl px-3 py-2">
+              <NavLink href="/" className="rounded-xl px-3 py-2">
                 Home
               </NavLink>
               <NavLink href="#" className="rounded-xl px-3 py-2">
@@ -69,7 +69,7 @@ export const Navigation = () => {
           <div className="border-t border-gray-200 bg-white md:hidden dark:border-gray-700 dark:bg-gray-900">
             <div className="space-y-1 px-2 pb-3 pt-2">
               <NavLink
-                href="#"
+                href="/"
                 className="block rounded-xl px-3 py-2"
                 onClick={() => setIsOpen(false)}
               >

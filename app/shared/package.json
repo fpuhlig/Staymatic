@@ -9,5 +9,8 @@
     "lint": "eslint . --ext .ts --config ../config/eslint/base.js",
     "lint:fix": "eslint . --ext .ts --config ../config/eslint/base.js --fix"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "zod": "^3.25.67"
+  }
 }
