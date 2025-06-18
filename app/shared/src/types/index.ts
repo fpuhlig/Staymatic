@@ -12,3 +12,27 @@ export interface ApiResponse<T> {
   data?: T;
   error?: string;
 }
+
+// Property/Hotel related types
+export interface Property {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  location: {
+    address: string;
+    city: string;
+    country: string;
+  };
+  price: {
+    amount: number;
+    currency: string;
+    period: 'night' | 'week' | 'month';
+  };
+  amenities: string[];
+  rating: number;
+  availableFrom: Date;
+  availableTo: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
