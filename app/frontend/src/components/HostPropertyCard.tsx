@@ -1,5 +1,6 @@
 import { PropertyWithHost } from '../../../shared/src/types';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface HostPropertyCardProps {
   property: PropertyWithHost;
@@ -15,10 +16,11 @@ export const HostPropertyCard = ({ property, onDelete }: HostPropertyCardProps) 
     <div className="flex flex-col overflow-hidden rounded-xl border-0 bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-gray-800 dark:shadow-lg dark:hover:shadow-2xl">
       {/* Image */}
       <div className="relative h-[200px] shrink-0 overflow-hidden rounded-t-xl">
-        <img
+        <Image
           src={property.imageUrl}
           alt={property.title}
-          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+          fill
+          className="object-cover transition-transform duration-300 hover:scale-105"
         />
       </div>
 
