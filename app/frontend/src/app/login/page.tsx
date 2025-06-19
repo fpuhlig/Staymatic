@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ZodError } from 'zod';
 import { loginSchema, type LoginFormData } from '../../../../shared/src/schemas';
 import { FormInput, FormButton } from '../../components';
+import { signIn } from '../../lib/auth-client';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,15 +19,13 @@ export default function LoginPage() {
   const handleInputChange = (field: keyof LoginFormData, value: string) => {
     setFormData((prev: LoginFormData) => ({ ...prev, [field]: value }));
 
-    // Only clear existing errors while typing - don't create new ones
     if (errors[field]) {
       setErrors((prev: Partial<LoginFormData>) => ({ ...prev, [field]: undefined }));
     }
   };
 
   const handleInputBlur = (field: keyof LoginFormData, value: string) => {
-    // Only validate when user leaves the field (blur event)
-    if (value.trim() === '') return; // Don't validate empty fields on blur
+    if (value.trim() === '') return;
 
     try {
       if (field === 'email') {
@@ -33,11 +33,14 @@ export default function LoginPage() {
       } else if (field === 'password') {
         loginSchema.shape.password.parse(value);
       }
-      // Clear error if validation passes
       setErrors((prev: Partial<LoginFormData>) => ({ ...prev, [field]: undefined }));
-    } catch (error: any) {
-      // Set error if validation fails
-      setErrors((prev: Partial<LoginFormData>) => ({ ...prev, [field]: error.errors[0]?.message }));
+    } catch (error) {
+      if (error instanceof ZodError) {
+        setErrors((prev: Partial<LoginFormData>) => ({
+          ...prev,
+          [field]: error.errors[0]?.message,
+        }));
+      }
     }
   };
 
@@ -45,7 +48,6 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Final validation check
     const emailValidation = loginSchema.shape.email.safeParse(formData.email);
     const passwordValidation = loginSchema.shape.password.safeParse(formData.password);
 
@@ -61,16 +63,35 @@ export default function LoginPage() {
     }
 
     try {
-      // TODO: Replace with Better Auth login
-      console.log('Login attempt:', formData);
+      const result = await signIn.email({
+        email: formData.email,
+        password: formData.password,
+      });
 
-      // Mock login success - redirect to home
-      setTimeout(() => {
-        router.push('/');
+      if (result.error) {
+        const errorMessage = result.error.message || 'Login failed';
+
+        // Handle different types of login errors
+        if (errorMessage.includes('Invalid credentials') || errorMessage.includes('incorrect')) {
+          setErrors({ password: 'Invalid email or password. Please try again.' });
+        } else if (errorMessage.includes('not found') || errorMessage.includes('not exist')) {
+          setErrors({ email: 'No account found with this email address.' });
+        } else if (errorMessage.includes('email')) {
+          setErrors({ email: errorMessage });
+        } else if (errorMessage.includes('password')) {
+          setErrors({ password: errorMessage });
+        } else {
+          // General error - show it on password field as fallback
+          setErrors({ password: errorMessage });
+        }
         setIsLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Login error:', error);
+        return;
+      }
+
+      router.replace('/');
+    } catch {
+      // Handle network or unexpected errors
+      setErrors({ email: 'An unexpected error occurred. Please try again.' });
       setIsLoading(false);
     }
   };

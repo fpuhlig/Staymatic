@@ -1,33 +1,40 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
 
-// Import controllers
 import { IndexController } from './controllers/index.controller';
-import { UsersController } from './controllers/users.controller';
 import { HealthController } from './controllers/health.controller';
+import { AuthController } from './controllers/auth.controller';
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(morgan('dev'));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }),
+);
+
+// Use different Morgan formats based on environment
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
-// Initialize controllers
 const indexController = new IndexController();
-const usersController = new UsersController();
 const healthController = new HealthController();
+const authController = new AuthController();
 
-// Routes
 app.use('/', indexController.router);
-app.use('/users', usersController.router);
 app.use('/', healthController.router);
+app.use('/api', authController.router);
 
-// Error handling
 app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.status(500);
   res.json({
