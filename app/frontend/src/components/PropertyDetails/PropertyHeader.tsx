@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { PropertyWithHost } from '../../../../shared/src/types';
+import { ImageCarousel } from './ImageCarousel';
 
 interface PropertyHeaderProps {
   property: PropertyWithHost;
@@ -8,14 +8,14 @@ interface PropertyHeaderProps {
 export const PropertyHeader = ({ property }: PropertyHeaderProps) => {
   return (
     <div className="mb-8">
-      {/* Property Image */}
-      <div className="relative mb-6 h-[400px] overflow-hidden rounded-xl sm:h-[500px] lg:h-[600px]">
-        <Image
-          src={property.imageUrl}
-          alt={property.title}
-          fill
-          className="object-cover"
-          priority
+      {/* Property Images Carousel */}
+      <div className="mb-6">
+        <ImageCarousel
+          images={
+            property.images && property.images.length > 0 ? property.images : [property.imageUrl]
+          }
+          title={property.title}
+          className="aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9]"
         />
       </div>
 

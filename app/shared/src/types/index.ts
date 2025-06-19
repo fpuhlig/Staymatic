@@ -39,7 +39,8 @@ export interface Property {
   hostId: string; // ID of the user who owns this property
   title: string;
   description: string;
-  imageUrl: string;
+  imageUrl: string; // Primary image for backward compatibility
+  images?: string[]; // Additional images for carousel
   location: {
     address: string;
     city: string;

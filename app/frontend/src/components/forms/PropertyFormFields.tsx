@@ -37,13 +37,23 @@ export const PropertyFormFields = ({ formData, onChange }: PropertyFormFieldsPro
           />
 
           <FormField
-            label="Image URL"
+            label="Main Image URL"
             name="imageUrl"
             type="url"
             value={formData.imageUrl}
             onChange={onChange}
             placeholder="https://images.unsplash.com/photo-..."
             required
+          />
+
+          <FormField
+            label="Additional Images (comma-separated URLs)"
+            name="images"
+            type="textarea"
+            value={formData.images}
+            onChange={onChange}
+            placeholder="https://images.unsplash.com/photo-1, https://images.unsplash.com/photo-2, ..."
+            rows={3}
           />
         </div>
       </FormSection>

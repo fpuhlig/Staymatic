@@ -1,6 +1,7 @@
 import { Property, PropertyWithHost } from '../../../shared/src/types';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ImagePreview } from './PropertyCard/ImagePreview';
 
 interface PropertyCardProps {
   property: Property | PropertyWithHost;
@@ -20,13 +21,13 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border-0 bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-gray-800 dark:shadow-lg dark:hover:shadow-2xl">
       {/* Image */}
-      <div className="relative h-[240px] shrink-0 overflow-hidden rounded-t-xl">
-        <Image
-          src={property.imageUrl}
-          alt={property.title}
-          width={800}
-          height={600}
-          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+      <div className="h-[240px] shrink-0 rounded-t-xl">
+        <ImagePreview
+          images={
+            property.images && property.images.length > 0 ? property.images : [property.imageUrl]
+          }
+          title={property.title}
+          className="h-full rounded-t-xl"
         />
       </div>
 
