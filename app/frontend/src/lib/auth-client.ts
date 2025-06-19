@@ -1,7 +1,7 @@
 import { createAuthClient } from 'better-auth/react';
 import { APP_CONSTANTS } from '../../../shared/src/constants';
 
-export const { signIn, signUp, signOut, useSession } = createAuthClient({
+const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_API_URL || APP_CONSTANTS.DEFAULT_BACKEND_URL,
   fetchOptions: {
     onSuccess: () => {
@@ -9,3 +9,5 @@ export const { signIn, signUp, signOut, useSession } = createAuthClient({
     },
   },
 });
+
+export const { signIn, signUp, signOut, useSession, getSession, listAccounts } = authClient;

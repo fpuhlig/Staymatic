@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession, signOut } from '../../lib/auth-client';
+import { signOut } from '../../lib/auth-client';
+import { useUser } from '../../lib/user-context';
 import { UserAvatar } from './UserAvatar';
 
 interface DropdownItem {
@@ -15,7 +16,7 @@ interface DropdownItem {
 
 export const UserDropdown = () => {
   const router = useRouter();
-  const { data: session, isPending } = useSession();
+  const { user, isLoading } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +38,7 @@ export const UserDropdown = () => {
     router.push('/');
   };
 
-  if (isPending) {
+  if (isLoading) {
     return (
       <div className="animate-pulse">
         <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
@@ -45,7 +46,7 @@ export const UserDropdown = () => {
     );
   }
 
-  if (!session?.user) {
+  if (!user) {
     return (
       <div className="flex items-center space-x-3">
         <button
@@ -64,8 +65,6 @@ export const UserDropdown = () => {
     );
   }
 
-  const user = session.user;
-
   const menuItems: DropdownItem[] = [
     {
       label: 'Host Dashboard',
@@ -83,10 +82,7 @@ export const UserDropdown = () => {
     },
     {
       label: 'Profile Settings',
-      onClick: () => {
-        // TODO: Implement profile settings
-        setIsOpen(false);
-      },
+      href: '/profile',
       icon: (
         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
