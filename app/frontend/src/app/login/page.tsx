@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ZodError } from 'zod';
 import { loginSchema, type LoginFormData } from '../../../../shared/src/schemas';
-import { FormInput, FormButton } from '../../components';
+import { FormInput, FormButton, AuthPageLayout } from '../../components';
 import { signIn } from '../../lib/auth-client';
 
 export default function LoginPage() {
@@ -106,68 +106,59 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] items-center justify-center overflow-hidden bg-gray-50 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
-      <div className="w-full max-w-md space-y-6">
-        <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Welcome back to Staymatic</p>
+    <AuthPageLayout title="Sign in to your account" subtitle="Welcome back to Staymatic">
+      <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
+        <div className="space-y-4">
+          <FormInput
+            id="email"
+            label="Email address"
+            type="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            error={errors.email}
+            autoComplete="email"
+            required
+            onChange={value => handleInputChange('email', value)}
+            onBlur={value => handleInputBlur('email', value)}
+          />
+
+          <FormInput
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            error={errors.password}
+            autoComplete="current-password"
+            required
+            onChange={value => handleInputChange('password', value)}
+            onBlur={value => handleInputBlur('password', value)}
+          />
         </div>
 
-        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <FormInput
-              id="email"
-              label="Email address"
-              type="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              error={errors.email}
-              autoComplete="email"
-              required
-              onChange={value => handleInputChange('email', value)}
-              onBlur={value => handleInputBlur('email', value)}
-            />
+        <div className="flex items-center justify-between">
+          <FormButton
+            type="submit"
+            disabled={isLoading}
+            loading={isLoading}
+            loadingText="Signing in..."
+            className="flex w-full justify-center"
+          >
+            Sign in
+          </FormButton>
+        </div>
 
-            <FormInput
-              id="password"
-              label="Password"
-              type="password"
-              placeholder="Enter your password"
-              value={formData.password}
-              error={errors.password}
-              autoComplete="current-password"
-              required
-              onChange={value => handleInputChange('password', value)}
-              onBlur={value => handleInputBlur('password', value)}
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <FormButton
-              type="submit"
-              disabled={isLoading}
-              loading={isLoading}
-              loadingText="Signing in..."
-              className="flex w-full justify-center"
-            >
-              Sign in
-            </FormButton>
-          </div>
-
-          <div className="text-center">
-            <FormButton
-              type="button"
-              variant="outline"
-              onClick={() => router.push('/')}
-              className="text-sm"
-            >
-              ← Back to Home
-            </FormButton>
-          </div>
-        </form>
-      </div>
-    </div>
+        <div className="text-center">
+          <FormButton
+            type="button"
+            variant="outline"
+            onClick={() => router.push('/')}
+            className="text-sm"
+          >
+            ← Back to Home
+          </FormButton>
+        </div>
+      </form>
+    </AuthPageLayout>
   );
 }

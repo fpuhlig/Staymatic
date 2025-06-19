@@ -1,37 +1,46 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession, getSession, listAccounts } from '../../lib/auth-client';
 import { useUser } from '../../lib/user-context';
-import { AuthGuard, PageContainer, PageHeader, LoadingSpinner } from '../../components';
-import { FormContainer, FormField, FormActions, FormSection } from '../../components/forms';
-import { UserAvatar } from '../../components/Navigation';
+import {
+  AuthGuard,
+  LoadingSpinner,
+  PageContainer,
+  PageHeader,
+  FormContainer,
+  FormSection,
+  FormField,
+  FormActions,
+  UserAvatar,
+} from '../../components';
+
+interface FormData {
+  name: string;
+  image: string;
+}
+
+interface UserAccount {
+  id: string;
+  provider: string;
+}
 
 export default function ProfilePage() {
   const router = useRouter();
   const { data: session } = useSession();
   const { user, updateUser } = useUser();
-  const [formData, setFormData] = useState({
-    name: user?.name || '',
-    image: user?.image || '',
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    image: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [userAccounts, setUserAccounts] = useState<
-    Array<{
-      id: string;
-      provider: string;
-      accountId: string;
-      createdAt: Date;
-      updatedAt: Date;
-      scopes: string[];
-    }>
-  >([]);
+  const [userAccounts, setUserAccounts] = useState<UserAccount[]>([]);
   const [isLoadingAccounts, setIsLoadingAccounts] = useState(true);
 
-  // Update form data when user changes
+  // Initialize form with user data
   useEffect(() => {
     if (user) {
       setFormData({
@@ -150,86 +159,84 @@ export default function ProfilePage() {
       unauthorizedTitle="Please log in to view your profile"
       unauthorizedDescription="You need to be logged in to manage your profile settings."
     >
-      <PageContainer>
+      <PageContainer maxWidth="2xl">
         <PageHeader
           title="Profile Settings"
           subtitle="Manage your account information and profile picture"
         />
 
-        <div className="mx-auto max-w-2xl">
-          {success && (
-            <div className="mb-6 rounded-lg bg-green-50 p-4 text-green-800 dark:bg-green-900/20 dark:text-green-400">
-              Profile updated successfully! Redirecting...
-            </div>
-          )}
+        {success && (
+          <div className="mb-6 rounded-lg bg-green-50 p-4 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+            Profile updated successfully! Redirecting...
+          </div>
+        )}
 
-          <FormContainer onSubmit={handleSubmit} error={error}>
-            <FormSection title="Profile Information">
-              {/* Current Profile Picture Preview */}
-              <div className="mb-6 flex items-center gap-4">
-                <UserAvatar
-                  user={{
-                    name: formData.name,
-                    email: user?.email || session?.user?.email,
-                    image: formData.image,
-                  }}
-                  size="lg"
-                />
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    Current Profile Picture
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {formData.image ? 'Custom image' : 'Default avatar with initials'}
+        <FormContainer onSubmit={handleSubmit} error={error}>
+          <FormSection title="Profile Information">
+            {/* Current Profile Picture Preview */}
+            <div className="mb-6 flex items-center gap-4">
+              <UserAvatar
+                user={{
+                  name: formData.name,
+                  email: user?.email || session?.user?.email,
+                  image: formData.image,
+                }}
+                size="lg"
+              />
+              <div>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Current Profile Picture
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {formData.image ? 'Custom image' : 'Default avatar with initials'}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <FormField
+                label="Full Name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Enter your full name"
+                required
+              />
+
+              <FormField
+                label="Profile Picture URL"
+                name="image"
+                type="url"
+                value={formData.image}
+                onChange={handleInputChange}
+                placeholder="https://example.com/your-photo.jpg"
+              />
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Enter a URL to your profile picture, or leave empty to use initials
+              </p>
+
+              {/* Show note about email editing based on authentication provider */}
+              {!isLoadingAccounts && (
+                <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                    <strong>Note:</strong>{' '}
+                    {userAccounts.some(account => account.provider !== 'credential')
+                      ? 'Your email address is managed by your authentication provider and cannot be changed here.'
+                      : 'You can change your email address by contacting support.'}
                   </p>
                 </div>
-              </div>
+              )}
+            </div>
+          </FormSection>
 
-              <div className="space-y-4">
-                <FormField
-                  label="Full Name"
-                  name="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Enter your full name"
-                  required
-                />
-
-                <FormField
-                  label="Profile Picture URL"
-                  name="image"
-                  type="url"
-                  value={formData.image}
-                  onChange={handleInputChange}
-                  placeholder="https://example.com/your-photo.jpg"
-                />
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  Enter a URL to your profile picture, or leave empty to use initials
-                </p>
-
-                {/* Show note about email editing based on authentication provider */}
-                {!isLoadingAccounts && (
-                  <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
-                    <p className="text-sm text-blue-800 dark:text-blue-200">
-                      <strong>Note:</strong>{' '}
-                      {userAccounts.some(account => account.provider !== 'credential')
-                        ? 'Your email address is managed by your authentication provider and cannot be changed here.'
-                        : 'You can change your email address by contacting support.'}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </FormSection>
-
-            <FormActions
-              submitLabel="Save Changes"
-              submitLoadingLabel="Saving..."
-              isSubmitting={isSubmitting}
-              cancelHref="/"
-            />
-          </FormContainer>
-        </div>
+          <FormActions
+            submitLabel="Save Changes"
+            submitLoadingLabel="Saving..."
+            isSubmitting={isSubmitting}
+            cancelHref="/"
+          />
+        </FormContainer>
       </PageContainer>
     </AuthGuard>
   );
