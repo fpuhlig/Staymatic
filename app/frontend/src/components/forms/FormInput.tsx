@@ -32,18 +32,16 @@ export const FormInput = ({
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
 
-    // Custom onBlur if provided
     if (onBlur) {
       onBlur(inputValue);
       return;
     }
 
-    // Auto Zod validation on blur if schema provided
     if (zodSchema && inputValue.trim() !== '') {
       try {
         zodSchema.parse(inputValue);
-      } catch (error: any) {
-        // Error handling would be done by parent component
+      } catch {
+        // Parent component will handle the error display
       }
     }
   };

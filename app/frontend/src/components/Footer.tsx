@@ -5,7 +5,6 @@ export const Footer = () => {
     <footer className="mt-16 border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <h3 className="mb-4 text-2xl font-bold text-blue-600 dark:text-blue-400">Staymatic</h3>
             <p className="mb-4 max-w-md text-gray-600 dark:text-gray-400">
@@ -22,7 +21,7 @@ export const Footer = () => {
               <FooterLink href="#" variant="social">
                 <span className="sr-only">Instagram</span>
                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987c6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297L3.182 17.73l2.041-1.944c-.807-.875-1.297-2.026-1.297-3.323s.49-2.448 1.297-3.323L3.182 7.096l1.944 2.041c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297l1.944-2.041-2.041 1.944c.875.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323l2.041 1.944-1.944-2.041c-.875.875-2.026 1.297-3.323 1.297-3.323z" />
+                  <path d="M12.017 2.154c3.198 0 3.586.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.650.069 4.849 0 3.198-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.109c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
               </FooterLink>
               <FooterLink href="#" variant="social">
@@ -34,7 +33,6 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
               Quick Links
@@ -55,7 +53,6 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Support */}
           <div>
             <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Support</h4>
             <ul className="space-y-2">
@@ -75,7 +72,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="mt-8 flex flex-col items-center justify-between border-t border-gray-200 pt-8 md:flex-row dark:border-gray-700">
           <p className="text-sm text-gray-500 dark:text-gray-400">
             © 2024 Staymatic. All rights reserved.
