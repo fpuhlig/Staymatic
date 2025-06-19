@@ -16,7 +16,7 @@ export default function Home() {
           Featured Properties
         </h2>
         <p className="mx-auto max-w-2xl px-4 text-lg text-gray-600 sm:text-xl dark:text-gray-400">
-          Discover amazing places to stay with trusted hosts - Hot Reload Test! 🚀
+          Discover amazing places to stay with trusted hosts
         </p>
       </div>
 
