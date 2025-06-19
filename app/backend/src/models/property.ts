@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
-import { Property } from '@shared/types';
+import { Property } from '../../../shared/src/types';
+import mongoose, { Schema, Document, model } from 'mongoose';
 
 // MongoDB Document interface extending shared Property type
 export interface IPropertyDocument extends Document, Omit<Property, 'id'> {
@@ -11,7 +11,6 @@ const PropertySchema = new Schema<IPropertyDocument>(
     hostId: {
       type: String, // Better Auth uses string IDs
       required: true,
-      index: true,
     },
     title: {
       type: String,
