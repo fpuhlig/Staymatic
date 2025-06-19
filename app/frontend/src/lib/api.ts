@@ -31,6 +31,9 @@ async function apiRequest<T>(endpoint: string): Promise<T> {
 
     return data;
   } catch (error) {
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      throw new Error('Network error: Unable to connect to server');
+    }
     console.error(`API Error (${endpoint}):`, error);
     throw error;
   }
