@@ -66,7 +66,7 @@ export default function PropertyDetails() {
               Property not found
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              The property you're looking for doesn't exist or has been removed.
+              The property you&apos;re looking for doesn&apos;t exist or has been removed.
             </p>
           </div>
         </div>

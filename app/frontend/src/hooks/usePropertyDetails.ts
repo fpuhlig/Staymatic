@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { PropertyWithHost } from '../../../shared/src/types';
 import { propertyAPI } from '../lib/api';
 
@@ -23,7 +23,7 @@ export const usePropertyDetails = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchProperty = async () => {
+  const fetchProperty = useCallback(async () => {
     if (!propertyId) return;
 
     setIsLoading(true);
@@ -39,7 +39,7 @@ export const usePropertyDetails = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [propertyId]);
 
   const clearError = () => {
     setError(null);
@@ -49,7 +49,7 @@ export const usePropertyDetails = ({
     if (autoLoad && propertyId) {
       fetchProperty();
     }
-  }, [autoLoad, propertyId]);
+  }, [autoLoad, propertyId, fetchProperty]);
 
   return {
     property,

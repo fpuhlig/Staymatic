@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { PropertyWithHost } from '../../../../shared/src/types';
 
@@ -94,7 +96,7 @@ export const BookingCard = ({ property }: BookingCardProps) => {
         </button>
 
         <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-          You won't be charged yet
+          You won&apos;t be charged yet
         </p>
 
         {/* Price Breakdown */}
