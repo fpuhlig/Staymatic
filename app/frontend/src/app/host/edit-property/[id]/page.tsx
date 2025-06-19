@@ -1,504 +1,116 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { useSession } from '../../../../lib/auth-client';
-import Link from 'next/link';
-import { FormField, FormButton } from '../../../../components/forms';
-import { LoadingSpinner } from '../../../../components';
+import { useParams } from 'next/navigation';
+import { AuthGuard, PageLayout, LoadingSpinner, ErrorMessage } from '../../../../components';
+import { FormContainer, FormActions, PropertyFormFields } from '../../../../components/forms';
+import { usePropertyForm, PropertyFormData } from '../../../../hooks';
 import { Property } from '../../../../../../shared/src/types';
 
-interface PropertyFormData {
-  title: string;
-  description: string;
-  imageUrl: string;
-  address: string;
-  city: string;
-  country: string;
-  amount: string;
-  currency: string;
-  period: string;
-  amenities: string;
-  availableFrom: string;
-  availableTo: string;
-}
-
 export default function EditProperty() {
-  const router = useRouter();
   const params = useParams();
   const propertyId = params.id as string;
-  const { data: session, isPending: isSessionLoading } = useSession();
-
   const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState<PropertyFormData>({
-    title: '',
-    description: '',
-    imageUrl: '',
-    address: '',
-    city: '',
-    country: 'Germany',
-    amount: '',
-    currency: 'EUR',
-    period: 'night',
-    amenities: '',
-    availableFrom: '',
-    availableTo: '',
-  });
+  const {
+    formData,
+    isSubmitting,
+    error,
+    handleInputChange,
+    updateProperty,
+    setFormData,
+    setError,
+  } = usePropertyForm();
 
-  const isAuthenticated = !!session?.user;
-  const hostId = session?.user?.id || '';
-
-  // Load property data
   useEffect(() => {
-    const loadProperty = async () => {
-      if (!propertyId || !isAuthenticated) return;
-
+    const fetchProperty = async () => {
       try {
         const response = await fetch(`http://localhost:3001/api/properties/${propertyId}`, {
           credentials: 'include',
         });
 
         if (!response.ok) {
-          throw new Error('Failed to load property');
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch property');
         }
 
         const apiResponse = await response.json();
+        const property: Property = apiResponse.data || apiResponse;
 
-        // Handle backend response structure (might be wrapped in success/data)
-        const propertyData: Property = apiResponse.data || apiResponse;
+        // Transform property data to form data
+        const initialData: PropertyFormData = {
+          title: property.title,
+          description: property.description,
+          imageUrl: property.imageUrl,
+          address: property.location.address,
+          city: property.location.city,
+          country: property.location.country,
+          amount: property.price.amount.toString(),
+          currency: property.price.currency,
+          period: property.price.period,
+          amenities: property.amenities.join(', '),
+          availableFrom: new Date(property.availableFrom).toISOString().split('T')[0],
+          availableTo: new Date(property.availableTo).toISOString().split('T')[0],
+        };
 
-        // Check if user owns this property
-        if (propertyData.hostId !== hostId) {
-          setError('You are not authorized to edit this property');
-          return;
-        }
-
-        // Populate form with existing data
-        setFormData({
-          title: propertyData.title,
-          description: propertyData.description,
-          imageUrl: propertyData.imageUrl,
-          address: propertyData.location.address,
-          city: propertyData.location.city,
-          country: propertyData.location.country,
-          amount: propertyData.price.amount.toString(),
-          currency: propertyData.price.currency,
-          period: propertyData.price.period,
-          amenities: propertyData.amenities.join(', '),
-          availableFrom: new Date(propertyData.availableFrom).toISOString().split('T')[0],
-          availableTo: new Date(propertyData.availableTo).toISOString().split('T')[0],
-        });
+        setFormData(initialData);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to load property';
-        setError(errorMessage);
+        setLoadError(errorMessage);
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (!isSessionLoading && isAuthenticated) {
-      loadProperty();
+    if (propertyId) {
+      fetchProperty();
     }
-  }, [propertyId, isAuthenticated, isSessionLoading, hostId]);
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  }, [propertyId, setFormData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
-
-    if (!hostId) {
-      setError('You must be logged in to update a property');
-      setIsSubmitting(false);
-      return;
-    }
-
-    try {
-      const payload = {
-        hostId,
-        title: formData.title,
-        description: formData.description,
-        imageUrl: formData.imageUrl,
-        location: {
-          address: formData.address,
-          city: formData.city,
-          country: formData.country,
-        },
-        price: {
-          amount: parseFloat(formData.amount),
-          currency: formData.currency,
-          period: formData.period,
-        },
-        amenities: formData.amenities
-          .split(',')
-          .map(a => a.trim())
-          .filter(a => a),
-        availableFrom: formData.availableFrom,
-        availableTo: formData.availableTo,
-      };
-
-      const response = await fetch(`http://localhost:3001/api/properties/${propertyId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to update property');
-      }
-
-      // Success - redirect to dashboard
-      router.push('/host/dashboard');
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to update property';
-      setError(errorMessage);
-    } finally {
-      setIsSubmitting(false);
-    }
+    await updateProperty(propertyId);
   };
 
-  // Show loading until session is checked
-  if (isSessionLoading) {
-    return (
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <LoadingSpinner message="Checking authentication..." />
-      </div>
-    );
-  }
-
-  // Redirect to login if not authenticated
-  if (!isAuthenticated) {
-    return (
-      <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-          Please log in to edit properties
-        </h1>
-        <p className="mb-6 text-gray-600 dark:text-gray-400">
-          You need to be logged in to edit properties on Staymatic.
-        </p>
-        <Link
-          href="/login"
-          className="inline-block rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
-        >
-          Log In
-        </Link>
-      </div>
-    );
-  }
-
-  // Show loading while fetching property
-  if (isLoading) {
-    return (
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <LoadingSpinner message="Loading property..." />
-      </div>
-    );
-  }
-
-  // Show error if property couldn't be loaded
-  if (error) {
-    return (
-      <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-          Error Loading Property
-        </h1>
-        <p className="mb-6 text-gray-600 dark:text-gray-400">{error}</p>
-        <Link
-          href="/host/dashboard"
-          className="inline-block rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
-        >
-          Back to Dashboard
-        </Link>
-      </div>
-    );
-  }
+  const handleRetry = () => {
+    setLoadError(null);
+    setError(null);
+    setIsLoading(true);
+    // Re-trigger the useEffect by updating a dependency
+    window.location.reload();
+  };
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="mb-4 flex items-center gap-4">
-          <Link
-            href="/host/dashboard"
-            className="flex items-center text-blue-600 hover:text-blue-700 dark:text-blue-400"
-          >
-            <svg className="mr-1 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Back to Dashboard
-          </Link>
-        </div>
-        <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">
-          Edit Property
-        </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
-          Update the details of your property listing
-        </p>
-      </div>
-
-      {/* Form */}
-      <div className="rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {error && (
-            <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/20">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Basic Information */}
-          <div>
-            <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
-              Basic Information
-            </h2>
-            <div className="grid grid-cols-1 gap-4">
-              <FormField
-                label="Property Title"
-                name="title"
-                type="text"
-                value={formData.title}
-                onChange={handleInputChange}
-                placeholder="e.g., Beautiful Apartment in Berlin"
-                required
-              />
-
-              <FormField
-                label="Description"
-                name="description"
-                type="textarea"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Describe your property, its features, and what makes it special..."
-                rows={4}
-                required
-              />
-
-              <FormField
-                label="Image URL"
-                name="imageUrl"
-                type="url"
-                value={formData.imageUrl}
-                onChange={handleInputChange}
-                placeholder="https://images.unsplash.com/photo-..."
-                required
-              />
-            </div>
-          </div>
-
-          {/* Location */}
-          <div>
-            <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Location</h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="md:col-span-2">
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Address *
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                    placeholder="e.g., Alexanderplatz 1"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  City *
-                </label>
-                <input
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  placeholder="e.g., Berlin"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Country *
-                </label>
-                <select
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  required
-                >
-                  <option value="Germany">Germany</option>
-                  <option value="Austria">Austria</option>
-                  <option value="Switzerland">Switzerland</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Pricing */}
-          <div>
-            <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Pricing</h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Price *
-                </label>
-                <input
-                  type="number"
-                  name="amount"
-                  value={formData.amount}
-                  onChange={handleInputChange}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  placeholder="0"
-                  min="0"
-                  step="0.01"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Currency *
-                </label>
-                <select
-                  name="currency"
-                  value={formData.currency}
-                  onChange={handleInputChange}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  required
-                >
-                  <option value="EUR">EUR (€)</option>
-                  <option value="USD">USD ($)</option>
-                  <option value="GBP">GBP (£)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Period *
-                </label>
-                <select
-                  name="period"
-                  value={formData.period}
-                  onChange={handleInputChange}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  required
-                >
-                  <option value="night">Per Night</option>
-                  <option value="week">Per Week</option>
-                  <option value="month">Per Month</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Amenities */}
-          <div>
-            <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Amenities</h2>
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Amenities (comma-separated)
-              </label>
-              <input
-                type="text"
-                name="amenities"
-                value={formData.amenities}
-                onChange={handleInputChange}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                placeholder="WiFi, Kitchen, Air Conditioning, Balcony"
-              />
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Enter amenities separated by commas
-              </p>
-            </div>
-          </div>
-
-          {/* Availability */}
-          <div>
-            <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Availability</h2>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Available From *
-                </label>
-                <input
-                  type="date"
-                  name="availableFrom"
-                  value={formData.availableFrom}
-                  onChange={handleInputChange}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Available Until *
-                </label>
-                <input
-                  type="date"
-                  name="availableTo"
-                  value={formData.availableTo}
-                  onChange={handleInputChange}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Submit Buttons */}
-          <div className="flex justify-end gap-4 border-t border-gray-200 pt-6 dark:border-gray-700">
-            <Link
-              href="/host/dashboard"
-              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-            >
-              Cancel
-            </Link>
-            <FormButton type="submit" disabled={isSubmitting} className="px-6 py-2">
-              {isSubmitting ? 'Updating...' : 'Update Property'}
-            </FormButton>
-          </div>
-        </form>
-      </div>
-    </main>
+    <AuthGuard
+      requireAuth={true}
+      unauthorizedTitle="Please log in to edit properties"
+      unauthorizedDescription="You need to be logged in to edit properties on Staymatic."
+    >
+      <PageLayout
+        title="Edit Property"
+        description="Update your property details"
+        backLink={{
+          href: '/host/dashboard',
+          label: 'Back to Dashboard',
+        }}
+      >
+        {isLoading ? (
+          <LoadingSpinner message="Loading property..." />
+        ) : loadError ? (
+          <ErrorMessage message={loadError} onRetry={handleRetry} retryLabel="Try Again" />
+        ) : (
+          <FormContainer onSubmit={handleSubmit} error={error}>
+            <PropertyFormFields formData={formData} onChange={handleInputChange} />
+            <FormActions
+              submitLabel="Update Property"
+              submitLoadingLabel="Updating..."
+              isSubmitting={isSubmitting}
+              cancelHref="/host/dashboard"
+            />
+          </FormContainer>
+        )}
+      </PageLayout>
+    </AuthGuard>
   );
 }
