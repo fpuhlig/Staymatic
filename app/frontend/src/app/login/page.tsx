@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ZodError } from 'zod';
-import { loginSchema, type LoginFormData } from '../../../../shared/src/schemas';
+import { loginSchema, type LoginFormData } from '@shared/schemas';
 import { FormInput, FormButton } from '../../components';
 import { signIn } from '../../lib/auth-client';
 

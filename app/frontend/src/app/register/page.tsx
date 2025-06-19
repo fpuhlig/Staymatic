@@ -3,11 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ZodError } from 'zod';
-import {
-  registerSchema,
-  registerBaseSchema,
-  type RegisterFormData,
-} from '../../../../shared/src/schemas';
+import { registerSchema, registerBaseSchema, type RegisterFormData } from '@shared/schemas';
 import { FormInput, FormButton } from '../../components';
 import { signUp } from '../../lib/auth-client';
 

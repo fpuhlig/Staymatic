@@ -1,4 +1,4 @@
-import { Property } from '../../../shared/src';
+import { Property } from '@shared/types';
 import Image from 'next/image';
 
 interface PropertyCardProps {
