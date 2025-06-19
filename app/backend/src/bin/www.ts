@@ -2,6 +2,7 @@
 
 import debug from 'debug';
 import http from 'http';
+import { APP_CONSTANTS } from '@shared/constants';
 import app from '../app';
 
 const debugLog = debug('backend:server');
@@ -24,7 +25,7 @@ function normalizePort(val: string): number | string | false {
 }
 
 // Get port from environment and store in Express
-const port = normalizePort(process.env.PORT || '3001');
+const port = normalizePort(process.env.PORT || APP_CONSTANTS.DEFAULT_BACKEND_PORT.toString());
 app.set('port', port);
 
 // Create HTTP server
@@ -56,7 +57,7 @@ function onError(error: NodeJS.ErrnoException): void {
 // Event listener for HTTP server "listening" event
 function onListening(): void {
   const addr = server.address();
-  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr?.port || ''}`;
+  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr?.port}`;
   debugLog(`Listening on ${bind}`);
 }
 
