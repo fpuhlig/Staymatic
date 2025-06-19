@@ -39,16 +39,16 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <FooterLink href="#">Home</FooterLink>
+                <FooterLink href="/">Home</FooterLink>
               </li>
               <li>
-                <FooterLink href="#">Properties</FooterLink>
+                <FooterLink href="/properties">Properties</FooterLink>
               </li>
               <li>
-                <FooterLink href="#">About Us</FooterLink>
+                <FooterLink href="/about">About Us</FooterLink>
               </li>
               <li>
-                <FooterLink href="#">Contact</FooterLink>
+                <FooterLink href="mailto:hello@staymatic.com">Contact</FooterLink>
               </li>
             </ul>
           </div>
@@ -57,16 +57,16 @@ export const Footer = () => {
             <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Support</h4>
             <ul className="space-y-2">
               <li>
-                <FooterLink href="#">Help Center</FooterLink>
+                <FooterLink href="/help">Help Center</FooterLink>
               </li>
               <li>
-                <FooterLink href="#">Privacy Policy</FooterLink>
+                <FooterLink href="/help">Privacy Policy</FooterLink>
               </li>
               <li>
-                <FooterLink href="#">Terms of Service</FooterLink>
+                <FooterLink href="/help">Terms of Service</FooterLink>
               </li>
               <li>
-                <FooterLink href="#">FAQ</FooterLink>
+                <FooterLink href="/help">FAQ</FooterLink>
               </li>
             </ul>
           </div>

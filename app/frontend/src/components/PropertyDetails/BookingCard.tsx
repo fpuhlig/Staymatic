@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { PropertyWithHost } from '../../../../shared/src/types';
 
