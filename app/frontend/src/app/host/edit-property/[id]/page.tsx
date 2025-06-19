@@ -52,6 +52,7 @@ export default function EditProperty() {
           amenities: property.amenities.join(', '),
           availableFrom: new Date(property.availableFrom).toISOString().split('T')[0],
           availableTo: new Date(property.availableTo).toISOString().split('T')[0],
+          images: property.images ? property.images.join(', ') : '',
         };
 
         setFormData(initialData);
@@ -90,6 +91,7 @@ export default function EditProperty() {
       <PageLayout
         title="Edit Property"
         description="Update your property details"
+        maxWidth="3xl"
         backLink={{
           href: '/host/dashboard',
           label: 'Back to Dashboard',

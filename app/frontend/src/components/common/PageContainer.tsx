@@ -1,14 +1,16 @@
 import { ReactNode } from 'react';
+import { getContainerClasses, LAYOUT_CONSTANTS } from './LayoutConstants';
 
 interface PageContainerProps {
   children: ReactNode;
   className?: string;
+  maxWidth?: keyof typeof LAYOUT_CONSTANTS.MAX_WIDTH;
 }
 
-export const PageContainer = ({ children, className = '' }: PageContainerProps) => {
-  return (
-    <main className={`mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 ${className}`}>
-      {children}
-    </main>
-  );
+export const PageContainer = ({
+  children,
+  className = '',
+  maxWidth = '7xl',
+}: PageContainerProps) => {
+  return <main className={`${getContainerClasses(maxWidth)} ${className}`}>{children}</main>;
 };

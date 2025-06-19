@@ -12,21 +12,21 @@ export default function AboutPage() {
     {
       title: 'For Travelers',
       items: [
-        'Curated selection of unique properties',
+        'Unique properties in prime locations',
         'Verified hosts and secure bookings',
         '24/7 customer support',
-        'Personalized recommendations',
-        'Easy booking and payment process',
+        'Flexible cancellation policies',
+        'Local recommendations and insights',
       ],
     },
     {
       title: 'For Hosts',
       items: [
         'Easy property listing and management',
-        'Flexible pricing and availability control',
-        'Host protection and insurance',
-        'Marketing and promotion tools',
-        'Community support and resources',
+        'Professional photography services',
+        'Dynamic pricing optimization',
+        'Guest screening and verification',
+        'Comprehensive host protection',
       ],
     },
   ];
@@ -36,25 +36,25 @@ export default function AboutPage() {
       icon: '🤝',
       title: 'Trust',
       description:
-        'We build trust through transparency, security, and reliability in every interaction.',
+        'We build trust through verified profiles, secure payments, and transparent communication between hosts and guests.',
+    },
+    {
+      icon: '🌟',
+      title: 'Quality',
+      description:
+        'Every property on our platform meets high standards for cleanliness, safety, and amenities to ensure exceptional stays.',
     },
     {
       icon: '🌍',
       title: 'Community',
       description:
-        'We foster a global community of travelers and hosts who share our passion for exploration.',
-    },
-    {
-      icon: '✨',
-      title: 'Excellence',
-      description:
-        'We strive for excellence in everything we do, from our platform to our customer service.',
+        'We foster a global community of travelers and hosts who share experiences, cultures, and create lasting connections.',
     },
   ];
 
   const ctaButtons = [
-    { href: 'mailto:hello@staymatic.com', text: 'Contact Us', variant: 'primary' as const },
-    { href: '/help', text: 'Visit Help Center', variant: 'secondary' as const },
+    { href: '/properties', text: 'Browse Properties', variant: 'primary' as const },
+    { href: '/host/add-property', text: 'Become a Host', variant: 'secondary' as const },
   ];
 
   return (

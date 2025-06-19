@@ -1,3 +1,5 @@
+import { getPageHeaderClasses, LAYOUT_CONSTANTS } from './LayoutConstants';
+
 interface PageHeaderProps {
   title: string;
   subtitle?: string;
@@ -6,9 +8,13 @@ interface PageHeaderProps {
 
 export const PageHeader = ({ title, subtitle, className = '' }: PageHeaderProps) => {
   return (
-    <div className={`mb-12 text-center ${className}`}>
-      <h1 className="mb-4 text-4xl font-bold text-gray-900 sm:text-5xl dark:text-white">{title}</h1>
-      {subtitle && <p className="text-xl text-gray-600 dark:text-gray-400">{subtitle}</p>}
+    <div className={`${getPageHeaderClasses()} ${className}`}>
+      <h1
+        className={`${LAYOUT_CONSTANTS.MARGIN.small} ${LAYOUT_CONSTANTS.TYPOGRAPHY.h1} text-gray-900 dark:text-white`}
+      >
+        {title}
+      </h1>
+      {subtitle && <p className={`text-xl ${LAYOUT_CONSTANTS.TYPOGRAPHY.subtitle}`}>{subtitle}</p>}
     </div>
   );
 };

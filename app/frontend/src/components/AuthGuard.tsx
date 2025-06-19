@@ -1,5 +1,6 @@
 import { useSession } from '../lib/auth-client';
 import { LoadingSpinner } from './LoadingSpinner';
+import { getContainerClasses, LAYOUT_CONSTANTS } from './common/LayoutConstants';
 import Link from 'next/link';
 
 interface AuthGuardProps {
@@ -25,7 +26,7 @@ export const AuthGuard = ({
   // Show loading until session is checked
   if (isSessionLoading) {
     return (
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <div className={getContainerClasses()}>
         <LoadingSpinner message={loadingMessage} />
       </div>
     );
@@ -34,11 +35,15 @@ export const AuthGuard = ({
   // If auth is required but user is not authenticated
   if (requireAuth && !isAuthenticated) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <h1 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+      <div className={`${getContainerClasses('2xl')} text-center`}>
+        <h1
+          className={`${LAYOUT_CONSTANTS.MARGIN.small} ${LAYOUT_CONSTANTS.TYPOGRAPHY.h2} text-gray-900 dark:text-white`}
+        >
           {unauthorizedTitle}
         </h1>
-        <p className="mb-6 text-gray-600 dark:text-gray-400">{unauthorizedDescription}</p>
+        <p className={`${LAYOUT_CONSTANTS.MARGIN.element} ${LAYOUT_CONSTANTS.TYPOGRAPHY.subtitle}`}>
+          {unauthorizedDescription}
+        </p>
         <Link
           href={redirectTo}
           className="inline-block rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"

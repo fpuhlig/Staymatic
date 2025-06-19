@@ -1,13 +1,22 @@
 import { FooterLink } from './FooterLink';
+import { LAYOUT_CONSTANTS } from './common/LayoutConstants';
 
 export const Footer = () => {
   return (
     <footer className="mt-16 border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+      <div
+        className={`mx-auto ${LAYOUT_CONSTANTS.MAX_WIDTH['7xl']} ${LAYOUT_CONSTANTS.PADDING.container} py-12`}
+      >
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="col-span-1 md:col-span-2">
-            <h3 className="mb-4 text-2xl font-bold text-blue-600 dark:text-blue-400">Staymatic</h3>
-            <p className="mb-4 max-w-md text-gray-600 dark:text-gray-400">
+            <h3
+              className={`${LAYOUT_CONSTANTS.MARGIN.small} ${LAYOUT_CONSTANTS.TYPOGRAPHY.h2} text-blue-600 dark:text-blue-400`}
+            >
+              Staymatic
+            </h3>
+            <p
+              className={`${LAYOUT_CONSTANTS.MARGIN.small} max-w-md ${LAYOUT_CONSTANTS.TYPOGRAPHY.subtitle}`}
+            >
               Find your perfect stay. We offer the best properties with amazing amenities and
               locations.
             </p>
@@ -34,10 +43,12 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+            <h4
+              className={`${LAYOUT_CONSTANTS.MARGIN.small} text-lg font-semibold text-gray-900 dark:text-white`}
+            >
               Quick Links
             </h4>
-            <ul className="space-y-2">
+            <ul className={LAYOUT_CONSTANTS.SPACING.sm}>
               <li>
                 <FooterLink href="/">Home</FooterLink>
               </li>
@@ -54,8 +65,12 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h4 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Support</h4>
-            <ul className="space-y-2">
+            <h4
+              className={`${LAYOUT_CONSTANTS.MARGIN.small} text-lg font-semibold text-gray-900 dark:text-white`}
+            >
+              Support
+            </h4>
+            <ul className={LAYOUT_CONSTANTS.SPACING.sm}>
               <li>
                 <FooterLink href="/help">Help Center</FooterLink>
               </li>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { LAYOUT_CONSTANTS, getContainerClasses } from './common/LayoutConstants';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ interface PageLayoutProps {
     href: string;
     label: string;
   };
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '7xl';
+  maxWidth?: keyof typeof LAYOUT_CONSTANTS.MAX_WIDTH;
   showBackButton?: boolean;
   hideTitle?: boolean;
 }
@@ -18,26 +19,16 @@ export const PageLayout = ({
   title,
   description,
   backLink,
-  maxWidth = '3xl',
+  maxWidth = '7xl',
   showBackButton = false,
   hideTitle = false,
 }: PageLayoutProps) => {
-  const maxWidthClasses = {
-    sm: 'max-w-sm',
-    md: 'max-w-md',
-    lg: 'max-w-lg',
-    xl: 'max-w-xl',
-    '2xl': 'max-w-2xl',
-    '3xl': 'max-w-3xl',
-    '7xl': 'max-w-7xl',
-  };
-
   return (
-    <main className={`mx-auto ${maxWidthClasses[maxWidth]} px-4 py-8 sm:px-6 sm:py-12 lg:px-8`}>
+    <main className={getContainerClasses(maxWidth)}>
       {/* Header */}
-      <div className="mb-8">
+      <div className={LAYOUT_CONSTANTS.MARGIN.header}>
         {(showBackButton || backLink) && (
-          <div className="mb-4 flex items-center gap-4">
+          <div className={LAYOUT_CONSTANTS.MARGIN.small}>
             <Link
               href={backLink?.href || '/'}
               className="flex items-center text-blue-600 hover:text-blue-700 dark:text-blue-400"
@@ -55,9 +46,13 @@ export const PageLayout = ({
           </div>
         )}
         {!hideTitle && (
-          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">{title}</h1>
+          <h1 className={`${LAYOUT_CONSTANTS.TYPOGRAPHY.h1} text-gray-900 dark:text-white`}>
+            {title}
+          </h1>
         )}
-        {description && <p className="mt-2 text-gray-600 dark:text-gray-400">{description}</p>}
+        {description && (
+          <p className={`mt-2 ${LAYOUT_CONSTANTS.TYPOGRAPHY.subtitle}`}>{description}</p>
+        )}
       </div>
 
       {children}

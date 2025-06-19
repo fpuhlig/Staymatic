@@ -8,7 +8,7 @@ import {
   registerBaseSchema,
   type RegisterFormData,
 } from '../../../../shared/src/schemas';
-import { FormInput, FormButton } from '../../components';
+import { FormInput, FormButton, AuthPageLayout } from '../../components';
 import { signUp } from '../../lib/auth-client';
 
 export default function RegisterPage() {
@@ -125,98 +125,90 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] items-center justify-center overflow-hidden bg-gray-50 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
-      <div className="w-full max-w-md space-y-6">
-        <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
-            Create your account
-          </h2>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Join Staymatic and find your perfect stay
-          </p>
+    <AuthPageLayout
+      title="Create your account"
+      subtitle="Join Staymatic and find your perfect stay"
+    >
+      <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
+        <div className="space-y-4">
+          <FormInput
+            id="name"
+            label="Full Name"
+            type="text"
+            placeholder="Enter your full name"
+            value={formData.name}
+            error={errors.name}
+            autoComplete="name"
+            required
+            onChange={value => handleInputChange('name', value)}
+            onBlur={value => handleInputBlur('name', value)}
+          />
+
+          <FormInput
+            id="email"
+            label="Email address"
+            type="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            error={errors.email}
+            autoComplete="email"
+            required
+            onChange={value => handleInputChange('email', value)}
+            onBlur={value => handleInputBlur('email', value)}
+          />
+
+          <FormInput
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="Enter your password (min. 8 characters)"
+            value={formData.password}
+            error={errors.password}
+            autoComplete="new-password"
+            required
+            onChange={value => handleInputChange('password', value)}
+            onBlur={value => handleInputBlur('password', value)}
+          />
+
+          <FormInput
+            id="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            placeholder="Confirm your password"
+            value={formData.confirmPassword}
+            error={errors.confirmPassword}
+            autoComplete="new-password"
+            required
+            onChange={value => handleInputChange('confirmPassword', value)}
+            onBlur={value => handleInputBlur('confirmPassword', value)}
+          />
         </div>
 
-        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <FormInput
-              id="name"
-              label="Full Name"
-              type="text"
-              placeholder="Enter your full name"
-              value={formData.name}
-              error={errors.name}
-              autoComplete="name"
-              required
-              onChange={value => handleInputChange('name', value)}
-              onBlur={value => handleInputBlur('name', value)}
-            />
+        <div className="flex items-center justify-between">
+          <FormButton
+            type="submit"
+            disabled={isLoading}
+            loading={isLoading}
+            loadingText="Creating account..."
+            className="flex w-full justify-center"
+          >
+            Create Account
+          </FormButton>
+        </div>
 
-            <FormInput
-              id="email"
-              label="Email address"
-              type="email"
-              placeholder="Enter your email"
-              value={formData.email}
-              error={errors.email}
-              autoComplete="email"
-              required
-              onChange={value => handleInputChange('email', value)}
-              onBlur={value => handleInputBlur('email', value)}
-            />
-
-            <FormInput
-              id="password"
-              label="Password"
-              type="password"
-              placeholder="Enter your password (min. 8 characters)"
-              value={formData.password}
-              error={errors.password}
-              autoComplete="new-password"
-              required
-              onChange={value => handleInputChange('password', value)}
-              onBlur={value => handleInputBlur('password', value)}
-            />
-
-            <FormInput
-              id="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              placeholder="Confirm your password"
-              value={formData.confirmPassword}
-              error={errors.confirmPassword}
-              autoComplete="new-password"
-              required
-              onChange={value => handleInputChange('confirmPassword', value)}
-              onBlur={value => handleInputBlur('confirmPassword', value)}
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <FormButton
-              type="submit"
-              disabled={isLoading}
-              loading={isLoading}
-              loadingText="Creating account..."
-              className="flex w-full justify-center"
+        <div className="text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Already have an account?{' '}
+            <button
+              type="button"
+              onClick={() => router.push('/login')}
+              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
             >
-              Create Account
-            </FormButton>
-          </div>
-
-          <div className="text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Already have an account?{' '}
-              <button
-                type="button"
-                onClick={() => router.push('/login')}
-                className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
-              >
-                Sign in here
-              </button>
-            </p>
-          </div>
-        </form>
-      </div>
-    </div>
+              Sign in here
+            </button>
+          </p>
+        </div>
+      </form>
+    </AuthPageLayout>
   );
 }

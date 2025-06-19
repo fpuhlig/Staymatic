@@ -21,6 +21,7 @@ export default function AddProperty() {
       <PageLayout
         title="Add New Property"
         description="Fill in the details to list your property on Staymatic"
+        maxWidth="3xl"
         backLink={{
           href: '/host/dashboard',
           label: 'Back to Dashboard',
