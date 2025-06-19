@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { User, CreateTestUserInput } from '@shared/types';
+import { User, CreateTestUserInput } from '../../../shared/src/types';
 
 // Better Auth User Schema extending shared User type
 export interface IBetterAuthUser extends User {

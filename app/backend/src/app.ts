@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import { APP_CONSTANTS } from '@shared/constants';
+import { APP_CONSTANTS } from '../../shared/src/constants';
 
 import { IndexController } from './controllers/index.controller';
 import { HealthController } from './controllers/health.controller';

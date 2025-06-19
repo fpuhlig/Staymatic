@@ -2,7 +2,7 @@
 
 import debug from 'debug';
 import http from 'http';
-import { APP_CONSTANTS } from '@shared/constants';
+import { APP_CONSTANTS } from '../../../shared/src/constants';
 import app from '../app';
 
 const debugLog = debug('backend:server');

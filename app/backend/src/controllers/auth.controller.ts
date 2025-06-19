@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { auth } from '../auth';
-import { APP_CONSTANTS } from '@shared/constants';
+import { APP_CONSTANTS } from '../../../shared/src/constants';
 
 export class AuthController {
   public router: Router;

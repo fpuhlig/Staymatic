@@ -1,20 +1,25 @@
 import { Types } from 'mongoose';
-import { Property } from '@shared/types';
+import { Property } from '../../../shared/src/types';
 import { IPropertyDocument } from '../models/property';
 
-// Backend-specific utility function to transform MongoDB property document to API response format
-export const transformPropertyDocument = (property: IPropertyDocument): Property => ({
-  id: (property._id as Types.ObjectId).toString(),
-  hostId: property.hostId.toString(),
-  title: property.title,
-  description: property.description,
-  imageUrl: property.imageUrl,
-  location: property.location,
-  price: property.price,
-  amenities: property.amenities,
-  rating: property.rating,
-  availableFrom: property.availableFrom,
-  availableTo: property.availableTo,
-  createdAt: property.createdAt,
-  updatedAt: property.updatedAt,
-});
+/**
+ * Transform MongoDB Property document to shared Property type
+ * This ensures consistent data format across frontend and backend
+ */
+export function transformPropertyDocument(doc: IPropertyDocument): Property {
+  return {
+    id: (doc._id as Types.ObjectId).toString(),
+    hostId: doc.hostId,
+    title: doc.title,
+    description: doc.description,
+    imageUrl: doc.imageUrl,
+    location: doc.location,
+    price: doc.price,
+    amenities: doc.amenities,
+    rating: doc.rating,
+    availableFrom: doc.availableFrom,
+    availableTo: doc.availableTo,
+    createdAt: doc.createdAt,
+    updatedAt: doc.updatedAt,
+  };
+}

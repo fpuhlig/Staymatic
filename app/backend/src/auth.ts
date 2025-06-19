@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { MongoClient } from 'mongodb';
-import { APP_CONSTANTS } from '@shared/constants';
+import { APP_CONSTANTS } from '../../shared/src/constants';
 
 // MongoDB connection
 const mongoUri = process.env.MONGODB_URI || APP_CONSTANTS.DEFAULT_MONGO_URI;

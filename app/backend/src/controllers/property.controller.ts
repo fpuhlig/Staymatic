@@ -1,9 +1,9 @@
 import { Router, Request, Response } from 'express';
 import { PropertyModel } from '../models/property';
-import { createPropertySchema, updatePropertySchema } from '@shared/schemas/property';
+import { createPropertySchema, updatePropertySchema } from '../../../shared/src/schemas/property';
 import { BetterAuthUserService } from '../utils/betterAuthUsers';
 import { transformPropertyDocument } from '../utils/propertyTransform';
-import { buildPropertyFilter, isValidObjectId, APP_CONSTANTS } from '@shared/index';
+import { buildPropertyFilter, isValidObjectId, APP_CONSTANTS } from '../../../shared/src/index';
 
 export class PropertyController {
   public router: Router;

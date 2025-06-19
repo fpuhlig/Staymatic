@@ -11,8 +11,8 @@ export class UserController {
 
   private initializeRoutes(): void {
     // Better Auth User management routes
-    this.router.get('/users', this.getAllUsers);
-    this.router.post('/users/test', this.createTestUser); // For development
+    this.router.get('/', this.getAllUsers);
+    this.router.post('/test', this.createTestUser); // For development
   }
 
   // GET /api/users - Get all Better Auth users (for admin/testing)
