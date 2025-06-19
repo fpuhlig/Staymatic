@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ZodError } from 'zod';
-import { loginSchema, type LoginFormData } from '@shared/schemas';
+import { loginSchema, type LoginFormData } from '../../../../shared/src/schemas';
 import { FormInput, FormButton } from '../../components';
 import { signIn } from '../../lib/auth-client';
 
@@ -15,17 +15,20 @@ export default function LoginPage() {
   });
   const [errors, setErrors] = useState<Partial<LoginFormData>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false); // Track if form was submitted
 
   const handleInputChange = (field: keyof LoginFormData, value: string) => {
     setFormData((prev: LoginFormData) => ({ ...prev, [field]: value }));
 
-    if (errors[field]) {
-      setErrors((prev: Partial<LoginFormData>) => ({ ...prev, [field]: undefined }));
+    // Only clear errors AFTER first submission attempt (security fix)
+    if (hasSubmitted && Object.keys(errors).length > 0) {
+      setErrors({});
     }
   };
 
   const handleInputBlur = (field: keyof LoginFormData, value: string) => {
-    if (value.trim() === '') return;
+    // Only validate on blur AFTER first submission
+    if (!hasSubmitted || value.trim() === '') return;
 
     try {
       if (field === 'email') {
@@ -47,6 +50,8 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrors({}); // Clear all errors at start of submission
+    setHasSubmitted(true); // Mark that form was submitted
 
     const emailValidation = loginSchema.shape.email.safeParse(formData.email);
     const passwordValidation = loginSchema.shape.password.safeParse(formData.password);
@@ -71,7 +76,7 @@ export default function LoginPage() {
       if (result.error) {
         const errorMessage = result.error.message || 'Login failed';
 
-        // Handle different types of login errors
+        // Handle different types of login errors with specific messages
         if (errorMessage.includes('Invalid credentials') || errorMessage.includes('incorrect')) {
           setErrors({ password: 'Invalid email or password. Please try again.' });
         } else if (errorMessage.includes('not found') || errorMessage.includes('not exist')) {
@@ -88,10 +93,14 @@ export default function LoginPage() {
         return;
       }
 
+      // Success - redirect to home
       router.replace('/');
-    } catch {
+    } catch (error) {
       // Handle network or unexpected errors
-      setErrors({ email: 'An unexpected error occurred. Please try again.' });
+      console.error('Login network error:', error);
+      setErrors({
+        email: 'Network error occurred. Please check your connection and try again.',
+      });
       setIsLoading(false);
     }
   };
