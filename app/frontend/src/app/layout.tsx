@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Header, Navigation, Footer } from '../components';
+import { MainNavigation } from '../components/Navigation/MainNavigation';
+import { Footer } from '../components';
 
 export const metadata: Metadata = {
   title: 'Staymatic',
@@ -15,8 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <Header />
-        <Navigation />
+        <MainNavigation />
         <main>{children}</main>
         <Footer />
       </body>
