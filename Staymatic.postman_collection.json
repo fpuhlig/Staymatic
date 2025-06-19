@@ -1,0 +1,305 @@
+{
+  "info": {
+    "_postman_id": "50cbfae5-b584-40c4-bab3-89d7ad48cf7a",
+    "name": "Staymatic",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45936960",
+    "_collection_link": "https://solemn-tango4u-5220248.postman.co/workspace/solemn-tango4u's-Workspace~516ef01c-26c9-44ac-8c35-3de172f27fbe/collection/45936960-50cbfae5-b584-40c4-bab3-89d7ad48cf7a?action=share&source=collection_link&creator=45936960"
+  },
+  "item": [
+    {
+      "name": "Health Checker",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Sign Up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"newuser@staymatic.com\", \"password\": \"password123\", \"name\": \"New User\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/auth/sign-up/email",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "auth", "sign-up", "email"]
+            },
+            "description": "Generated from cURL: curl -X POST http://localhost:3001/api/auth/sign-up/email -H \"Content-Type: application/json\" -d '{\"email\": \"newuser@staymatic.com\", \"password\": \"password123\", \"name\": \"New User\"}'"
+          },
+          "response": []
+        },
+        {
+          "name": "Sign In",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"test@staymatic.com\", \"password\": \"password123\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/auth/sign-in/email",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "auth", "sign-in", "email"]
+            },
+            "description": "Generated from cURL: curl -X POST http://localhost:3001/api/auth/sign-in/email -H \"Content-Type: application/json\" -d '{\"email\": \"test@staymatic.com\", \"password\": \"password123\"}'"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Properties",
+      "item": [
+        {
+          "name": "All Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/properties",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "properties"]
+            },
+            "description": "Generated from cURL: curl -s http://localhost:3001/api/properties"
+          },
+          "response": []
+        },
+        {
+          "name": "One Property",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/properties/68542927df1d2454bc08585e",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "properties", "68542927df1d2454bc08585e"]
+            },
+            "description": "Generated from cURL: curl -s http://localhost:3001/api/properties/68542927df1d2454bc08585e"
+          },
+          "response": []
+        },
+        {
+          "name": "New Property",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hostId\": \"{{hostId}}\",\n  \"title\": \"Beautiful Apartment in Berlin\",\n  \"description\": \"A wonderful 2-bedroom apartment in the heart of Berlin with modern amenities and great location.\",\n  \"imageUrl\": \"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2\",\n  \"location\": {\n    \"address\": \"Alexanderplatz 1\",\n    \"city\": \"Berlin\",\n    \"country\": \"Germany\"\n  },\n  \"price\": {\n    \"amount\": 85,\n    \"currency\": \"EUR\",\n    \"period\": \"night\"\n  },\n  \"amenities\": [\"WiFi\", \"Kitchen\", \"Air Conditioning\", \"Balcony\"],\n  \"availableFrom\": \"2025-01-01T00:00:00.000Z\",\n  \"availableTo\": \"2025-12-31T00:00:00.000Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/properties",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "properties"]
+            },
+            "description": "Create new property with Better Auth host integration. Use {{hostId}} variable for Better Auth user ID."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Property",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Updated Apartment Title\",\n    \"description\": \"Updated description with new amenities\",\n    \"price\": {\n      \"amount\": 120,\n      \"currency\": \"EUR\", \n      \"period\": \"night\"\n    },\n    \"amenities\": [\"WiFi\", \"Kitchen\", \"Air Conditioning\", \"Balcony\", \"Parking\"]\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/properties/PROPERTY_ID_HERE",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "properties", "PROPERTY_ID_HERE"]
+            },
+            "description": "Generated from cURL: curl -X PUT http://localhost:3001/api/properties/PROPERTY_ID_HERE \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"title\": \"Updated Apartment Title\",\n    \"description\": \"Updated description with new amenities\",\n    \"price\": {\n      \"amount\": 120,\n      \"currency\": \"EUR\", \n      \"period\": \"night\"\n    },\n    \"amenities\": [\"WiFi\", \"Kitchen\", \"Air Conditioning\", \"Balcony\", \"Parking\"]\n  }'"
+          },
+          "response": []
+        },
+        {
+          "name": "Property",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/properties/68542946df1d2454bc085862",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "properties", "68542946df1d2454bc085862"]
+            },
+            "description": "Generated from cURL: curl -s -X DELETE http://localhost:3001/api/properties/68542946df1d2454bc085862"
+          },
+          "response": []
+        },
+        {
+          "name": "Properties with Hosts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/properties-with-hosts",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "properties-with-hosts"],
+              "query": [
+                {
+                  "key": "hostId",
+                  "value": "{{hostId}}",
+                  "description": "Filter by Better Auth Host ID",
+                  "disabled": true
+                },
+                {
+                  "key": "city",
+                  "value": "Berlin",
+                  "description": "Filter by city",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Get all properties with Better Auth host data - no data duplication!"
+          },
+          "response": []
+        },
+        {
+          "name": "Property with Host",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/properties/6854334028cb02a0db5effcb/with-host",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "properties", "6854334028cb02a0db5effcb", "with-host"]
+            },
+            "description": "Get single property with Better Auth host data included"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3001/api/users",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "users"]
+            },
+            "description": "Get all Better Auth users - direct integration!"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Test User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test-host@staymatic.com\",\n  \"name\": \"Test Host User\",\n  \"emailVerified\": true,\n  \"image\": \"https://via.placeholder.com/150\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3001/api/users/test",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3001",
+              "path": ["api", "users", "test"]
+            },
+            "description": "Create test Better Auth user for development - integrates directly with properties!"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
