@@ -32,6 +32,9 @@ export const Navigation = () => {
               <NavLink href="#" className="rounded-xl px-3 py-2">
                 Help
               </NavLink>
+              <NavLink href="/host/dashboard" className="rounded-xl px-3 py-2">
+                Host Dashboard
+              </NavLink>
             </div>
           </div>
 
@@ -102,6 +105,13 @@ export const Navigation = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Help
+              </NavLink>
+              <NavLink
+                href="/host/dashboard"
+                className="block rounded-xl px-3 py-2"
+                onClick={() => setIsOpen(false)}
+              >
+                Host Dashboard
               </NavLink>
             </div>
           </div>

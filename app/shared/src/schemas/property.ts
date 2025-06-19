@@ -34,6 +34,7 @@ export const createPropertySchema = z
 // Schema for updating a property (all fields optional)
 export const updatePropertySchema = z
   .object({
+    hostId: z.string().optional(),
     title: z.string().min(1, 'Title is required').max(200, 'Title too long').optional(),
     description: z
       .string()
