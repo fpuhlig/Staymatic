@@ -1,5 +1,6 @@
 import { Property, PropertyWithHost } from '../../../shared/src/types';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface PropertyCardProps {
   property: Property | PropertyWithHost;
@@ -112,9 +113,12 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
                 /{property.price.period}
               </span>
             </div>
-            <button className="rounded-xl bg-blue-600 px-6 py-2 font-medium text-white transition-colors duration-200 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+            <Link
+              href={`/property/${property.id}`}
+              className="rounded-xl bg-blue-600 px-6 py-2 font-medium text-white transition-colors duration-200 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+            >
               View Details
-            </button>
+            </Link>
           </div>
         </div>
       </div>

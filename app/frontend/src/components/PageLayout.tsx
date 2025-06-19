@@ -10,6 +10,7 @@ interface PageLayoutProps {
   };
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '7xl';
   showBackButton?: boolean;
+  hideTitle?: boolean;
 }
 
 export const PageLayout = ({
@@ -19,6 +20,7 @@ export const PageLayout = ({
   backLink,
   maxWidth = '3xl',
   showBackButton = false,
+  hideTitle = false,
 }: PageLayoutProps) => {
   const maxWidthClasses = {
     sm: 'max-w-sm',
@@ -52,7 +54,9 @@ export const PageLayout = ({
             </Link>
           </div>
         )}
-        <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">{title}</h1>
+        {!hideTitle && (
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">{title}</h1>
+        )}
         {description && <p className="mt-2 text-gray-600 dark:text-gray-400">{description}</p>}
       </div>
 
