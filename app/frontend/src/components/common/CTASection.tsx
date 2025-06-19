@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 interface CTAButton {
   href: string;
   text: string;

@@ -72,8 +72,8 @@ export default function AboutPage() {
             empowering hosts to share their spaces and create meaningful connections.
           </p>
           <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-            We're not just a booking platform – we're a community that celebrates the joy of travel
-            and the warmth of hospitality.
+            We&apos;re not just a booking platform – we&apos;re a community that celebrates the joy
+            of travel and the warmth of hospitality.
           </p>
         </ContentSection>
 
@@ -98,12 +98,12 @@ export default function AboutPage() {
             and creating memories that last a lifetime.
           </p>
           <p className="mb-4 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-            Founded by a team of passionate travelers and technology enthusiasts, we've built a
+            Founded by a team of passionate travelers and technology enthusiasts, we&apos;ve built a
             platform that combines the latest technology with the timeless values of hospitality and
             human connection.
           </p>
           <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-            Today, we're proud to serve thousands of travelers and hosts around the world,
+            Today, we&apos;re proud to serve thousands of travelers and hosts around the world,
             facilitating millions of nights of comfortable, memorable stays.
           </p>
         </ContentSection>

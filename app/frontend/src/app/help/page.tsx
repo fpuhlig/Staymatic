@@ -12,7 +12,7 @@ export default function HelpPage() {
     {
       question: 'How do I book a property?',
       answer:
-        'Browse our properties, select your dates, and click "Book Now". You\'ll be guided through our secure checkout process. Payment is processed securely, and you\'ll receive a confirmation email with all the details.',
+        'Browse our properties, select your dates, and click "Book Now". You&apos;ll be guided through our secure checkout process. Payment is processed securely, and you&apos;ll receive a confirmation email with all the details.',
     },
     {
       question: 'What payment methods do you accept?',
@@ -37,7 +37,7 @@ export default function HelpPage() {
     {
       question: 'How do I contact my host?',
       answer:
-        "Once your booking is confirmed, you can message your host directly through our platform. You'll find the messaging feature in your booking details and trip itinerary.",
+        'Once your booking is confirmed, you can message your host directly through our platform. You&apos;ll find the messaging feature in your booking details and trip itinerary.',
     },
     {
       question: 'What if I have issues during my stay?',
@@ -47,7 +47,7 @@ export default function HelpPage() {
     {
       question: 'How do I leave a review?',
       answer:
-        "After your stay, you'll receive an email invitation to leave a review. You can also access the review form through your account dashboard. Reviews help other travelers and improve our community.",
+        'After your stay, you&apos;ll receive an email invitation to leave a review. You can also access the review form through your account dashboard. Reviews help other travelers and improve our community.',
     },
   ];
 
