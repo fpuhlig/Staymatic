@@ -21,18 +21,20 @@ export default function RegisterPage() {
   });
   const [errors, setErrors] = useState<Partial<RegisterFormData>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false); // Track if form was submitted
 
   const handleInputChange = (field: keyof RegisterFormData, value: string) => {
     setFormData((prev: RegisterFormData) => ({ ...prev, [field]: value }));
 
-    // Only clear existing errors while typing - don't create new ones
-    if (errors[field]) {
-      setErrors((prev: Partial<RegisterFormData>) => ({ ...prev, [field]: undefined }));
+    // Only clear errors AFTER first submission attempt (security fix)
+    if (hasSubmitted && Object.keys(errors).length > 0) {
+      setErrors({});
     }
   };
 
   const handleInputBlur = (field: keyof RegisterFormData, value: string) => {
-    if (value.trim() === '') return;
+    // Only validate on blur AFTER first submission
+    if (!hasSubmitted || value.trim() === '') return;
 
     try {
       if (field === 'name') {
@@ -56,6 +58,8 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrors({}); // Clear all errors at start of submission
+    setHasSubmitted(true); // Mark that form was submitted
 
     const validation = registerSchema.safeParse(formData);
 
@@ -82,8 +86,14 @@ export default function RegisterPage() {
       if (result.error) {
         const errorMessage = result.error.message || 'Registration failed';
 
-        // Handle different types of errors
-        if (errorMessage.includes('existing email') || errorMessage.includes('already exists')) {
+        // Handle different types of errors with specific messages
+        if (
+          errorMessage.includes('existing email') ||
+          errorMessage.includes('already exists') ||
+          errorMessage.includes('duplicate') ||
+          errorMessage.includes('User already exists') ||
+          errorMessage === 'User already exists'
+        ) {
           setErrors({
             email:
               'This email is already registered. Please use a different email or try logging in.',
@@ -102,10 +112,14 @@ export default function RegisterPage() {
         return;
       }
 
+      // Success - redirect to home
       router.replace('/');
-    } catch {
+    } catch (error) {
       // Handle network or unexpected errors
-      setErrors({ email: 'An unexpected error occurred. Please try again.' });
+      console.error('Registration network error:', error);
+      setErrors({
+        email: 'Network error occurred. Please check your connection and try again.',
+      });
       setIsLoading(false);
     }
   };

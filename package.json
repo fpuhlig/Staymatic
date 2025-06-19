@@ -39,11 +39,11 @@
     ],
     "app/backend/**/*.{ts,js}": [
       "prettier --write --config ./app/config/prettier/index.js",
-      "yarn workspace @staymatic/backend lint:fix --"
+      "yarn workspace @staymatic/backend lint:fix"
     ],
     "app/shared/**/*.{ts,js}": [
       "prettier --write --config ./app/config/prettier/index.js",
-      "yarn workspace @staymatic/shared lint:fix --"
+      "yarn workspace @staymatic/shared lint:fix"
     ],
     "*.{json,md}": [
       "prettier --write --config ./app/config/prettier/index.js"

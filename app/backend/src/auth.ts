@@ -1,20 +1,20 @@
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { MongoClient } from 'mongodb';
+import { APP_CONSTANTS } from '../../shared/src/constants';
 
 // MongoDB connection
-const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/staymatic';
+const mongoUri = process.env.MONGODB_URI || APP_CONSTANTS.DEFAULT_MONGO_URI;
 const client = new MongoClient(mongoUri);
 const db = client.db('staymatic');
 
 // Better Auth secret
-const secret =
-  process.env.BETTER_AUTH_SECRET || 'your-super-secret-key-for-development-minimum-32-characters';
+const secret = process.env.BETTER_AUTH_SECRET || APP_CONSTANTS.DEFAULT_AUTH_SECRET;
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),
-  baseURL: process.env.BACKEND_URL || 'http://localhost:3001',
-  basePath: '/api/auth',
+  baseURL: process.env.BACKEND_URL || APP_CONSTANTS.DEFAULT_BACKEND_URL,
+  basePath: APP_CONSTANTS.AUTH_BASE_PATH,
   secret,
 
   // Email & Password Settings
@@ -58,8 +58,9 @@ export const auth = betterAuth({
     crossSubDomainCookies: {
       enabled: false, // Disable cross-subdomain cookies for security
     },
+    trustedOrigins: [process.env.FRONTEND_URL || APP_CONSTANTS.DEFAULT_FRONTEND_URL],
   },
 
-  // Trusted Origins
-  trustedOrigins: [process.env.FRONTEND_URL || 'http://localhost:3000'],
+  // Plugins can be added here if needed
+  plugins: [],
 });

@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import type { Request, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import { auth } from '../auth';
+import { APP_CONSTANTS } from '../../../shared/src/constants';
 
 export class AuthController {
   public router: Router;
@@ -11,25 +11,23 @@ export class AuthController {
   }
 
   private initializeRoutes(): void {
-    // Better Auth handler - this will handle all auth routes like /api/auth/sign-in, /api/auth/sign-up, etc.
-    this.router.all('/auth/*', this.handleAuth);
-    this.router.all('/auth', this.handleAuth); // Handle exact /auth path too
+    // Better Auth handles all auth routes automatically
+    // We just need to forward requests to the auth handler
+    this.router.use('*', this.handleAuth);
   }
 
   private handleAuth = async (req: Request, res: Response): Promise<void> => {
     try {
+      // Create a Web API Request from Express request
       const protocol = req.secure ? 'https' : 'http';
-      const host = req.headers.host || 'localhost:3001';
-      const fullUrl = `${protocol}://${host}${req.originalUrl}`;
+      const host = req.headers.host || `localhost:${APP_CONSTANTS.DEFAULT_BACKEND_PORT}`;
+      const url = `${protocol}://${host}${req.originalUrl}`;
 
-      const fetchRequest = new globalThis.Request(fullUrl, {
+      const webRequest = new globalThis.Request(url, {
         method: req.method,
         headers: {
           'content-type': req.headers['content-type'] || 'application/json',
-          'user-agent': req.headers['user-agent'] || 'Staymatic-Backend',
-          // Forward cookies
           ...(req.headers.cookie && { cookie: req.headers.cookie }),
-          // Forward other important headers
           ...(req.headers.authorization && { authorization: req.headers.authorization }),
         },
         body:
@@ -38,23 +36,24 @@ export class AuthController {
             : undefined,
       });
 
-      const response = await auth.handler(fetchRequest);
+      // Forward to Better Auth
+      const response = await auth.handler(webRequest);
 
+      // Copy response headers
       response.headers.forEach((value, key) => {
         res.setHeader(key, value);
       });
 
+      // Set status and send response
       res.status(response.status);
-
-      if (response.body) {
-        const body = await response.text();
-        res.send(body);
-      } else {
-        res.end();
-      }
+      const body = await response.text();
+      res.send(body);
     } catch (error) {
-      console.error('[Auth] Error:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      console.error('[Auth] Error handling auth request:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Authentication service error',
+      });
     }
   };
 }

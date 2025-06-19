@@ -1,11 +1,22 @@
-import { Property } from '../../../shared/src';
+import { Property, PropertyWithHost } from '../../../shared/src/types';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface PropertyCardProps {
-  property: Property;
+  property: Property | PropertyWithHost;
 }
 
+// Type guard to check if property has host data
+const isPropertyWithHost = (
+  property: Property | PropertyWithHost,
+): property is PropertyWithHost => {
+  return 'host' in property;
+};
+
 export const PropertyCard = ({ property }: PropertyCardProps) => {
+  const hasHost = isPropertyWithHost(property);
+  const host = hasHost ? property.host : null;
+
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border-0 bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-gray-800 dark:shadow-lg dark:hover:shadow-2xl">
       {/* Image */}
@@ -37,6 +48,31 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
           <p className="mt-3 font-medium text-gray-600 dark:text-gray-400">
             {property.location.city}, {property.location.country}
           </p>
+
+          {/* Host Information */}
+          {host && (
+            <div className="mt-3 flex items-center gap-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+                {host.image ? (
+                  <Image
+                    src={host.image}
+                    alt={host.name}
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
+                    {host.name.charAt(0).toUpperCase()}
+                  </span>
+                )}
+              </div>
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                Hosted by{' '}
+                <span className="font-medium text-gray-900 dark:text-white">{host.name}</span>
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Content - grows to push button to bottom */}
@@ -77,9 +113,12 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
                 /{property.price.period}
               </span>
             </div>
-            <button className="rounded-xl bg-blue-600 px-6 py-2 font-medium text-white transition-colors duration-200 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+            <Link
+              href={`/property/${property.id}`}
+              className="rounded-xl bg-blue-600 px-6 py-2 font-medium text-white transition-colors duration-200 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+            >
               View Details
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -3,19 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node dist/bin/www.js",
-    "dev": "tsc -w & nodemon dist/bin/www.js",
-    "build": "rm -rf dist && tsc",
+    "start": "node dist/backend/src/bin/www.js",
+    "dev": "tsc -w & sleep 3 && nodemon dist/backend/src/bin/www.js",
+    "build": "rm -rf dist && tsc && tsc-alias -p tsconfig.json",
     "test": "jest",
     "lint": "eslint . --config ../config/eslint/backend.js",
     "lint:fix": "eslint . --config ../config/eslint/backend.js --fix"
   },
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "better-auth": "^1.2.9",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.18.2",
     "mongodb": "^6.17.0",
+    "mongoose": "^8.16.0",
     "morgan": "~1.9.1",
     "zod": "^3.22.4"
   },
@@ -27,10 +29,12 @@
     "@types/node": "^20.11.19",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "concurrently": "^8.2.2",
     "eslint": "^9.0.0",
     "eslint-plugin-import": "^2.31.0",
     "jest": "^29.7.0",
     "nodemon": "^3.0.3",
-    "ts-jest": "^29.1.2"
+    "ts-jest": "^29.1.2",
+    "tsc-alias": "^1.8.10"
   }
 }

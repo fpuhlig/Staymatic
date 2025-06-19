@@ -1,28 +1,83 @@
-import { Property } from '../../../shared/src';
+'use client';
+
+import { Property, PropertyWithHost } from '../../../shared/src/types';
 import { PropertyCard } from './PropertyCard';
 
 interface PropertyGridProps {
-  properties: Property[];
+  properties: Property[] | PropertyWithHost[];
+  isLoading?: boolean;
+  error?: string | null;
+  onRetry?: () => void;
 }
 
-export const PropertyGrid = ({ properties }: PropertyGridProps) => {
-  return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      <div className="mb-12 text-center sm:mb-16">
-        <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">
-          Featured Properties
-        </h2>
-        <p className="mx-auto max-w-2xl px-4 text-lg text-gray-600 sm:text-xl dark:text-gray-400">
-          Discover amazing places to stay
-        </p>
+const LoadingSkeleton = () => (
+  <div className="animate-pulse">
+    <div className="h-[240px] rounded-t-xl bg-gray-300 dark:bg-gray-600"></div>
+    <div className="p-6">
+      <div className="mb-3 h-6 rounded bg-gray-300 dark:bg-gray-600"></div>
+      <div className="mb-2 h-4 w-3/4 rounded bg-gray-300 dark:bg-gray-600"></div>
+      <div className="mb-4 h-4 w-1/2 rounded bg-gray-300 dark:bg-gray-600"></div>
+      <div className="mb-4 h-16 rounded bg-gray-300 dark:bg-gray-600"></div>
+      <div className="flex justify-between">
+        <div className="h-8 w-20 rounded bg-gray-300 dark:bg-gray-600"></div>
+        <div className="h-10 w-24 rounded bg-gray-300 dark:bg-gray-600"></div>
       </div>
+    </div>
+  </div>
+);
 
-      {/* Property Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {properties.map((property: Property) => (
-          <PropertyCard key={property.id} property={property} />
+export const PropertyGrid = ({ properties, isLoading, error, onRetry }: PropertyGridProps) => {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }, (_, i) => (
+          <LoadingSkeleton key={i} />
         ))}
       </div>
-    </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12">
+        <div className="text-center">
+          <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            Failed to load properties
+          </h3>
+          <p className="mb-4 text-gray-600 dark:text-gray-400">{error}</p>
+          {onRetry && (
+            <button
+              onClick={onRetry}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+            >
+              Try Again
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  if (!properties || properties.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12">
+        <div className="text-center">
+          <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            No properties found
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400">
+            There are no properties available at the moment.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {properties.map(property => (
+        <PropertyCard key={property.id} property={property} />
+      ))}
+    </div>
   );
 };

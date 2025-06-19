@@ -2,11 +2,10 @@
   "extends": "../config/typescript/backend.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "./src",
     "outDir": "./dist",
     "paths": {
       "@/*": ["./src/*"],
-      "@shared/*": ["../shared/*"]
+      "@shared/*": ["../shared/src/*"]
     }
   },
   "include": ["src/**/*"],
