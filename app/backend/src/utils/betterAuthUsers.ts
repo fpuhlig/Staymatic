@@ -78,12 +78,47 @@ export class BetterAuthUserService {
     }
   }
 
+  // Update user profile
+  static async updateUser(
+    userId: string,
+    updateData: { name?: string; image?: string | null },
+  ): Promise<IBetterAuthUser | null> {
+    try {
+      // Try to find by id first, then by _id as fallback
+      let updatedUser = await BetterAuthUserModel.findOneAndUpdate(
+        { id: userId },
+        {
+          ...updateData,
+          updatedAt: new Date(),
+        },
+        { new: true },
+      );
+
+      // If not found by id, try by _id (MongoDB ObjectId)
+      if (!updatedUser && mongoose.Types.ObjectId.isValid(userId)) {
+        updatedUser = await BetterAuthUserModel.findByIdAndUpdate(
+          userId,
+          {
+            ...updateData,
+            updatedAt: new Date(),
+          },
+          { new: true },
+        );
+      }
+
+      return updatedUser;
+    } catch (error) {
+      console.error('Error updating Better Auth user:', error);
+      return null;
+    }
+  }
+
   // Format user for API response
   static formatUser(user: IBetterAuthUser | null) {
     if (!user) return null;
 
     return {
-      id: user.id,
+      id: user.id || user._id?.toString(), // Fallback to MongoDB _id if id is missing
       email: user.email,
       name: user.name,
       emailVerified: user.emailVerified,
