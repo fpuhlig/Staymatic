@@ -3,8 +3,34 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  emailVerified: boolean; // Added to match Better Auth
+  image?: string; // Optional user image
   createdAt: Date;
   updatedAt: Date;
+}
+
+// Better Auth Session Type
+export interface Session {
+  id: string;
+  userId: string;
+  token: string;
+  expiresAt: Date;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Auth Response Types
+export interface AuthResponse {
+  user: User;
+  token: string;
+  redirect?: boolean;
+}
+
+export interface SessionResponse {
+  user: User;
+  session: Session;
 }
 
 export interface ApiResponse<T> {
