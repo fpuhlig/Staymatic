@@ -11,11 +11,13 @@
     "lint:fix": "eslint . --config ../config/eslint/backend.js --fix"
   },
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "better-auth": "^1.2.9",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.18.2",
     "mongodb": "^6.17.0",
+    "mongoose": "^8.16.0",
     "morgan": "~1.9.1",
     "zod": "^3.22.4"
   },

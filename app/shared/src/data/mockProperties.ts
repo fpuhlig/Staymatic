@@ -3,6 +3,7 @@ import { Property } from '../types';
 export const mockProperties: Property[] = [
   {
     id: '1',
+    hostId: 'host1',
     title: 'Luxurious Downtown Apartment',
     description:
       'Modern apartment in the heart of the city with stunning skyline views and premium amenities.',
@@ -26,6 +27,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '2',
+    hostId: 'host2',
     title: 'Cozy Mountain Cabin',
     description:
       'Peaceful retreat in the Austrian Alps with breathtaking mountain views and hiking trails nearby.',
@@ -49,6 +51,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '3',
+    hostId: 'host3',
     title: 'Historic City Center Hotel',
     description:
       'Charming boutique hotel in a restored 18th-century building with elegant rooms and traditional architecture.',
@@ -72,6 +75,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '4',
+    hostId: 'host4',
     title: 'Lakeside Villa with Pool',
     description:
       'Stunning lakefront property with private pool, garden, and direct lake access. Perfect for families.',
@@ -95,6 +99,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '5',
+    hostId: 'host5',
     title: 'Modern Business Hotel',
     description:
       'Contemporary hotel designed for business travelers with meeting rooms and high-speed internet.',
@@ -118,6 +123,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '6',
+    hostId: 'host6',
     title: 'Romantic Countryside B&B',
     description:
       'Intimate bed & breakfast surrounded by vineyards and rolling hills. Includes homemade breakfast.',
