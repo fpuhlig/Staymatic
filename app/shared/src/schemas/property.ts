@@ -20,6 +20,10 @@ export const createPropertySchema = z
     title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
     description: z.string().min(1, 'Description is required').max(2000, 'Description too long'),
     imageUrl: z.string().url('Must be a valid URL'),
+    images: z
+      .array(z.string().url('Must be a valid URL'))
+      .max(10, 'Maximum 10 images allowed')
+      .optional(),
     location: locationSchema,
     price: priceSchema,
     amenities: z.array(z.string()).default([]),
@@ -42,6 +46,10 @@ export const updatePropertySchema = z
       .max(2000, 'Description too long')
       .optional(),
     imageUrl: z.string().url('Must be a valid URL').optional(),
+    images: z
+      .array(z.string().url('Must be a valid URL'))
+      .max(10, 'Maximum 10 images allowed')
+      .optional(),
     location: locationSchema.optional(),
     price: priceSchema.optional(),
     amenities: z.array(z.string()).optional(),
@@ -81,6 +89,7 @@ export const propertyFormSchema = z
     title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
     description: z.string().min(1, 'Description is required').max(2000, 'Description too long'),
     imageUrl: z.string().url('Must be a valid URL'),
+    images: z.string().optional(), // Comma-separated URLs on frontend
     location: locationSchema,
     price: priceSchema,
     amenities: z.array(z.string()).default([]),

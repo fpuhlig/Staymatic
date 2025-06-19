@@ -13,6 +13,7 @@ export function transformPropertyDocument(doc: IPropertyDocument): Property {
     title: doc.title,
     description: doc.description,
     imageUrl: doc.imageUrl,
+    images: doc.images,
     location: doc.location,
     price: doc.price,
     amenities: doc.amenities,

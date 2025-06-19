@@ -6,6 +6,7 @@ export interface PropertyFormData {
   title: string;
   description: string;
   imageUrl: string;
+  images: string; // Comma-separated additional images
   address: string;
   city: string;
   country: string;
@@ -21,6 +22,7 @@ const initialFormData: PropertyFormData = {
   title: '',
   description: '',
   imageUrl: '',
+  images: '',
   address: '',
   city: '',
   country: 'Germany',
@@ -64,6 +66,10 @@ export const usePropertyForm = ({ initialData, onSuccess }: UsePropertyFormProps
     title: formData.title,
     description: formData.description,
     imageUrl: formData.imageUrl,
+    images: formData.images
+      .split(',')
+      .map(url => url.trim())
+      .filter(url => url),
     location: {
       address: formData.address,
       city: formData.city,

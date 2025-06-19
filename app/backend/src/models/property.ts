@@ -29,6 +29,16 @@ const PropertySchema = new Schema<IPropertyDocument>(
       required: true,
       trim: true,
     },
+    images: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: function (images: string[]) {
+          return images.length <= 10; // Limit to 10 images maximum
+        },
+        message: 'Maximum of 10 images allowed per property',
+      },
+    },
     location: {
       address: {
         type: String,
