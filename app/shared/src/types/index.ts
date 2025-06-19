@@ -33,15 +33,10 @@ export interface SessionResponse {
   session: Session;
 }
 
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-}
-
 // Property/Hotel related types
 export interface Property {
   id: string;
+  hostId: string; // ID of the user who owns this property
   title: string;
   description: string;
   imageUrl: string;
@@ -62,3 +57,42 @@ export interface Property {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Property with host data
+export interface PropertyWithHost extends Property {
+  host: User | null;
+}
+
+// User creation for tests/development
+export interface CreateTestUserInput {
+  email: string;
+  name: string;
+  emailVerified?: boolean;
+  image?: string;
+}
+
+// API Response wrapper
+export interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: string;
+  message?: string;
+}
+
+// MongoDB filter interface for property queries
+export interface PropertyFilter {
+  hostId?: string;
+  'location.city'?: RegExp;
+  'price.amount'?: {
+    $gte?: number;
+    $lte?: number;
+  };
+}
+
+// Response types for consistency
+export type PropertyResponse = ApiResponse<Property>;
+export type PropertiesResponse = ApiResponse<Property[]>;
+export type PropertyWithHostResponse = ApiResponse<PropertyWithHost>;
+export type PropertiesWithHostsResponse = ApiResponse<PropertyWithHost[]> & {
+  hostsFound?: number;
+};
