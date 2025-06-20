@@ -33,7 +33,15 @@ export class BetterAuthUserService {
   // Get user by ID
   static async getUserById(userId: string): Promise<IBetterAuthUser | null> {
     try {
-      return await BetterAuthUserModel.findOne({ id: userId });
+      // Try to find by id first
+      let user = await BetterAuthUserModel.findOne({ id: userId });
+
+      // If not found by id, try by _id (MongoDB ObjectId)
+      if (!user && mongoose.Types.ObjectId.isValid(userId)) {
+        user = await BetterAuthUserModel.findById(userId);
+      }
+
+      return user;
     } catch (error) {
       console.error('Error fetching Better Auth user by ID:', error);
       return null;

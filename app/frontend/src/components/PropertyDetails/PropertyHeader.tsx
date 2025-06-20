@@ -1,4 +1,5 @@
 import { PropertyWithHost } from '../../../../shared/src/types';
+import { propertyUtils } from '../../../../shared/src/utils';
 import { ImageCarousel } from './ImageCarousel';
 
 interface PropertyHeaderProps {
@@ -11,9 +12,7 @@ export const PropertyHeader = ({ property }: PropertyHeaderProps) => {
       {/* Property Images Carousel */}
       <div className="mb-6">
         <ImageCarousel
-          images={
-            property.images && property.images.length > 0 ? property.images : [property.imageUrl]
-          }
+          images={propertyUtils.combineImages(property.imageUrl, property.images)}
           title={property.title}
           className="aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9]"
         />

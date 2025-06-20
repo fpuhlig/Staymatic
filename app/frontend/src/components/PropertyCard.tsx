@@ -1,4 +1,5 @@
 import { Property, PropertyWithHost } from '../../../shared/src/types';
+import { propertyUtils } from '../../../shared/src/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ImagePreview } from './PropertyCard/ImagePreview';
@@ -23,9 +24,7 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
       {/* Image */}
       <div className="h-[240px] shrink-0 rounded-t-xl">
         <ImagePreview
-          images={
-            property.images && property.images.length > 0 ? property.images : [property.imageUrl]
-          }
+          images={propertyUtils.combineImages(property.imageUrl, property.images)}
           title={property.title}
           className="h-full rounded-t-xl"
         />
