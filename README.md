@@ -1,170 +1,303 @@
-# Staymatic
+# 🏠 Staymatic
 
-Staymatic is an AI-enhanced Airbnb clone that provides personalized accommodation recommendations based on users' past stays and preferences.
+A modern, full-stack accommodation platform built with Next.js and Express.js. Staymatic enables users to discover and book unique properties while providing hosts with comprehensive tools to manage their listings.
 
-## Table of Contents
+## ✨ Features
 
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-  - [Local Development](#local-development)
-  - [Production Deployment](#production-deployment)
-- [Project Structure](#project-structure)
-- [Technologies Used](#technologies-used)
-- [License](#license)
+### 🔐 **Authentication & User Management**
 
-## Quick Start
+- Secure email/password authentication powered by [Better Auth](https://www.better-auth.com/)
+- User registration, login, and profile management
+- Protected routes and role-based access control
+- Session management with configurable expiration
 
-To get the project up and running for local development, follow these steps:
+### 🏡 **Property Management**
 
-1.  **Clone the repository:**
+- **Host Dashboard**: Comprehensive property management interface
+- **CRUD Operations**: Create, read, update, and delete properties
+- **Image Galleries**: Multi-image support with carousel functionality
+- **Rich Property Data**: Location, pricing, amenities, availability periods
+- **Search & Filtering**: Filter by location, price range, and host
 
-    ```bash
-    git clone https://github.com/fpuhlig/Staymatic.git
-    cd Staymatic
-    ```
+### 🎨 **Modern User Experience**
 
-2.  **Start the development services:**
-    This command will build the Docker images and start the frontend and backend services.
+- Responsive design with Tailwind CSS
+- Dark/light mode support
+- Image carousels and galleries
+- Loading states and error handling
+- Accessible UI components
 
-    ```bash
-    docker compose -f docker-compose.dev.yml up --build -d
-    ```
+### 🛠 **Developer Experience**
 
-3.  **Access the applications:**
-    - **Frontend (Next.js):** Open your browser and navigate to `http://localhost:3000`
-    - **Backend (Express.js):** The API will be available at `http://localhost:3001`
+- **TypeScript**: Full-stack type safety
+- **Monorepo Architecture**: Yarn workspaces for shared code
+- **API Documentation**: Interactive Swagger/OpenAPI docs
+- **Testing**: Jest unit tests across all modules
+- **Code Quality**: ESLint, Prettier, and pre-commit hooks
 
-For more detailed instructions, refer to the [Local Development](#local-development) section.
+## 🚀 Quick Start
 
-## Features
+### Prerequisites
 
-- Personalized accommodation recommendations using AI.
-- Full-stack application with separate frontend and backend services.
-- Containerized development and production environments with Docker Compose.
+- **Docker Desktop** (includes Docker Engine and Docker Compose)
+- **Git** for version control
 
-## Prerequisites
+### 1. Clone the Repository
 
-Before you begin, ensure you have the following installed on your system:
+```bash
+git clone https://github.com/fpuhlig/Staymatic.git
+cd Staymatic
+```
 
-- **Git**: For cloning the repository.
-- **Docker Desktop**: Includes Docker Engine and Docker Compose.
-  - [Download Docker Desktop](https://www.docker.com/products/docker-desktop/)
+### 2. Choose Your Setup
 
-## Getting Started
+#### 🏗️ **Production Setup (Recommended)**
 
-Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+1. **Environment Configuration:**
+   Create a `.env` file based on `.env.example`:
 
-### Local Development
+   ```env
+   BETTER_AUTH_SECRET=your-secret-key-minimum-32-characters
+   MONGODB_URI=mongodb://admin:password@mongodb:27017/staymatic?authSource=admin
+   MONGO_USERNAME=admin
+   MONGO_PASSWORD=password
+   FRONTEND_URL=http://localhost:3000
+   BACKEND_URL=http://localhost:3001
+   NODE_ENV=production
+   ```
 
-This setup is optimized for a smooth development workflow, featuring live code reloading.
+2. **Build and deploy:**
+   ```bash
+   docker compose -f docker-compose.prod.yml up --build -d
+   ```
 
-1.  **Clone the repository:**
+#### 💻 **Development Setup**
 
-    ```bash
-    git clone https://github.com/fpuhlig/Staymatic.git
-    cd Staymatic
-    ```
+For development with live reloading:
 
-2.  **Start the services in development mode:**
-    This command will build the Docker images and start the frontend and backend services.
+```bash
+docker compose -f docker-compose.dev.yml up --build -d
+```
 
-    ```bash
-    docker compose -f docker-compose.dev.yml up --build -d
-    ```
+### 3. Access the Application
 
-    - The first build might take some time as it installs dependencies and builds images.
-    - `--build`: Ensures the images are built (or rebuilt if changes are detected).
-    - `-d`: Runs the containers in detached mode (in the background).
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:3001
+- **API Documentation**: http://localhost:3001/api-docs
 
-3.  **Access the applications:**
+### 4. Stop Services
 
-    - **Frontend (Next.js):** Open your browser and navigate to `http://localhost:3000`
-    - **Backend (Express.js):** The API will be available at `http://localhost:3001`
+```bash
+# Production
+docker compose -f docker-compose.prod.yml down
 
-4.  **Live Reloading:**
+# Development
+docker compose -f docker-compose.dev.yml down
+```
 
-    - Any changes you make to the source code (`app/frontend` or `app/backend`) on your host machine will automatically trigger a rebuild/reload within the respective Docker container, allowing for a rapid development cycle.
-
-5.  **Stop the development services:**
-    ```bash
-    docker compose -f docker-compose.dev.yml down
-    ```
-
-### Production Deployment
-
-This setup is optimized for production, building highly optimized images. The build process will include a `yarn build` step inside the Docker container.
-
-1.  **Navigate to the project root:**
-
-    ```bash
-    cd Staymatic # Ensure you are in the root directory where docker-compose.prod.yml is located
-    ```
-
-2.  **Build the production Docker images:**
-    This command compiles the application code inside the Docker images.
-
-    ```bash
-    docker compose -f docker-compose.prod.yml build
-    ```
-
-3.  **Start the services in production mode:**
-
-    ```bash
-    docker compose -f docker-compose.prod.yml up -d
-    ```
-
-4.  **Access the applications:**
-
-    - **Frontend (Next.js):** `http://localhost:3000`
-    - **Backend (Express.js):** `http://localhost:3001`
-
-5.  **Stop the production services:**
-    ```bash
-    docker compose -f docker-compose.prod.yml down
-    ```
-
-## Project Structure
-
-The project follows a monorepo structure, containing multiple services:
+## 📁 Project Structure
 
 ```
-.
-├── app/
-│   ├── backend/        # Express.js backend service (TypeScript)
-│   ├── docker/         # Dockerfiles for each service
-│   │   ├── backend/
-│   │   └── frontend/
-│   ├── frontend/       # Next.js frontend application
-│   ├── database/       # Placeholder for database-related configurations/scripts
-│   ├── node_modules/   # Root node_modules for Yarn Workspaces
-│   ├── package.json    # Root package.json for Yarn Workspaces
-│   └── yarn.lock
-├── docker-compose.dev.yml  # Docker Compose configuration for local development
-├── docker-compose.prod.yml # Docker Compose configuration for production deployment
-├── docs/               # Project documentation
-├── .gitignore
+Staymatic/
+├── app/                          # Application modules
+│   ├── backend/                  # Express.js backend API
+│   │   ├── src/
+│   │   │   ├── __tests__/       # Backend tests
+│   │   │   ├── controllers/     # API route controllers
+│   │   │   ├── models/          # Database models
+│   │   │   ├── utils/           # Backend utilities
+│   │   │   ├── bin/             # Server startup scripts
+│   │   │   ├── auth.ts          # Better Auth configuration
+│   │   │   ├── app.ts           # Express app setup
+│   │   │   └── swagger.ts       # API documentation setup
+│   │   ├── api-specification.yaml # OpenAPI/Swagger spec
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   ├── frontend/                 # Next.js frontend application
+│   │   ├── src/
+│   │   │   ├── __tests__/       # Frontend tests
+│   │   │   ├── app/             # Next.js app router pages
+│   │   │   │   ├── host/        # Host dashboard & property management
+│   │   │   │   ├── login/       # Authentication pages
+│   │   │   │   ├── properties/  # Property browsing
+│   │   │   │   └── ...          # Other app routes
+│   │   │   ├── components/      # Reusable UI components
+│   │   │   │   ├── forms/       # Form components
+│   │   │   │   ├── Navigation/  # Navigation components
+│   │   │   │   ├── PropertyDetails/ # Property detail components
+│   │   │   │   └── common/      # Common UI components
+│   │   │   ├── hooks/           # Custom React hooks
+│   │   │   └── lib/             # Utilities and API clients
+│   │   ├── public/              # Static assets
+│   │   ├── package.json
+│   │   ├── next.config.ts
+│   │   └── tsconfig.json
+│   ├── shared/                  # Shared types and utilities
+│   │   ├── src/
+│   │   │   ├── __tests__/       # Shared tests
+│   │   │   ├── types/           # TypeScript type definitions
+│   │   │   ├── schemas/         # Zod validation schemas
+│   │   │   ├── constants/       # Application constants
+│   │   │   └── utils/           # Shared utility functions
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   ├── config/                  # Shared configuration
+│   │   ├── eslint/              # ESLint configurations
+│   │   ├── prettier/            # Prettier configuration
+│   │   └── typescript/          # TypeScript configurations
+│   ├── docker/                  # Dockerfiles
+│   │   ├── backend/             # Backend Docker configs
+│   │   └── frontend/            # Frontend Docker configs
+│   └── database/                # Database configurations/scripts
+├── docs/                        # Project documentation
+│   ├── assets/                  # Documentation assets
+│   └── *.md                     # Documentation files
+├── docker-compose.dev.yml       # Development environment
+├── docker-compose.prod.yml      # Production environment
+├── package.json                 # Root workspace configuration
+├── yarn.lock                    # Dependency lock file
 ├── LICENSE
-└── README.md           # This file
+├── README.md
+└── Staymatic.postman_collection.json # API testing collection
 ```
 
-## Technologies Used
+## 🛠 Technology Stack
 
-- **Frontend:**
-  - [Next.js](https://nextjs.org/) (React Framework)
-  - [TypeScript](https://www.typescriptlang.org/)
-  - [Tailwind CSS](https://tailwindcss.com/)
-- **Backend:**
-  - [Express.js](https://expressjs.com/) (Node.js web application framework)
-  - [TypeScript](https://www.typescriptlang.org/)
-  - [Mongoose](https://mongoosejs.com/) (MongoDB object modeling for Node.js)
-  - [Zod](https://zod.dev/) (TypeScript-first schema declaration and validation)
-- **Containerization:**
-  - [Docker](https://www.docker.com/)
-  - [Docker Compose](https://docs.docker.com/compose/)
-- **Package Management:**
-  - [Yarn Workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/)
+### Frontend
 
-## License
+- **[Next.js](https://nextjs.org/)** - React framework with App Router
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Better Auth](https://www.better-auth.com/)** - Authentication client
+- **[Zod](https://zod.dev/)** - Schema validation
+
+### Backend
+
+- **[Express.js](https://expressjs.com/)** - Web application framework
+- **[Better Auth](https://www.better-auth.com/)** - Authentication server
+- **[MongoDB](https://www.mongodb.com/)** - Document database
+- **[Mongoose](https://mongoosejs.com/)** - MongoDB ODM
+- **[Swagger](https://swagger.io/)** - API documentation
+
+### Shared & DevOps
+
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
+- **[Yarn Workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/)** - Monorepo management
+- **[Docker](https://www.docker.com/)** - Containerization
+- **[Jest](https://jestjs.io/)** - Testing framework
+- **[ESLint](https://eslint.org/)** - Code linting
+- **[Prettier](https://prettier.io/)** - Code formatting
+
+## 🔗 API Endpoints
+
+### Authentication
+
+- `POST /api/auth/sign-up/email` - User registration
+- `POST /api/auth/sign-in/email` - User login
+- `GET /api/auth/get-session` - Get current session
+- `POST /api/auth/sign-out` - User logout
+- **Note**: All auth routes are handled by Better Auth automatically
+
+### Properties
+
+- `GET /api/properties` - Get all properties
+- `GET /api/properties/with-hosts` - Get properties with host data
+- `GET /api/properties/:id` - Get property by ID
+- `POST /api/properties` - Create new property
+- `PUT /api/properties/:id` - Update property
+- `DELETE /api/properties/:id` - Delete property
+
+### Users
+
+- `GET /api/users` - Get all users
+- `PUT /api/users/profile` - Update user profile
+
+### Health & Documentation
+
+- `GET /health` - Health check
+- `GET /api-docs` - Interactive API documentation
+- `GET /api-spec.json` - OpenAPI specification (JSON)
+- `GET /api-spec.yaml` - OpenAPI specification (YAML)
+
+## 🧪 Testing
+
+Run tests for all modules:
+
+```bash
+yarn test
+```
+
+Run tests for specific module:
+
+```bash
+yarn workspace @staymatic/frontend test
+yarn workspace @staymatic/backend test
+yarn workspace @staymatic/shared test
+```
+
+## 📝 Development Scripts
+
+```bash
+# Install dependencies
+yarn install
+
+# Start development servers
+yarn dev
+
+# Build all modules
+yarn build
+
+# Run linting
+yarn lint
+
+# Format code
+yarn format
+
+# Run tests
+yarn test
+```
+
+## 🌟 Key Features in Detail
+
+### Host Dashboard
+
+- View all listed properties with statistics
+- Add new properties with comprehensive forms
+- Edit existing property details
+- Delete properties with confirmation
+- Real-time property management
+
+### Property Browsing
+
+- Grid view of all available properties
+- Detailed property pages with image galleries
+- Host information and contact details
+- Advanced filtering and search capabilities
+
+### User Authentication
+
+- Secure registration and login flows
+- Profile management with image uploads
+- Session-based authentication
+- Protected routes and access control
+
+## 📖 Documentation
+
+Comprehensive project documentation is available in the `/docs` directory:
+
+- [Project Overview](docs/01_Short%20Overview%20on%20the%20specific%20Software%20Project.md)
+- [Business View](docs/02_Business%20View.md)
+- [Technical Architecture](docs/04_Technical%20View.md)
+- [Security Considerations](docs/08_Security%20View.md)
+- [Testing Strategy](docs/09_Testing%20View.md)
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🚀 Getting Started with Development
+
+1. **Environment Setup**: Follow the Quick Start guide above
+2. **Database**: MongoDB will be automatically set up via Docker
+3. **API Testing**: Use the built-in Swagger UI at `/api-docs`
+4. **Code Quality**: Pre-commit hooks ensure code quality
+5. **Testing**: Run tests before committing changes
