@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'yaml';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const swaggerUi = require('swagger-ui-express');
 
 // Load the OpenAPI spec from YAML file and dynamically set servers
@@ -86,7 +85,7 @@ export const setupSwagger = (app: Express): void => {
     res.send(yaml.stringify(apiSpec));
   });
 
-  console.log(`📚 Swagger UI available at: ${backendUrl}/api-docs`);
-  console.log(`📋 API Spec JSON available at: ${backendUrl}/api-spec.json`);
-  console.log(`📋 API Spec YAML available at: ${backendUrl}/api-spec.yaml`);
+  console.warn(`📚 Swagger UI available at: ${backendUrl}/api-docs`);
+  console.warn(`📋 API Spec JSON available at: ${backendUrl}/api-spec.json`);
+  console.warn(`📋 API Spec YAML available at: ${backendUrl}/api-spec.yaml`);
 };
