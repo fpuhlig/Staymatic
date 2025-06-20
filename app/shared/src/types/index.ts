@@ -83,7 +83,7 @@ export interface ApiResponse<T> {
 // MongoDB filter interface for property queries
 export interface PropertyFilter {
   hostId?: string;
-  'location.city'?: RegExp;
+  'location.city'?: RegExp | { $regex: string; $options: string };
   'price.amount'?: {
     $gte?: number;
     $lte?: number;
