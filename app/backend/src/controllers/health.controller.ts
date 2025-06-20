@@ -9,7 +9,7 @@ export class HealthController {
   }
 
   private initializeRoutes(): void {
-    this.router.get('/health', HealthController.getHealth);
+    this.router.get('/', HealthController.getHealth);
   }
 
   private static getHealth = (req: Request, res: Response): void => {

@@ -12,12 +12,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'via.placeholder.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'example.com',
         port: '',
         pathname: '/**',
@@ -42,12 +36,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Turbopack configuration for path aliases
-  experimental: {
-    turbo: {
-      resolveAlias: {
-        '@shared': path.resolve(__dirname, '../shared/src'),
-      },
+  // Turbopack configuration for path aliases (fixed deprecated config)
+  turbopack: {
+    resolveAlias: {
+      '@shared': path.resolve(__dirname, '../shared/src'),
     },
   },
   // Webpack configuration (fallback for non-turbo builds)
