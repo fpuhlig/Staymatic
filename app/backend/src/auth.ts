@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { MongoClient } from 'mongodb';
+import { nanoid } from 'nanoid';
 import { APP_CONSTANTS } from '../../shared/src/constants';
 
 // MongoDB connection
@@ -51,8 +52,27 @@ export const auth = betterAuth({
     max: 10, // Max 10 requests per window per IP
   },
 
+  // Database hooks to ensure proper ID generation
+  databaseHooks: {
+    user: {
+      create: {
+        before: async user => {
+          return {
+            data: {
+              ...user,
+              id: nanoid(), // Generate proper ID
+            },
+          };
+        },
+      },
+    },
+  },
+
   // Advanced Security Settings
   advanced: {
+    database: {
+      generateId: false, // Let us handle ID generation
+    },
     useSecureCookies:
       process.env.NODE_ENV === 'production' && !process.env.BACKEND_URL?.includes('localhost'), // Secure cookies in production, but not on localhost
     crossSubDomainCookies: {

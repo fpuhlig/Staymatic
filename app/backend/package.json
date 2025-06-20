@@ -19,6 +19,7 @@
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.0",
     "morgan": "~1.9.1",
+    "nanoid": "^5.1.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "yaml": "^2.8.0",

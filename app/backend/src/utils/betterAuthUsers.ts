@@ -9,7 +9,7 @@ export interface IBetterAuthUser extends User {
 // Connect directly to Better Auth's user collection
 const BetterAuthUserSchema = new mongoose.Schema(
   {
-    id: { type: String, required: true, unique: true },
+    id: { type: String, required: false }, // Remove unique constraint to avoid conflicts
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     emailVerified: { type: Boolean, default: false },
