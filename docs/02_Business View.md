@@ -1,4 +1,4 @@
-# Staymatic – The Smart AI Platform for Short-Term Rentals
+# Staymatic – Smart Platform for Short-Term Rentals
 
 ## Industry
 
@@ -9,7 +9,7 @@
 
 ## Internal Drivers
 
-- A **transparent platform** where users can quickly and easily find accommodation using **AI**.
+- A **transparent platform** where users can quickly and easily find accommodation using **smart search**.
 
 ## External Drivers
 
@@ -21,8 +21,8 @@
    - Hosts can list their apartments for specific time periods.
 2. **Booking Request Management:**
    - Hosts can accept or decline booking requests.
-3. **AI-Powered Search:**
-   - Users enter keywords – the **AI automatically finds** the best accommodation.
+3. **Smart Search:**
+   - Users enter keywords – the **system automatically finds** the best accommodation.
 4. **Communication & Management:**
    - **Messaging system** between guests and hosts.
 5. **Optional Trip Planning:**
