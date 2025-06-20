@@ -2,10 +2,11 @@
 
 ## 1. Architecture Overview
 
-- **Frontend:** Next.js (React), shadcn/ui, TypeScript
+- **Frontend:** Next.js (React), Tailwind CSS, TypeScript
 - **Backend:** Node.js with Express.js, RESTful API
 - **Database:** MongoDB (Dockerized)
-- **AI Integration:** OpenRouter API
+- **Package Manager:** Yarn workspaces
+- **Recommendation Integration:** OpenRouter API
 
 ---
 
@@ -13,15 +14,14 @@
 
 ### Frontend (Next.js)
 
-- **Unit Tests:** Components, forms, validations
+- **Unit Tests:** Components, forms, validations (Jest, React Testing Library)
 - **Integration Tests:** Component interactions, API calls
-- **End-to-End Tests (E2E):** User flows (e.g., registration, booking, search)
 - **UI/UX Tests:** Responsiveness, accessibility, usability
 
 ### Backend (Express.js)
 
-- **Unit Tests:** Routes, controllers, services, validations
-- **Integration Tests:** Route interactions, database, external APIs (e.g., AI)
+- **Unit Tests:** Routes, controllers, services, validations (Jest)
+- **Integration Tests:** Route interactions, database, external APIs
 - **API Tests:** REST endpoints (CRUD for apartments, bookings, users)
 - **Security Tests:** Authentication, permissions, input validation
 
@@ -30,7 +30,7 @@
 ## 3. When are tests conducted?
 
 - **Unit/Integration:** During development (local, CI)
-- **E2E/UI:** Before release, after major changes (staging)
+- **UI:** Before release, after major changes (staging)
 - **API/Security:** Before release, regularly automated (CI/CD)
 - **Regression:** After each bugfix/feature update
 
@@ -66,16 +66,16 @@ To create a functional test case, we consider the following:
 
 #### Frontend
 
-- Apartment search (with AI)
-- Apartment booking
+- Property search and filtering
+- Property booking flow
 - Display of recommendations
-- Send/read messages
+- Host-guest messaging
 
 #### Backend
 
-- AI recommendation: POST /api/recommendations
-- Booking: POST /api/bookings
-- Permission check: Access to admin endpoints
+- Property recommendation: POST /api/recommendations
+- Booking management: POST /api/bookings
+- Permission checks: Access to admin endpoints
 
 ---
 
@@ -141,14 +141,14 @@ It is recommended to have another team run the functional test cases to ensure o
 ### Test Data Management
 
 - Test data is automatically generated before each test run and deleted after the test run.
-- Special test databases are used for E2E and integration tests.
+- Special test databases are used for integration tests.
 
 ### Test Automation
 
-- Frontend: e.g., Jest, React Testing Library, Cypress
-- Backend: e.g., Jest, Supertest
-- API: e.g., Postman/Newman
-- Automated execution in CI/CD pipeline
+- Frontend: Jest, React Testing Library
+- Backend: Jest
+- API: Postman/Newman (planned)
+- Automated execution in CI/CD pipeline (planned)
 
 ### Test Coverage
 
