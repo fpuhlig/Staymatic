@@ -1,8 +1,10 @@
 // Property transformation utilities
 export const propertyUtils = {
-  // Combine imageUrl with images array (KISS principle)
+  // Combine imageUrl with images array, removing duplicates (KISS principle)
   combineImages: (imageUrl: string, images?: string[]): string[] => {
-    return [imageUrl, ...(images || [])];
+    const allImages = [imageUrl, ...(images || [])];
+    // Remove duplicates and empty strings
+    return [...new Set(allImages.filter(Boolean))];
   },
 
   // Format property price for display

@@ -7,6 +7,26 @@ describe('Property Utils', () => {
     expect(result).toEqual(['main.jpg', '1.jpg', '2.jpg']);
   });
 
+  it('should remove duplicate images', () => {
+    const result = propertyUtils.combineImages('main.jpg', ['main.jpg', '1.jpg', '2.jpg']);
+    expect(result).toEqual(['main.jpg', '1.jpg', '2.jpg']);
+  });
+
+  it('should filter out empty strings', () => {
+    const result = propertyUtils.combineImages('main.jpg', ['', '1.jpg', '', '2.jpg']);
+    expect(result).toEqual(['main.jpg', '1.jpg', '2.jpg']);
+  });
+
+  it('should handle empty images array', () => {
+    const result = propertyUtils.combineImages('main.jpg', []);
+    expect(result).toEqual(['main.jpg']);
+  });
+
+  it('should handle undefined images array', () => {
+    const result = propertyUtils.combineImages('main.jpg', undefined);
+    expect(result).toEqual(['main.jpg']);
+  });
+
   it('should format price correctly', () => {
     const result = propertyUtils.formatPrice(100, 'EUR', 'night');
     expect(result).toBe('EUR100/night');
