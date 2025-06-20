@@ -1,45 +1,98 @@
 # Implementation View
 
-## TODO: Basic Architecture Decisions
+## Project Requirements Compliance
 
-- **Deployment Model:** Local deployment vs. Cloud hosting
-- **Cost Model:** Free vs. paid services
+### Build Automation
+
+- **Expected:** gulp-based build system
+- **Implemented:** Next.js built-in build system with Docker
+- **Commands:**
+  - `yarn install` - Install dependencies
+  - `yarn build` - Build production application
+  - `yarn dev` - Start development server
+  - `docker-compose up` - Start full application stack
+
+### Installation Instructions
+
+1. Clone the repository
+2. Run `yarn install` in the root directory (installs all workspace dependencies)
+3. Set up environment variables (.env files)
+4. Run `docker-compose up` to start the application
+5. Access frontend at http://localhost:3000
+6. Access backend API at http://localhost:8000
+
+### Documentation Standards
+
+- **Backend:** JSDoc comments for API endpoints and functions
+- **Frontend:** TSDoc comments for React components and hooks
+- **API:** OpenAPI/Swagger specification in YAML format
+
+## Basic Architecture Decisions
+
+- **Deployment Model:** Cloud hosting with container orchestration
+- **Cost Model:** Combination of free and paid services based on scale
 
 ## What products and components should the system be built with?
 
 ### Frontend
 
 - **Framework:** Next.js (React-based)
-- **UI Library:** shadcn/ui
+- **Styling:** Tailwind CSS
 - **Development Tools:**
   - TypeScript
   - ESLint for code quality
-  - Testing Frameworks: Jest, React Testing Library, Cypress
+  - Testing Frameworks: Jest, React Testing Library
 
 ### Backend
 
 - **Runtime:** Node.js
 - **Framework:** Express.js
+- **Database ORM:** Mongoose
 - **API:** RESTful architecture
-- **Testing Frameworks:** Jest, Supertest
+- **Testing Frameworks:** Jest
 
 ### Database
 
 - **Primary Database:** MongoDB
 - **Database Container:** Docker-based
 
-### AI Integration
+### Recommendation System
 
-- **Provider:** OpenAI/ChatGPT API
-- **Integration:** REST API calls
+- **Provider:** OpenRouter API
+- **Integration:** REST API calls for personalization features
 
 ### Infrastructure
 
+- **Package Manager:** Yarn workspaces
 - **Containerization:** Docker
 - **Container Orchestration:** Docker Compose
 - **Version Control:** Git
-- **CI/CD Tools:** GitHub Actions
-- **Monitoring Tools:** Sentry, Prometheus, Grafana
+- **CI/CD Tools:** GitHub Actions (planned)
+- **Monitoring Tools:** Sentry (planned)
+
+### Development Tools
+
+- **Code Quality:**
+
+  - ESLint with TypeScript and Airbnb configuration
+  - Prettier with Tailwind CSS plugin
+  - Husky for Git hooks (pre-commit checks)
+  - lint-staged for staged file linting
+
+- **Authentication & Validation:**
+
+  - better-auth for modern authentication
+  - Zod for TypeScript schema validation
+
+- **API Documentation:**
+
+  - swagger-jsdoc for OpenAPI specification generation
+  - swagger-ui-express for interactive API documentation
+
+- **Development Automation:**
+  - concurrently for running multiple development servers
+  - nodemon for backend auto-restart
+  - tsc-alias for TypeScript path mapping
 
 ## How will the system be developed and deployed?
 
@@ -65,8 +118,8 @@
 ### Deployment Strategy
 
 - **Staging Environment:** For testing and QA
-- **Production Environment:** TODO: Dependent on architecture decision
-- **Database:** Container-based
+- **Production Environment:** Cloud-hosted containers
+- **Database:** Container-based with persistent storage
 
 ## What verification methods will be used?
 
@@ -84,7 +137,7 @@
 
 ### Hosting
 
-- TODO: Only local with Docker or actually hosted?
+- Cloud-hosted solution using containerized deployment
 
 ### Monitoring
 
@@ -133,7 +186,7 @@
   - Monitoring tools
 
 - **External Services:**
-  - AI API usage
+  - Recommendation API usage
   - Backup services
   - Support services
 
