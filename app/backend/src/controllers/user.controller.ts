@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { BetterAuthUserService } from '../utils/betterAuthUsers';
+import { responseHandlers } from '../../../shared/src/utils';
 
 export class UserController {
   public router: Router;
@@ -21,17 +22,13 @@ export class UserController {
     try {
       const users = await BetterAuthUserService.getAllUsers();
 
-      res.json({
-        success: true,
-        data: users.map(user => BetterAuthUserService.formatUser(user)),
-        count: users.length,
-      });
-    } catch (error) {
-      console.error('[User] Error getting users:', error);
-      res.status(500).json({
-        success: false,
-        error: 'Failed to fetch users',
-      });
+      responseHandlers.successWithMeta(
+        res,
+        users.map(user => BetterAuthUserService.formatUser(user)),
+        { count: users.length },
+      );
+    } catch {
+      responseHandlers.serverError(res, 'Failed to fetch users', 'User');
     }
   };
 
@@ -41,10 +38,7 @@ export class UserController {
       const { email, name, emailVerified, image } = req.body;
 
       if (!email || !name) {
-        res.status(400).json({
-          success: false,
-          error: 'Email and name are required',
-        });
+        responseHandlers.serverError(res, 'Email and name are required');
         return;
       }
 
@@ -56,23 +50,13 @@ export class UserController {
       });
 
       if (!user) {
-        res.status(500).json({
-          success: false,
-          error: 'Failed to create test user',
-        });
+        responseHandlers.serverError(res, 'Failed to create test user');
         return;
       }
 
-      res.status(201).json({
-        success: true,
-        data: BetterAuthUserService.formatUser(user),
-      });
-    } catch (error) {
-      console.error('[User] Error creating test user:', error);
-      res.status(500).json({
-        success: false,
-        error: 'Failed to create test user',
-      });
+      responseHandlers.success(res, BetterAuthUserService.formatUser(user), 201);
+    } catch {
+      responseHandlers.serverError(res, 'Failed to create test user', 'User');
     }
   };
 

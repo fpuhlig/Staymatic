@@ -3,7 +3,12 @@ import { PropertyModel } from '../models/property';
 import { createPropertySchema, updatePropertySchema } from '../../../shared/src/schemas/property';
 import { BetterAuthUserService } from '../utils/betterAuthUsers';
 import { transformPropertyDocument } from '../utils/propertyTransform';
-import { buildPropertyFilter, isValidObjectId, APP_CONSTANTS } from '../../../shared/src/index';
+import {
+  buildPropertyFilter,
+  isValidObjectId,
+  APP_CONSTANTS,
+  responseHandlers,
+} from '../../../shared/src/index';
 
 export class PropertyController {
   public router: Router;
@@ -37,16 +42,9 @@ export class PropertyController {
       const properties = await PropertyModel.find(filter).sort(APP_CONSTANTS.DEFAULT_SORT_ORDER);
       const formattedProperties = properties.map(transformPropertyDocument);
 
-      res.json({
-        success: true,
-        data: formattedProperties,
-      });
-    } catch (error) {
-      console.error('[Property] Error getting all properties:', error);
-      res.status(500).json({
-        success: false,
-        error: APP_CONSTANTS.ERRORS.FETCH_PROPERTIES_FAILED,
-      });
+      responseHandlers.success(res, formattedProperties);
+    } catch {
+      responseHandlers.serverError(res, APP_CONSTANTS.ERRORS.FETCH_PROPERTIES_FAILED, 'Property');
     }
   };
 
@@ -56,33 +54,20 @@ export class PropertyController {
       const { id } = req.params;
 
       if (!isValidObjectId(id)) {
-        res.status(400).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.INVALID_ID,
-        });
+        responseHandlers.invalidId(res);
         return;
       }
 
       const property = await PropertyModel.findById(id);
 
       if (!property) {
-        res.status(404).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.PROPERTY_NOT_FOUND,
-        });
+        responseHandlers.notFound(res);
         return;
       }
 
-      res.json({
-        success: true,
-        data: transformPropertyDocument(property),
-      });
-    } catch (error) {
-      console.error('[Property] Error getting property by ID:', error);
-      res.status(500).json({
-        success: false,
-        error: APP_CONSTANTS.ERRORS.FETCH_PROPERTY_FAILED,
-      });
+      responseHandlers.success(res, transformPropertyDocument(property));
+    } catch {
+      responseHandlers.serverError(res, APP_CONSTANTS.ERRORS.FETCH_PROPERTY_FAILED, 'Property');
     }
   };
 
@@ -96,11 +81,7 @@ export class PropertyController {
       const validationResult = createPropertySchema.safeParse(req.body);
 
       if (!validationResult.success) {
-        res.status(400).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.VALIDATION_FAILED,
-          details: validationResult.error.errors,
-        });
+        responseHandlers.validationError(res, { errors: validationResult.error.errors });
         return;
       }
 
@@ -131,16 +112,9 @@ export class PropertyController {
 
       const savedProperty = await property.save();
 
-      res.status(201).json({
-        success: true,
-        data: transformPropertyDocument(savedProperty),
-      });
-    } catch (error) {
-      console.error('[Property] Error creating property:', error);
-      res.status(500).json({
-        success: false,
-        error: APP_CONSTANTS.ERRORS.CREATE_PROPERTY_FAILED,
-      });
+      responseHandlers.success(res, transformPropertyDocument(savedProperty), 201);
+    } catch {
+      responseHandlers.serverError(res, APP_CONSTANTS.ERRORS.CREATE_PROPERTY_FAILED, 'Property');
     }
   };
 
@@ -150,31 +124,21 @@ export class PropertyController {
       const { id } = req.params;
 
       if (!isValidObjectId(id)) {
-        res.status(400).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.INVALID_ID,
-        });
+        responseHandlers.invalidId(res);
         return;
       }
 
       const property = await PropertyModel.findById(id);
 
       if (!property) {
-        res.status(404).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.PROPERTY_NOT_FOUND,
-        });
+        responseHandlers.notFound(res);
         return;
       }
 
       const validationResult = updatePropertySchema.safeParse(req.body);
 
       if (!validationResult.success) {
-        res.status(400).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.VALIDATION_FAILED,
-          details: validationResult.error.errors,
-        });
+        responseHandlers.validationError(res, { errors: validationResult.error.errors });
         return;
       }
 
@@ -183,16 +147,9 @@ export class PropertyController {
         runValidators: true,
       });
 
-      res.json({
-        success: true,
-        data: transformPropertyDocument(updatedProperty!),
-      });
-    } catch (error) {
-      console.error('[Property] Error updating property:', error);
-      res.status(500).json({
-        success: false,
-        error: APP_CONSTANTS.ERRORS.UPDATE_PROPERTY_FAILED,
-      });
+      responseHandlers.success(res, transformPropertyDocument(updatedProperty!));
+    } catch {
+      responseHandlers.serverError(res, APP_CONSTANTS.ERRORS.UPDATE_PROPERTY_FAILED, 'Property');
     }
   };
 
@@ -202,35 +159,22 @@ export class PropertyController {
       const { id } = req.params;
 
       if (!isValidObjectId(id)) {
-        res.status(400).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.INVALID_ID,
-        });
+        responseHandlers.invalidId(res);
         return;
       }
 
       const property = await PropertyModel.findById(id);
 
       if (!property) {
-        res.status(404).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.PROPERTY_NOT_FOUND,
-        });
+        responseHandlers.notFound(res);
         return;
       }
 
       await PropertyModel.findByIdAndDelete(id);
 
-      res.json({
-        success: true,
-        message: APP_CONSTANTS.SUCCESS.PROPERTY_DELETED,
-      });
-    } catch (error) {
-      console.error('[Property] Error deleting property:', error);
-      res.status(500).json({
-        success: false,
-        error: APP_CONSTANTS.ERRORS.DELETE_PROPERTY_FAILED,
-      });
+      responseHandlers.successWithMessage(res, APP_CONSTANTS.SUCCESS.PROPERTY_DELETED);
+    } catch {
+      responseHandlers.serverError(res, APP_CONSTANTS.ERRORS.DELETE_PROPERTY_FAILED, 'Property');
     }
   };
 
@@ -260,17 +204,15 @@ export class PropertyController {
         }),
       );
 
-      res.json({
-        success: true,
-        data: propertiesWithHosts,
+      responseHandlers.successWithMeta(res, propertiesWithHosts, {
         hostsFound: propertiesWithHosts.filter(p => p.host).length,
       });
-    } catch (error) {
-      console.error('[Property] Error getting properties with hosts:', error);
-      res.status(500).json({
-        success: false,
-        error: APP_CONSTANTS.ERRORS.FETCH_PROPERTIES_WITH_HOSTS_FAILED,
-      });
+    } catch {
+      responseHandlers.serverError(
+        res,
+        APP_CONSTANTS.ERRORS.FETCH_PROPERTIES_WITH_HOSTS_FAILED,
+        'Property',
+      );
     }
   };
 
@@ -280,20 +222,14 @@ export class PropertyController {
       const { id } = req.params;
 
       if (!isValidObjectId(id)) {
-        res.status(400).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.INVALID_ID,
-        });
+        responseHandlers.invalidId(res);
         return;
       }
 
       const property = await PropertyModel.findById(id);
 
       if (!property) {
-        res.status(404).json({
-          success: false,
-          error: APP_CONSTANTS.ERRORS.PROPERTY_NOT_FOUND,
-        });
+        responseHandlers.notFound(res);
         return;
       }
 
@@ -301,19 +237,16 @@ export class PropertyController {
       const host = await BetterAuthUserService.getUserById(property.hostId);
       const transformedProperty = transformPropertyDocument(property);
 
-      res.json({
-        success: true,
-        data: {
-          ...transformedProperty,
-          host: BetterAuthUserService.formatUser(host), // Add host data
-        },
+      responseHandlers.success(res, {
+        ...transformedProperty,
+        host: BetterAuthUserService.formatUser(host), // Add host data
       });
-    } catch (error) {
-      console.error('[Property] Error getting property with host:', error);
-      res.status(500).json({
-        success: false,
-        error: APP_CONSTANTS.ERRORS.FETCH_PROPERTY_WITH_HOST_FAILED,
-      });
+    } catch {
+      responseHandlers.serverError(
+        res,
+        APP_CONSTANTS.ERRORS.FETCH_PROPERTY_WITH_HOST_FAILED,
+        'Property',
+      );
     }
   };
 }
