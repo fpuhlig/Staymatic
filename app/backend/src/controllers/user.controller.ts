@@ -13,7 +13,6 @@ export class UserController {
   private initializeRoutes(): void {
     // Better Auth User management routes
     this.router.get('/', this.getAllUsers);
-    this.router.post('/test', this.createTestUser); // For development
     this.router.put('/profile', this.updateProfile); // Update user profile
   }
 
@@ -29,34 +28,6 @@ export class UserController {
       );
     } catch {
       responseHandlers.serverError(res, 'Failed to fetch users', 'User');
-    }
-  };
-
-  // POST /api/users/test - Create test user (for development)
-  private createTestUser = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { email, name, emailVerified, image } = req.body;
-
-      if (!email || !name) {
-        responseHandlers.serverError(res, 'Email and name are required');
-        return;
-      }
-
-      const user = await BetterAuthUserService.createTestUser({
-        email,
-        name,
-        emailVerified,
-        image,
-      });
-
-      if (!user) {
-        responseHandlers.serverError(res, 'Failed to create test user');
-        return;
-      }
-
-      responseHandlers.success(res, BetterAuthUserService.formatUser(user), 201);
-    } catch {
-      responseHandlers.serverError(res, 'Failed to create test user', 'User');
     }
   };
 
