@@ -1,0 +1,850 @@
+openapi: 3.0.3
+info:
+  title: Staymatic REST API
+  description: |
+    AI-Enhanced Airbnb Clone API
+    
+    Staymatic is a platform where users can log their previous stays and reviews in their profile. 
+    An AI analyzes this data and provides personalized suggestions based on it – whether users are 
+    looking for similar experiences or want to try something completely new.
+    
+    ## Authentication
+    This API uses Better Auth for authentication. Most endpoints require valid authentication.
+    
+    ## Features
+    - Property management (CRUD operations)
+    - User authentication and profile management
+    - AI-enhanced recommendations (future feature)
+    - Review and rating system
+    
+  version: 1.0.0
+  contact:
+    name: Staymatic API Support
+    email: support@staymatic.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3001
+    description: Development server
+  - url: https://api.staymatic.com
+    description: Production server
+
+paths:
+  /:
+    get:
+      tags:
+        - General
+      summary: API Welcome message
+      description: Returns a welcome message for the Staymatic API
+      operationId: getIndex
+      responses:
+        '200':
+          description: Welcome message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Welcome to Staymatic API"
+
+  /health/health:
+    get:
+      tags:
+        - Health
+      summary: Health check
+      description: Returns the health status of the API
+      operationId: getHealth
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: "2024-12-15T10:30:00.000Z"
+
+  # Authentication endpoints (Better Auth)
+  /api/auth/sign-up/email:
+    post:
+      tags:
+        - Authentication
+      summary: Sign up with email
+      description: Create a new user account using email and password
+      operationId: signUpEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@staymatic.com"
+                password:
+                  type: string
+                  minLength: 8
+                  example: "securePassword123"
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                  example: "John Doe"
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          description: Invalid input data
+        '409':
+          description: User already exists
+
+  /api/auth/sign-in/email:
+    post:
+      tags:
+        - Authentication
+      summary: Sign in with email
+      description: Authenticate user with email and password
+      operationId: signInEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@staymatic.com"
+                password:
+                  type: string
+                  example: "securePassword123"
+      responses:
+        '200':
+          description: Successfully authenticated
+        '401':
+          description: Invalid credentials
+        '400':
+          description: Invalid input data
+
+  # Property endpoints
+  /api/properties:
+    get:
+      tags:
+        - Properties
+      summary: Get all properties
+      description: Retrieve a list of all properties with optional filtering
+      operationId: getAllProperties
+      parameters:
+        - name: hostId
+          in: query
+          description: Filter by host ID
+          required: false
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: Filter by city
+          required: false
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          description: Minimum price filter
+          required: false
+          schema:
+            type: number
+            minimum: 0
+        - name: maxPrice
+          in: query
+          description: Maximum price filter
+          required: false
+          schema:
+            type: number
+            minimum: 0
+      responses:
+        '200':
+          description: List of properties
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+        '500':
+          description: Server error
+
+    post:
+      tags:
+        - Properties
+      summary: Create a new property
+      description: Create a new property listing
+      operationId: createProperty
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePropertyRequest'
+      responses:
+        '201':
+          description: Property created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Property'
+        '400':
+          description: Invalid input data
+        '500':
+          description: Server error
+
+  /api/properties/{id}:
+    get:
+      tags:
+        - Properties
+      summary: Get property by ID
+      description: Retrieve a specific property by its ID
+      operationId: getPropertyById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Property ID
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+      responses:
+        '200':
+          description: Property details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Property'
+        '400':
+          description: Invalid property ID
+        '404':
+          description: Property not found
+        '500':
+          description: Server error
+
+    put:
+      tags:
+        - Properties
+      summary: Update property
+      description: Update an existing property
+      operationId: updateProperty
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Property ID
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePropertyRequest'
+      responses:
+        '200':
+          description: Property updated successfully
+        '400':
+          description: Invalid property ID or input data
+        '404':
+          description: Property not found
+        '500':
+          description: Server error
+
+    delete:
+      tags:
+        - Properties
+      summary: Delete property
+      description: Delete an existing property
+      operationId: deleteProperty
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Property ID
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+      responses:
+        '200':
+          description: Property deleted successfully
+        '400':
+          description: Invalid property ID
+        '404':
+          description: Property not found
+        '500':
+          description: Server error
+
+  # User endpoints
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Retrieve all users (admin/testing purpose)
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '500':
+          description: Server error
+
+  /api/users/profile:
+    put:
+      tags:
+        - Users
+      summary: Update user profile
+      description: Update the current user's profile information
+      operationId: updateProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - userId
+              properties:
+                userId:
+                  type: string
+                  description: User ID (temporary for testing)
+                  example: "user123"
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                  example: "Updated Name"
+                image:
+                  type: string
+                  format: uri
+                  example: "https://example.com/new-avatar.jpg"
+      responses:
+        '200':
+          description: Profile updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input data
+        '404':
+          description: User not found
+        '500':
+          description: Server error
+
+  /api/properties/with-hosts:
+    get:
+      tags:
+        - Properties
+      summary: Get properties with host information
+      description: Retrieve properties along with detailed host information
+      operationId: getPropertiesWithHosts
+      parameters:
+        - name: hostId
+          in: query
+          description: Filter by host ID
+          required: false
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: Filter by city
+          required: false
+          schema:
+            type: string
+        - name: minPrice
+          in: query
+          description: Minimum price filter
+          required: false
+          schema:
+            type: number
+            minimum: 0
+        - name: maxPrice
+          in: query
+          description: Maximum price filter
+          required: false
+          schema:
+            type: number
+            minimum: 0
+      responses:
+        '200':
+          description: List of properties with host information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PropertyWithHost'
+                  meta:
+                    type: object
+                    properties:
+                      hostsFound:
+                        type: integer
+                        example: 8
+        '500':
+          description: Server error
+
+  /api/properties/{id}/with-host:
+    get:
+      tags:
+        - Properties
+      summary: Get property with host information
+      description: Retrieve a specific property along with detailed host information
+      operationId: getPropertyWithHost
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Property ID
+          schema:
+            type: string
+            pattern: '^[0-9a-fA-F]{24}$'
+      responses:
+        '200':
+          description: Property with host details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/PropertyWithHost'
+        '400':
+          description: Invalid property ID
+        '404':
+          description: Property not found
+        '500':
+          description: Server error
+
+  /api/auth/session:
+    get:
+      tags:
+        - Authentication
+      summary: Get current session
+      description: Retrieve information about the current authenticated session
+      operationId: getSession
+      responses:
+        '200':
+          description: Session information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '401':
+          description: Not authenticated
+
+  /api/auth/sign-out:
+    post:
+      tags:
+        - Authentication
+      summary: Sign out
+      description: Sign out the current user and invalidate the session
+      operationId: signOut
+      responses:
+        '200':
+          description: Successfully signed out
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    # Core entities
+    Property:
+      type: object
+      required:
+        - id
+        - hostId
+        - title
+        - description
+        - imageUrl
+        - location
+        - price
+        - availableFrom
+        - availableTo
+      properties:
+        id:
+          type: string
+          description: Unique property identifier
+          example: "64fa8b2c9d1e2a4b6c8f9e0a"
+        hostId:
+          type: string
+          description: ID of the property host
+          example: "host123"
+        title:
+          type: string
+          maxLength: 200
+          description: Property title
+          example: "Beautiful Apartment in Berlin"
+        description:
+          type: string
+          maxLength: 2000
+          description: Property description
+          example: "A wonderful 2-bedroom apartment in the heart of Berlin with modern amenities and great location."
+        imageUrl:
+          type: string
+          format: uri
+          description: Main property image URL
+          example: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+          maxItems: 10
+          description: Additional property images
+          example: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"]
+        location:
+          $ref: '#/components/schemas/Location'
+        price:
+          $ref: '#/components/schemas/Price'
+        amenities:
+          type: array
+          items:
+            type: string
+          description: List of property amenities
+          example: ["WiFi", "Kitchen", "Air Conditioning", "Balcony"]
+        rating:
+          type: number
+          minimum: 0
+          maximum: 5
+          default: 0
+          description: Property rating
+          example: 4.5
+        availableFrom:
+          type: string
+          format: date-time
+          description: Property availability start date
+          example: "2025-01-01T00:00:00.000Z"
+        availableTo:
+          type: string
+          format: date-time
+          description: Property availability end date
+          example: "2025-12-31T00:00:00.000Z"
+        createdAt:
+          type: string
+          format: date-time
+          description: Property creation timestamp
+          example: "2024-12-15T10:30:00.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: Property last update timestamp
+          example: "2024-12-15T10:30:00.000Z"
+
+    Location:
+      type: object
+      required:
+        - address
+        - city
+        - country
+      properties:
+        address:
+          type: string
+          maxLength: 200
+          description: Street address
+          example: "Alexanderplatz 1"
+        city:
+          type: string
+          maxLength: 100
+          description: City name
+          example: "Berlin"
+        country:
+          type: string
+          maxLength: 100
+          description: Country name
+          example: "Germany"
+
+    Price:
+      type: object
+      required:
+        - amount
+        - currency
+        - period
+      properties:
+        amount:
+          type: number
+          minimum: 0
+          description: Price amount
+          example: 85
+        currency:
+          type: string
+          enum: [EUR, USD, GBP]
+          default: EUR
+          description: Price currency
+          example: "EUR"
+        period:
+          type: string
+          enum: [night, week, month]
+          default: night
+          description: Price period
+          example: "night"
+
+    User:
+      type: object
+      required:
+        - id
+        - email
+        - name
+      properties:
+        id:
+          type: string
+          description: Unique user identifier
+          example: "user123"
+        email:
+          type: string
+          format: email
+          description: User email address
+          example: "user@staymatic.com"
+        name:
+          type: string
+          maxLength: 100
+          description: User full name
+          example: "John Doe"
+        image:
+          type: string
+          format: uri
+          nullable: true
+          description: User profile image URL
+          example: "https://example.com/avatar.jpg"
+        emailVerified:
+          type: boolean
+          description: Whether user's email is verified
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+          description: User registration timestamp
+          example: "2024-12-15T10:30:00.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: User last update timestamp
+          example: "2024-12-15T10:30:00.000Z"
+
+    # Request schemas
+    CreatePropertyRequest:
+      type: object
+      required:
+        - hostId
+        - title
+        - description
+        - imageUrl
+        - location
+        - price
+        - availableFrom
+        - availableTo
+      properties:
+        hostId:
+          type: string
+          description: ID of the property host
+          example: "host123"
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Property title
+          example: "Beautiful Apartment in Berlin"
+        description:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: Property description
+          example: "A wonderful 2-bedroom apartment in the heart of Berlin with modern amenities and great location."
+        imageUrl:
+          type: string
+          format: uri
+          description: Main property image URL
+          example: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+          maxItems: 10
+          description: Additional property images
+          example: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"]
+        location:
+          $ref: '#/components/schemas/Location'
+        price:
+          $ref: '#/components/schemas/Price'
+        amenities:
+          type: array
+          items:
+            type: string
+          default: []
+          description: List of property amenities
+          example: ["WiFi", "Kitchen", "Air Conditioning", "Balcony"]
+        availableFrom:
+          type: string
+          format: date-time
+          description: Property availability start date
+          example: "2025-01-01T00:00:00.000Z"
+        availableTo:
+          type: string
+          format: date-time
+          description: Property availability end date
+          example: "2025-12-31T00:00:00.000Z"
+
+    UpdatePropertyRequest:
+      type: object
+      properties:
+        hostId:
+          type: string
+          description: ID of the property host
+          example: "host123"
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Property title
+          example: "Updated Beautiful Apartment in Berlin"
+        description:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: Property description
+          example: "An updated wonderful 2-bedroom apartment in the heart of Berlin with modern amenities and great location."
+        imageUrl:
+          type: string
+          format: uri
+          description: Main property image URL
+          example: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+          maxItems: 10
+          description: Additional property images
+          example: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"]
+        location:
+          $ref: '#/components/schemas/Location'
+        price:
+          $ref: '#/components/schemas/Price'
+        amenities:
+          type: array
+          items:
+            type: string
+          description: List of property amenities
+          example: ["WiFi", "Kitchen", "Air Conditioning", "Balcony", "Parking"]
+        availableFrom:
+          type: string
+          format: date-time
+          description: Property availability start date
+          example: "2025-01-01T00:00:00.000Z"
+        availableTo:
+          type: string
+          format: date-time
+          description: Property availability end date
+          example: "2025-12-31T00:00:00.000Z"
+
+    # Response schemas
+    PropertyWithHost:
+      allOf:
+        - $ref: '#/components/schemas/Property'
+        - type: object
+          properties:
+            host:
+              $ref: '#/components/schemas/User'
+
+    SessionResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        session:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "session123"
+            userId:
+              type: string
+              example: "user123"
+            expiresAt:
+              type: string
+              format: date-time
+              example: "2024-12-22T10:30:00.000Z"
+
+tags:
+  - name: General
+    description: General API information
+  - name: Health
+    description: API health monitoring
+  - name: Authentication
+    description: User authentication and session management
+  - name: Properties
+    description: Property management operations
+  - name: Users
+    description: User management operations 

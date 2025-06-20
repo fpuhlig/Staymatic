@@ -9,6 +9,7 @@ import { HealthController } from './controllers/health.controller';
 import { AuthController } from './controllers/auth.controller';
 import { PropertyController } from './controllers/property.controller';
 import { UserController } from './controllers/user.controller';
+import { setupSwagger } from './swagger';
 
 const app = express();
 
@@ -45,6 +46,9 @@ const healthController = new HealthController();
 const authController = new AuthController();
 const propertyController = new PropertyController();
 const userController = new UserController();
+
+// Setup Swagger documentation
+setupSwagger(app);
 
 // Routes
 app.use('/', indexController.router);
