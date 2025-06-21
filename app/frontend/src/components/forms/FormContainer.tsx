@@ -5,6 +5,9 @@ interface FormContainerProps {
   className?: string;
 }
 
+import { LAYOUT_CONSTANTS } from '../common/LayoutConstants';
+import { getCardClasses } from '../common/StyleUtilities';
+
 export const FormContainer = ({
   children,
   onSubmit,
@@ -12,7 +15,9 @@ export const FormContainer = ({
   className = '',
 }: FormContainerProps) => {
   return (
-    <div className={`rounded-lg bg-white p-6 shadow-md dark:bg-gray-800 ${className}`}>
+    <div
+      className={`${getCardClasses('interactive')} ${LAYOUT_CONSTANTS.PADDING.form} ${className}`}
+    >
       <form onSubmit={onSubmit} className="space-y-6">
         {error && (
           <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/20">
