@@ -4,4 +4,10 @@ import { LAYOUT_CONSTANTS, layoutHelpers } from '../../../../shared/src/constant
 export { LAYOUT_CONSTANTS };
 
 // Legacy exports for backward compatibility (KISS principle)
-export const { getContainerClasses, getPageHeaderClasses, getSectionClasses } = layoutHelpers;
+export const {
+  getContainerClasses,
+  getPageClasses,
+  getPageWithSectionClasses,
+  getPageHeaderClasses,
+  getSectionClasses,
+} = layoutHelpers;

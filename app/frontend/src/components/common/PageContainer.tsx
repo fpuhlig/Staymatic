@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { getContainerClasses, LAYOUT_CONSTANTS } from './LayoutConstants';
+import { getPageWithSectionClasses, LAYOUT_CONSTANTS } from './LayoutConstants';
 
 interface PageContainerProps {
   children: ReactNode;
@@ -12,5 +12,5 @@ export const PageContainer = ({
   className = '',
   maxWidth = '7xl',
 }: PageContainerProps) => {
-  return <main className={`${getContainerClasses(maxWidth)} ${className}`}>{children}</main>;
+  return <div className={`${getPageWithSectionClasses(maxWidth)} ${className}`}>{children}</div>;
 };
