@@ -1,42 +1,42 @@
-## Stakeholder-Matrix
+## Stakeholder Matrix
 
-| Einfluss ↓ \ Bedeutung → |                                                                              Niedrig (0–1)                                                                              |                                                                                    Mittel (1–2)                                                                                     |                                                                                          Hoch (2–3)                                                                                          |
-| :----------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|    **Niedrig (0–1)**     |                                                                                    –                                                                                    |   **Customer Support**<br />• Nutzer-Hilfe<br />• FAQ-Management<br />• Support-Tickets<br /><br />**Lokale Anbieter**<br />• Werbepartnerschaften<br />• Aktivitäten-Integration   |                                                                                              –                                                                                               |
-|     **Mittel (1–2)**     | **OpenRouter Provider**<br />• Tech-Kick-offs<br />• SLAs<br />• API-Integration<br /><br />**Payment Gateway**<br />• Transaktionssicherheit<br />• Zahlungsabwicklung | **Admins & Moderatoren**<br />• Plattform-Überwachung<br />• Sicherheit & Support<br />• Nutzer-Management<br /><br />**Wettbewerber**<br />• Marktanalyse<br />• Feature-Vergleich |        **Vermieter (Hosts)**<br />• Apartment-Listings<br />• Buchungsverwaltung<br />• Einnahmen<br /><br />**Mieter (Guests)**<br />• Buchungen<br />• Bewertungen<br />• Feedback         |
-|      **Hoch (2–3)**      |                                                                                    –                                                                                    |                                       **Regulatorische Behörden**<br />• Compliance & DSGVO<br />• Rechtliche Freigaben<br />• Audit-Berichte                                       | **Entwicklungsteam**<br />• Daily Stand-ups<br />• Scrum-Meetings<br />• Code-Reviews<br /><br />**Investoren**<br />• Steering-Committee<br />• Finanzielle Ziele<br />• Wachstumsstrategie |
+| Influence ↓ \ Importance → |                                                                               Low (0–1)                                                                               |                                                                                  Medium (1–2)                                                                                   |                                                                                       High (2–3)                                                                                       |
+| :------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|       **Low (0–1)**        |                                                                                   –                                                                                   |  **Customer Support**<br />• User Help<br />• FAQ Management<br />• Support Tickets<br /><br />**Local Providers**<br />• Advertising Partnerships<br />• Activity Integration  |                                                                                           –                                                                                            |
+|      **Medium (1–2)**      | **OpenRouter Provider**<br />• Tech Kick-offs<br />• SLAs<br />• API Integration<br /><br />**Payment Gateway**<br />• Transaction Security<br />• Payment Processing | **Admins & Moderators**<br />• Platform Monitoring<br />• Security & Support<br />• User Management<br /><br />**Competitors**<br />• Market Analysis<br />• Feature Comparison |        **Hosts (Landlords)**<br />• Apartment Listings<br />• Booking Management<br />• Revenue<br /><br />**Guests (Tenants)**<br />• Bookings<br />• Reviews<br />• Feedback         |
+|       **High (2–3)**       |                                                                                   –                                                                                   |                                         **Regulatory Authorities**<br />• Compliance & GDPR<br />• Legal Approvals<br />• Audit Reports                                         | **Development Team**<br />• Daily Stand-ups<br />• Scrum Meetings<br />• Code Reviews<br /><br />**Investors**<br />• Steering Committee<br />• Financial Goals<br />• Growth Strategy |
 
 ---
 
-## Einbindung der Stakeholder
+## Stakeholder Engagement
 
 - **Manage Closely**
 
-  - **Entwicklungsteam & Investoren** (Hoch Einfluss / hohe Bedeutung)
-    - Tägliche Stand-ups, ausführliche Status-Reports, regelmäßige Steering-Committee-Meetings
-    - Technische Roadmap-Planung, Budget-Controlling, Wachstumsstrategie
+  - **Development Team & Investors** (High Influence / High Importance)
+    - Daily stand-ups, detailed status reports, regular steering committee meetings
+    - Technical roadmap planning, budget controlling, growth strategy
 
 - **Keep Satisfied**
 
-  - **Regulatorische Behörden** (Hoch Einfluss / mittlere Bedeutung)
-    - Compliance-Workshops, regelmäßige Audit-Berichte, rechtliche Freigaben frühzeitig einholen
-    - DSGVO-Konformität, Datenschutzrichtlinien, Sicherheitsstandards
+  - **Regulatory Authorities** (High Influence / Medium Importance)
+    - Compliance workshops, regular audit reports, obtain legal approvals early
+    - GDPR compliance, privacy policies, security standards
 
 - **Keep Informed**
 
-  - **Vermieter (Hosts) & Mieter (Guests)** (mittlerer Einfluss / hohe Bedeutung)
-    - Nutzer-Feedback-Sessions, Workshops zur UX-Optimierung, E-Mail-Newsletter mit neuen Features
-    - Buchungsstatistiken, Einnahmenübersichten, Markttrends
-  - **Admins & Moderatoren** (mittlerer Einfluss / mittlere Bedeutung)
-    - Schulungen, ausführliche Betriebs- und Moderations-Manuals, Quartals-Reviews
-    - Sicherheitsrichtlinien, Nutzer-Management, Support-Prozesse
+  - **Hosts & Guests** (Medium Influence / High Importance)
+    - User feedback sessions, UX optimization workshops, email newsletters with new features
+    - Booking statistics, revenue overviews, market trends
+  - **Admins & Moderators** (Medium Influence / Medium Importance)
+    - Training, detailed operation and moderation manuals, quarterly reviews
+    - Security guidelines, user management, support processes
 
 - **Monitor**
-  - **AI-Provider & Payment Gateway** (mittlerer Einfluss / niedrige Bedeutung)
-    - Technische Koordinations-Calls, SLA-Kontrollen, Integrations-Dokumentation aktuell halten
-    - API-Performance, Systemverfügbarkeit, Sicherheitsupdates
-  - **Customer Support** (niedriger Einfluss / mittlere Bedeutung)
-    - FAQs und Handbücher pflegen, regelmäßige Q&A-Sessions, Tool-Trainings
-    - Support-Metriken, Nutzerzufriedenheit, Response-Zeiten
-  - **Lokale Anbieter** (niedriger Einfluss / mittlere Bedeutung)
-    - Werbepartnerschaften, Aktivitäten-Integration, lokale Marktentwicklung
+  - **AI Provider & Payment Gateway** (Medium Influence / Low Importance)
+    - Technical coordination calls, SLA monitoring, keep integration documentation current
+    - API performance, system availability, security updates
+  - **Customer Support** (Low Influence / Medium Importance)
+    - Maintain FAQs and manuals, regular Q&A sessions, tool training
+    - Support metrics, user satisfaction, response times
+  - **Local Providers** (Low Influence / Medium Importance)
+    - Advertising partnerships, activity integration, local market development

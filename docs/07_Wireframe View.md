@@ -18,15 +18,15 @@ This section outlines the key pages and areas of the Staymatic website, detailin
 
 ### Settings Page
 
-### Admin-Bereich
+### Admin Area
 
 ### Support/FAQ
 
-### Buchungsübersicht
+### Booking Overview
 
-### Bewertungen
+### Reviews
 
-### KI-Empfehlungen
+### AI Recommendations
 
 ## Welcome Page Wireframe
 

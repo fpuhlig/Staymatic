@@ -5,7 +5,7 @@
 - Next.js (React framework)
 - Express.js (Backend framework)
 - MongoDB (Database)
-- shadcn/ui (UI library)
+- Tailwind CSS (UI styling)
 - Jest (Testing)
 - Docker, Docker Compose (Containerization)
 
