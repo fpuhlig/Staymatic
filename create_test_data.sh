@@ -220,7 +220,7 @@ create_property "maria.schmidt@berlin-stays.com" "$MARIA_ID" \
     "Cozy Apartment in Prenzlauer Berg" \
     "Beautiful 2-bedroom apartment in the heart of Prenzlauer Berg. Perfect for couples or small families. Walking distance to cafes, restaurants, and public transport. Fully equipped kitchen, comfortable living area, and quiet bedroom with quality beds. Experience authentic Berlin life in this charming neighborhood known for its vibrant culture and excellent dining scene." \
     "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" \
-    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800,https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800,https://images.unsplash.com/photo-1556912167-f556f1e3db53?w=800,https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800" \
+    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800,https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800,https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800,https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800" \
     "Kastanienallee 45" \
     "Berlin" \
     "Germany" \
@@ -250,7 +250,7 @@ create_property "anna.weber@hamburg-harbor.com" "$ANNA_ID" \
     "Harbor View Apartment in HafenCity" \
     "Stunning waterfront apartment with panoramic harbor views in Hamburg's prestigious HafenCity district. This modern 2-bedroom apartment features floor-to-ceiling windows, designer furniture, and a private balcony overlooking the Elbe River. Perfect for romantic getaways or business trips. Walking distance to Miniatur Wunderland, Elbphilharmonie, and historic Speicherstadt." \
     "https://images.unsplash.com/photo-1592928302636-c83cf1e1c887?w=800" \
-    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800,https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800,https://images.unsplash.com/photo-1600566752734-6d1b37e9b7c2?w=800,https://images.unsplash.com/photo-1551361415-69c5d264a3b8?w=800" \
+    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800,https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800,https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800,https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800" \
     "Am Sandtorkai 12" \
     "Hamburg" \
     "Germany" \
@@ -296,7 +296,7 @@ create_property "maria.schmidt@berlin-stays.com" "$MARIA_ID" \
     "Modern Studio near Alexanderplatz" \
     "Stylish studio apartment just 10 minutes from Alexanderplatz. Ideal for business travelers and tourists. Features modern amenities, high-speed internet, and a comfortable workspace. The building offers 24/7 security and is located in a safe, well-connected area. Easy access to major attractions like Museum Island, Brandenburg Gate, and the TV Tower." \
     "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=800" \
-    "https://images.unsplash.com/photo-1581618542096-c5ec8b8a5be8?w=800,https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800,https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=800,https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800" \
+    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800,https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800,https://images.unsplash.com/photo-1571055107559-3e67626fa8be?w=800,https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800" \
     "Karl-Marx-Allee 78" \
     "Berlin" \
     "Germany" \
