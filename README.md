@@ -2,39 +2,6 @@
 
 A modern, full-stack accommodation platform built with Next.js and Express.js. Staymatic enables users to discover and book unique properties while providing hosts with comprehensive tools to manage their listings.
 
-## ✨ Features
-
-### 🔐 **Authentication & User Management**
-
-- Secure email/password authentication powered by [Better Auth](https://www.better-auth.com/)
-- User registration, login, and profile management
-- Protected routes and role-based access control
-- Session management with configurable expiration
-
-### 🏡 **Property Management**
-
-- **Host Dashboard**: Comprehensive property management interface
-- **CRUD Operations**: Create, read, update, and delete properties
-- **Image Galleries**: Multi-image support with carousel functionality
-- **Rich Property Data**: Location, pricing, amenities, availability periods
-- **Search & Filtering**: Filter by location, price range, and host
-
-### 🎨 **Modern User Experience**
-
-- Responsive design with Tailwind CSS
-- Dark/light mode support
-- Image carousels and galleries
-- Loading states and error handling
-- Accessible UI components
-
-### 🛠 **Developer Experience**
-
-- **TypeScript**: Full-stack type safety
-- **Monorepo Architecture**: Yarn workspaces for shared code
-- **API Documentation**: Interactive Swagger/OpenAPI docs
-- **Testing**: Jest unit tests across all modules
-- **Code Quality**: ESLint, Prettier, and pre-commit hooks
-
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -119,6 +86,39 @@ docker compose -f docker-compose.prod.yml down
 # Development
 docker compose -f docker-compose.dev.yml down
 ```
+
+## ✨ Features
+
+### 🔐 **Authentication & User Management**
+
+- Secure email/password authentication powered by [Better Auth](https://www.better-auth.com/)
+- User registration, login, and profile management
+- Protected routes and role-based access control
+- Session management with configurable expiration
+
+### 🏡 **Property Management**
+
+- **Host Dashboard**: Comprehensive property management interface
+- **CRUD Operations**: Create, read, update, and delete properties
+- **Image Galleries**: Multi-image support with carousel functionality
+- **Rich Property Data**: Location, pricing, amenities, availability periods
+- **Search & Filtering**: Filter by location, price range, and host
+
+### 🎨 **Modern User Experience**
+
+- Responsive design with Tailwind CSS
+- Dark/light mode support
+- Image carousels and galleries
+- Loading states and error handling
+- Accessible UI components
+
+### 🛠 **Developer Experience**
+
+- **TypeScript**: Full-stack type safety
+- **Monorepo Architecture**: Yarn workspaces for shared code
+- **API Documentation**: Interactive Swagger/OpenAPI docs
+- **Testing**: Jest unit tests across all modules
+- **Code Quality**: ESLint, Prettier, and pre-commit hooks
 
 ## 📁 Project Structure
 
