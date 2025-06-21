@@ -21,15 +21,18 @@ cd Staymatic
 #### 🏗️ **Production Setup (Recommended)**
 
 1. **Environment Configuration:**
-   Create a `.env` file based on `.env.example`:
+
+   **Step 1:** Generate a secure secret key:
 
    ```bash
-   # Generate a secure secret key
    openssl rand -base64 32
    ```
 
+   **Step 2:** Create a `.env` file with your values:
+
    ```env
-   BETTER_AUTH_SECRET=your-generated-secret-from-openssl-command-above
+   # Use the output from the openssl command above
+   BETTER_AUTH_SECRET=your-generated-secret-here
    MONGODB_URI=mongodb://admin:password@mongodb:27017/staymatic?authSource=admin
    MONGO_USERNAME=admin
    MONGO_PASSWORD=password
