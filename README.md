@@ -23,8 +23,13 @@ cd Staymatic
 1. **Environment Configuration:**
    Create a `.env` file based on `.env.example`:
 
+   ```bash
+   # Generate a secure secret key
+   openssl rand -base64 32
+   ```
+
    ```env
-   BETTER_AUTH_SECRET=your-secret-key-minimum-32-characters
+   BETTER_AUTH_SECRET=your-generated-secret-from-openssl-command-above
    MONGODB_URI=mongodb://admin:password@mongodb:27017/staymatic?authSource=admin
    MONGO_USERNAME=admin
    MONGO_PASSWORD=password
@@ -40,11 +45,12 @@ cd Staymatic
 
 #### 💻 **Development Setup**
 
-For development with live reloading:
+1. **Start development environment:**
+   For development with live reloading:
 
-```bash
-docker compose -f docker-compose.dev.yml up --build -d
-```
+   ```bash
+   docker compose -f docker-compose.dev.yml up --build -d
+   ```
 
 ### 3. Access the Application
 
