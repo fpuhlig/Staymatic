@@ -58,13 +58,13 @@ export default function AboutPage() {
   ];
 
   return (
-    <PageContainer>
+    <PageContainer maxWidth="7xl">
       <PageHeader
         title="About Staymatic"
         subtitle="Connecting travelers with extraordinary places to stay"
       />
 
-      <div className="mx-auto max-w-4xl space-y-12">
+      <div className="mx-auto max-w-6xl space-y-12">
         <ContentSection title="Our Mission">
           <p className="mb-4 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
             At Staymatic, we believe that every journey should be extraordinary. Our mission is to

@@ -1,3 +1,6 @@
+import { LAYOUT_CONSTANTS } from '../../../shared/src/constants';
+import { getButtonClasses } from './common/ButtonStyles';
+
 interface ErrorMessageProps {
   message: string;
   onRetry?: () => void;
@@ -6,7 +9,7 @@ interface ErrorMessageProps {
 
 export const ErrorMessage = ({ message, onRetry, retryLabel = 'Try Again' }: ErrorMessageProps) => {
   return (
-    <div className="py-12 text-center">
+    <div className={`text-center ${LAYOUT_CONSTANTS.PADDING.section}`}>
       <div className="mx-auto mb-4 h-12 w-12 text-red-400">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -19,10 +22,7 @@ export const ErrorMessage = ({ message, onRetry, retryLabel = 'Try Again' }: Err
       </div>
       <p className="mb-4 text-red-600 dark:text-red-400">{message}</p>
       {onRetry && (
-        <button
-          onClick={onRetry}
-          className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-        >
+        <button onClick={onRetry} className={getButtonClasses('primary', 'md')}>
           {retryLabel}
         </button>
       )}

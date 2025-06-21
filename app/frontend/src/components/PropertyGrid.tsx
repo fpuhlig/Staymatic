@@ -1,7 +1,9 @@
 'use client';
 
 import { Property, PropertyWithHost } from '../../../shared/src/types';
+import { LAYOUT_CONSTANTS } from '../../../shared/src/constants';
 import { PropertyCard } from './PropertyCard';
+import { getButtonClasses } from './common/ButtonStyles';
 
 interface PropertyGridProps {
   properties: Property[] | PropertyWithHost[];
@@ -39,17 +41,16 @@ export const PropertyGrid = ({ properties, isLoading, error, onRetry }: Property
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
+      <div
+        className={`flex flex-col items-center justify-center ${LAYOUT_CONSTANTS.PADDING.section}`}
+      >
         <div className="text-center">
           <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
             Failed to load properties
           </h3>
           <p className="mb-4 text-gray-600 dark:text-gray-400">{error}</p>
           {onRetry && (
-            <button
-              onClick={onRetry}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-            >
+            <button onClick={onRetry} className={getButtonClasses('primary', 'md')}>
               Try Again
             </button>
           )}
@@ -60,7 +61,9 @@ export const PropertyGrid = ({ properties, isLoading, error, onRetry }: Property
 
   if (!properties || properties.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
+      <div
+        className={`flex flex-col items-center justify-center ${LAYOUT_CONSTANTS.PADDING.section}`}
+      >
         <div className="text-center">
           <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
             No properties found

@@ -127,13 +127,13 @@ export default function HelpPage() {
   ];
 
   return (
-    <PageContainer>
+    <PageContainer maxWidth="7xl">
       <PageHeader
         title="Help Center"
         subtitle="Find answers to your questions and get the support you need"
       />
 
-      <div className="mx-auto max-w-4xl space-y-12">
+      <div className="mx-auto max-w-6xl space-y-12">
         <CTASection
           title="Need Help?"
           description="Our support team is available 24/7 to assist you with any questions or concerns."

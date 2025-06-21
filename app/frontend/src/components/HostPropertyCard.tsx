@@ -2,6 +2,7 @@ import { PropertyWithHost } from '../../../shared/src/types';
 import { propertyUtils } from '../../../shared/src/utils';
 import Link from 'next/link';
 import { ImagePreview } from './PropertyCard/ImagePreview';
+import { getButtonClasses } from './common/ButtonStyles';
 
 interface HostPropertyCardProps {
   property: PropertyWithHost;
@@ -9,10 +10,6 @@ interface HostPropertyCardProps {
 }
 
 export const HostPropertyCard = ({ property, onDelete }: HostPropertyCardProps) => {
-  const handleDeleteClick = () => {
-    onDelete(property.id);
-  };
-
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border-0 bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:bg-gray-800 dark:shadow-lg dark:hover:shadow-2xl">
       {/* Image */}
@@ -49,13 +46,13 @@ export const HostPropertyCard = ({ property, onDelete }: HostPropertyCardProps) 
         <div className="mt-4 flex gap-2">
           <Link
             href={`/host/edit-property/${property.id}`}
-            className="flex-1 rounded-lg bg-blue-600 px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className={getButtonClasses('primary', 'sm', 'flex-1 text-center')}
           >
             Edit
           </Link>
           <button
-            onClick={handleDeleteClick}
-            className="flex-1 rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
+            onClick={() => onDelete(property.id)}
+            className={getButtonClasses('danger', 'sm', 'flex-1')}
           >
             Delete
           </button>

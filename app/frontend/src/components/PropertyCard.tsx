@@ -3,6 +3,8 @@ import { propertyUtils } from '../../../shared/src/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ImagePreview } from './PropertyCard/ImagePreview';
+import { getButtonClasses } from './common/ButtonStyles';
+import { getTextClasses, getBadgeClasses } from './common/StyleUtilities';
 
 interface PropertyCardProps {
   property: Property | PropertyWithHost;
@@ -33,9 +35,11 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
       {/* Content wrapper */}
       <div className="flex flex-1 flex-col">
         {/* Header */}
-        <div className="px-6 pb-8 pt-5">
+        <div className="px-4 pb-6 pt-4 sm:px-6 sm:pb-8 sm:pt-5">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="line-clamp-2 h-14 text-xl font-bold leading-tight text-gray-900 dark:text-white">
+            <h3
+              className={`line-clamp-2 h-14 text-xl font-bold leading-tight ${getTextClasses('primary')}`}
+            >
               {property.title}
             </h3>
             <div className="flex shrink-0 items-center gap-1 text-amber-500 dark:text-amber-400">
@@ -45,7 +49,7 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
               </span>
             </div>
           </div>
-          <p className="mt-3 font-medium text-gray-600 dark:text-gray-400">
+          <p className={`mt-3 font-medium ${getTextClasses('muted')}`}>
             {property.location.city}, {property.location.country}
           </p>
 
@@ -67,16 +71,16 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
                   </span>
                 )}
               </div>
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+              <span className={`text-sm ${getTextClasses('muted')}`}>
                 Hosted by{' '}
-                <span className="font-medium text-gray-900 dark:text-white">{host.name}</span>
+                <span className={`font-medium ${getTextClasses('primary')}`}>{host.name}</span>
               </span>
             </div>
           )}
         </div>
 
         {/* Content - grows to push button to bottom */}
-        <div className="flex flex-1 flex-col gap-8 px-6 py-4">
+        <div className="flex flex-1 flex-col gap-6 px-4 py-3 sm:gap-8 sm:px-6 sm:py-4">
           <p className="line-clamp-3 leading-relaxed text-gray-700 dark:text-gray-300">
             {property.description}
           </p>
@@ -85,7 +89,7 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
             {property.amenities.slice(0, 3).map((amenity: string) => (
               <span
                 key={amenity}
-                className="inline-flex items-center border border-gray-300 bg-gray-200 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                className={getBadgeClasses('default')}
                 style={{ borderRadius: '8px' }}
               >
                 {amenity}
@@ -103,19 +107,19 @@ export const PropertyCard = ({ property }: PropertyCardProps) => {
         </div>
 
         {/* Button area - always at bottom */}
-        <div className="shrink-0 border-t border-gray-100 bg-gray-50/50 px-6 pb-8 pt-10 dark:border-gray-700 dark:bg-gray-700/50">
+        <div className="shrink-0 border-t border-gray-100 bg-gray-50/50 px-4 pb-6 pt-6 sm:px-6 sm:pb-8 sm:pt-8 dark:border-gray-700 dark:bg-gray-700/50">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-3xl font-bold text-gray-900 dark:text-white">
+              <span className={`text-3xl font-bold ${getTextClasses('primary')}`}>
                 €{property.price.amount}
               </span>
-              <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">
+              <span className={`ml-1 text-sm ${getTextClasses('secondary')}`}>
                 /{property.price.period}
               </span>
             </div>
             <Link
               href={`/property/${property.id}`}
-              className="rounded-xl bg-blue-600 px-6 py-2 font-medium text-white transition-colors duration-200 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              className={getButtonClasses('primary', 'md', 'rounded-xl sm:px-6 sm:text-base')}
             >
               View Details
             </Link>

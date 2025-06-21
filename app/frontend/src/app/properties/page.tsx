@@ -10,7 +10,7 @@ export default function PropertiesPage() {
   });
 
   return (
-    <PageContainer>
+    <PageContainer maxWidth="gallery">
       <PageHeader
         title="All Properties"
         subtitle="Discover amazing places to stay with trusted hosts around the world"

@@ -14,6 +14,7 @@ import {
   ErrorMessage,
   PageContainer,
 } from '../../../components';
+import { getButtonClasses } from '../../../components/common/ButtonStyles';
 
 export default function HostDashboard() {
   const { data: session, isPending: isSessionLoading } = useSession();
@@ -67,9 +68,9 @@ export default function HostDashboard() {
       unauthorizedTitle="Please log in to access your dashboard"
       unauthorizedDescription="You need to be logged in to manage your properties."
     >
-      <PageContainer>
+      <PageContainer maxWidth="dashboard">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl dark:text-white">
               My Properties
@@ -79,25 +80,24 @@ export default function HostDashboard() {
               properties.
             </p>
           </div>
-          <Link
-            href="/host/add-property"
-            className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            <svg
-              className="-ml-1 mr-2 h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            Add New Property
-          </Link>
+          <div className="flex-shrink-0">
+            <Link href="/host/add-property" className={getButtonClasses('primary', 'md')}>
+              <svg
+                className="-ml-1 mr-2 h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Add New Property
+            </Link>
+          </div>
         </div>
 
         {/* Stats - Always visible with consistent height */}
@@ -152,13 +152,13 @@ export default function HostDashboard() {
         {/* Properties Grid - Fixed height container to prevent layout shifts */}
         <div className="min-h-[500px]">
           {isLoading ? (
-            <div className="flex items-center justify-center py-20">
+            <div className="flex items-center justify-center">
               <LoadingSpinner message="Loading your properties..." />
             </div>
           ) : error ? (
             <ErrorMessage message={error} onRetry={refetch} />
           ) : properties.length === 0 ? (
-            <div className="flex items-center justify-center py-20">
+            <div className="flex items-center justify-center">
               <EmptyState
                 icon={
                   <svg

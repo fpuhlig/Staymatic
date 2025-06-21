@@ -1,14 +1,13 @@
+import React from 'react';
+import { LAYOUT_CONSTANTS } from '../../../shared/src/constants';
 import { FooterLink } from './FooterLink';
-import { LAYOUT_CONSTANTS } from './common/LayoutConstants';
 
 export const Footer = () => {
   return (
-    <footer className="mt-16 border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-      <div
-        className={`mx-auto ${LAYOUT_CONSTANTS.MAX_WIDTH['7xl']} ${LAYOUT_CONSTANTS.PADDING.container} py-12`}
-      >
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          <div className="col-span-1 md:col-span-2">
+    <footer className="mt-8 border-t border-gray-200 bg-white sm:mt-12 dark:border-gray-700 dark:bg-gray-900">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2">
             <h3
               className={`${LAYOUT_CONSTANTS.MARGIN.small} ${LAYOUT_CONSTANTS.TYPOGRAPHY.h2} text-blue-600 dark:text-blue-400`}
             >
@@ -42,7 +41,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          <div>
+          <div className="sm:col-span-1">
             <h4
               className={`${LAYOUT_CONSTANTS.MARGIN.small} text-lg font-semibold text-gray-900 dark:text-white`}
             >
@@ -64,7 +63,7 @@ export const Footer = () => {
             </ul>
           </div>
 
-          <div>
+          <div className="sm:col-span-1">
             <h4
               className={`${LAYOUT_CONSTANTS.MARGIN.small} text-lg font-semibold text-gray-900 dark:text-white`}
             >

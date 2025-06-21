@@ -10,7 +10,7 @@ export default function Home() {
   });
 
   return (
-    <PageContainer>
+    <PageContainer maxWidth="gallery">
       <PageHeader
         title="Featured Properties"
         subtitle="Discover amazing places to stay with trusted hosts"

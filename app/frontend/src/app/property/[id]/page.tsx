@@ -1,7 +1,8 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { PageLayout, LoadingSpinner, ErrorMessage } from '../../../components';
+import { LAYOUT_CONSTANTS } from '../../../../../shared/src/constants';
+import { PageContainer, PageHeader, LoadingSpinner, ErrorMessage } from '../../../components';
 import {
   PropertyHeader,
   PropertyInfo,
@@ -21,47 +22,41 @@ export default function PropertyDetails() {
 
   if (isLoading) {
     return (
-      <PageLayout
-        title="Loading Property..."
-        backLink={{
-          href: '/',
-          label: 'Back to Properties',
-        }}
-      >
-        <div className="flex justify-center py-20">
+      <PageContainer maxWidth="gallery">
+        <PageHeader
+          title="Loading Property..."
+          subtitle="Please wait while we load the property details"
+        />
+        <div className="flex justify-center">
           <LoadingSpinner message="Loading property details..." />
         </div>
-      </PageLayout>
+      </PageContainer>
     );
   }
 
   if (error) {
     return (
-      <PageLayout
-        title="Error Loading Property"
-        backLink={{
-          href: '/',
-          label: 'Back to Properties',
-        }}
-      >
-        <div className="flex justify-center py-20">
+      <PageContainer maxWidth="gallery">
+        <PageHeader
+          title="Error Loading Property"
+          subtitle="There was an issue loading the property details"
+        />
+        <div className="flex justify-center">
           <ErrorMessage message={error} onRetry={refetch} />
         </div>
-      </PageLayout>
+      </PageContainer>
     );
   }
 
   if (!property) {
     return (
-      <PageLayout
-        title="Property Not Found"
-        backLink={{
-          href: '/',
-          label: 'Back to Properties',
-        }}
-      >
-        <div className="flex justify-center py-20">
-          <div className="text-center">
+      <PageContainer maxWidth="gallery">
+        <PageHeader
+          title="Property Not Found"
+          subtitle="The property you're looking for doesn't exist"
+        />
+        <div className="flex justify-center">
+          <div className={`text-center ${LAYOUT_CONSTANTS.PADDING.section}`}>
             <h2 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
               Property not found
             </h2>
@@ -70,42 +65,50 @@ export default function PropertyDetails() {
             </p>
           </div>
         </div>
-      </PageLayout>
+      </PageContainer>
     );
   }
 
   return (
-    <PageLayout
-      title={property.title}
-      backLink={{
-        href: '/',
-        label: 'Back to Properties',
-      }}
-      hideTitle={true} // We'll show the title in PropertyHeader instead
-      maxWidth="7xl" // Use full width for property details
-    >
-      <div>
-        {/* Property Header */}
-        <PropertyHeader property={property} />
+    <PageContainer maxWidth="gallery">
+      {/* Back Button */}
+      <div className="mb-6">
+        <button
+          onClick={() => window.history.back()}
+          className="inline-flex items-center text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Back to Properties
+        </button>
+      </div>
 
-        {/* Main Content Grid */}
-        <div className="grid gap-8 xl:grid-cols-3 xl:gap-12">
-          {/* Left Column - Property Info */}
-          <div className="xl:col-span-2">
-            <PropertyInfo property={property} />
-          </div>
+      {/* Property Header */}
+      <PropertyHeader property={property} />
 
-          {/* Right Column - Booking Card */}
-          <div className="xl:col-span-1">
-            <BookingCard property={property} />
-          </div>
+      {/* Main Content Grid */}
+      <div className="grid gap-8 xl:grid-cols-3 xl:gap-12">
+        {/* Left Column - Property Info */}
+        <div className="xl:col-span-2">
+          <PropertyInfo property={property} />
         </div>
 
-        {/* Host Information - Full Width */}
-        <div className="mt-12">
-          <HostInfo host={property.host} />
+        {/* Right Column - Booking Card */}
+        <div className="xl:col-span-1">
+          <BookingCard property={property} />
         </div>
       </div>
-    </PageLayout>
+
+      {/* Host Information - Full Width */}
+      <div className="mt-12">
+        <HostInfo host={property.host} />
+      </div>
+    </PageContainer>
   );
 }

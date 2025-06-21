@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { LAYOUT_CONSTANTS, getContainerClasses } from './common/LayoutConstants';
+import { LAYOUT_CONSTANTS, getPageClasses } from './common/LayoutConstants';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ export const PageLayout = ({
   hideTitle = false,
 }: PageLayoutProps) => {
   return (
-    <main className={getContainerClasses(maxWidth)}>
+    <main className={getPageClasses(maxWidth)}>
       {/* Header */}
       <div className={LAYOUT_CONSTANTS.MARGIN.header}>
         {(showBackButton || backLink) && (
