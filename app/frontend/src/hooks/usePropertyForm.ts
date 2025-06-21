@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from '../lib/auth-client';
+import { propertyFormSchema } from '../../../shared/src/schemas/property';
 
+// Frontend form data interface (before validation)
 export interface PropertyFormData {
   title: string;
   description: string;
@@ -61,32 +63,67 @@ export const usePropertyForm = ({ initialData, onSuccess }: UsePropertyFormProps
     }));
   };
 
-  const createPayload = () => ({
-    hostId,
-    title: formData.title,
-    description: formData.description,
-    imageUrl: formData.imageUrl,
-    images: formData.images
-      .split(',')
-      .map(url => url.trim())
-      .filter(url => url),
-    location: {
-      address: formData.address,
-      city: formData.city,
-      country: formData.country,
-    },
-    price: {
-      amount: parseFloat(formData.amount),
-      currency: formData.currency,
-      period: formData.period,
-    },
-    amenities: formData.amenities
-      .split(',')
-      .map(a => a.trim())
-      .filter(a => a),
-    availableFrom: formData.availableFrom,
-    availableTo: formData.availableTo,
-  });
+  const createPayload = () => {
+    // First, transform form data to match Zod schema expectations
+    const transformedData = {
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      imageUrl: formData.imageUrl.trim(),
+      images: formData.images.trim(), // Keep as string for frontend schema
+      location: {
+        address: formData.address.trim(),
+        city: formData.city.trim(),
+        country: formData.country.trim(),
+      },
+      price: {
+        amount: parseFloat(formData.amount) || 0, // Convert string to number
+        currency: formData.currency as 'EUR' | 'USD' | 'GBP',
+        period: formData.period as 'night' | 'week' | 'month',
+      },
+      amenities: formData.amenities
+        ? formData.amenities
+            .split(',')
+            .map(a => a.trim())
+            .filter(a => a)
+        : [],
+      availableFrom: formData.availableFrom,
+      availableTo: formData.availableTo,
+    };
+
+    // Validate with Zod schema
+    const validationResult = propertyFormSchema.safeParse(transformedData);
+
+    if (!validationResult.success) {
+      // Get the first validation error with detailed path information
+      const errors = validationResult.error.errors;
+      const errorMessages = errors.map(err => {
+        const path = err.path.length > 0 ? `${err.path.join('.')}: ` : '';
+        return `${path}${err.message}`;
+      });
+      throw new Error(`Validation failed: ${errorMessages.join(', ')}`);
+    }
+
+    // Return validated data for backend API
+    const validatedData = validationResult.data;
+
+    return {
+      hostId,
+      title: validatedData.title,
+      description: validatedData.description,
+      imageUrl: validatedData.imageUrl,
+      images: validatedData.images
+        ? validatedData.images
+            .split(',')
+            .map(url => url.trim())
+            .filter(url => url)
+        : [],
+      location: validatedData.location,
+      price: validatedData.price,
+      amenities: validatedData.amenities,
+      availableFrom: validatedData.availableFrom,
+      availableTo: validatedData.availableTo,
+    };
+  };
 
   const submitForm = async (url: string, method: 'POST' | 'PUT' = 'POST') => {
     setIsSubmitting(true);
