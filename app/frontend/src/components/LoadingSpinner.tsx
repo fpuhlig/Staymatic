@@ -1,3 +1,5 @@
+import { LAYOUT_CONSTANTS } from '../../../shared/src/constants';
+
 interface LoadingSpinnerProps {
   message?: string;
   size?: 'sm' | 'md' | 'lg';
@@ -11,7 +13,7 @@ export const LoadingSpinner = ({ message = 'Loading...', size = 'md' }: LoadingS
   };
 
   return (
-    <div className="py-12 text-center">
+    <div className={`text-center ${LAYOUT_CONSTANTS.PADDING.section}`}>
       <div
         className={`inline-block animate-spin rounded-full border-b-2 border-blue-600 ${sizeClasses[size]}`}
       ></div>

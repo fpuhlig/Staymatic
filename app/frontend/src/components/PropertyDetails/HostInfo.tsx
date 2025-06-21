@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import { User } from '../../../../shared/src/types';
+import { getCardClasses, getHeadingClasses, getTextClasses } from '../common/StyleUtilities';
+import { getButtonClasses } from '../common/ButtonStyles';
 
 interface HostInfoProps {
   host: User | null;
@@ -8,16 +10,16 @@ interface HostInfoProps {
 export const HostInfo = ({ host }: HostInfoProps) => {
   if (!host) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-        <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">Host Information</h2>
-        <p className="text-gray-600 dark:text-gray-400">Host information not available</p>
+      <div className={getCardClasses('section', 'p-6')}>
+        <h2 className={`mb-4 ${getHeadingClasses('h2')}`}>Host Information</h2>
+        <p className={getTextClasses('muted')}>Host information not available</p>
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">Meet your host</h2>
+    <div className={getCardClasses('section', 'p-6')}>
+      <h2 className={`mb-6 ${getHeadingClasses('h2')}`}>Meet your host</h2>
 
       <div className="flex items-start gap-4">
         {/* Host Avatar */}
@@ -39,11 +41,11 @@ export const HostInfo = ({ host }: HostInfoProps) => {
 
         {/* Host Details */}
         <div className="flex-1">
-          <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{host.name}</h3>
+          <h3 className={`mb-2 ${getHeadingClasses('h3')}`}>{host.name}</h3>
 
-          {host.email && <p className="mb-3 text-gray-600 dark:text-gray-400">{host.email}</p>}
+          {host.email && <p className={`mb-3 ${getTextClasses('muted')}`}>{host.email}</p>}
 
-          <div className="mb-4 flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+          <div className={`mb-4 flex items-center gap-4 text-sm ${getTextClasses('muted')}`}>
             <div className="flex items-center gap-1">
               <span className="text-amber-500">★</span>
               <span>4.9 rating</span>
@@ -59,9 +61,7 @@ export const HostInfo = ({ host }: HostInfoProps) => {
             guests. Feel free to reach out if you have any questions about the property or the area.
           </p>
 
-          <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
-            Contact Host
-          </button>
+          <button className={getButtonClasses('outline', 'md')}>Contact Host</button>
         </div>
       </div>
     </div>

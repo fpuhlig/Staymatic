@@ -9,44 +9,26 @@ export const DarkModeToggle = () => {
   useEffect(() => {
     setMounted(true);
 
-    // Check localStorage first
+    // Check localStorage first, then system preference
     const stored = localStorage.getItem('darkMode');
-    let isDark = false;
-
-    if (stored !== null) {
-      isDark = JSON.parse(stored);
-    } else {
-      // Check system preference
-      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
+    const isDark =
+      stored !== null
+        ? JSON.parse(stored)
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     setDarkMode(isDark);
     applyDarkMode(isDark);
   }, []);
 
   const applyDarkMode = (isDark: boolean) => {
-    const html = document.documentElement;
-    const body = document.body;
-
-    if (isDark) {
-      html.classList.add('dark');
-      body.classList.add('dark');
-    } else {
-      html.classList.remove('dark');
-      body.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', isDark);
   };
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
 
-    // Apply to DOM first (instant visual change)
     applyDarkMode(newDarkMode);
-
-    // Then update React state (for icon change)
     setDarkMode(newDarkMode);
-
-    // Save to localStorage (async)
     localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
   };
 
@@ -61,7 +43,7 @@ export const DarkModeToggle = () => {
   return (
     <button
       onClick={toggleDarkMode}
-      className="rounded-xl border border-gray-300 bg-white p-2 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
+      className="cursor-pointer rounded-xl border border-gray-300 bg-white p-2 transition-colors duration-200 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
       aria-label="Toggle dark mode"
     >
       {darkMode ? (

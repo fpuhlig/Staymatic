@@ -1,3 +1,6 @@
+import { LAYOUT_CONSTANTS } from './common/LayoutConstants';
+import { getCardClasses, getTextClasses } from './common/StyleUtilities';
+
 interface StatCardProps {
   title: string;
   value: string | number;
@@ -7,7 +10,7 @@ interface StatCardProps {
 
 export const StatCard = ({ title, value, icon, bgColor }: StatCardProps) => {
   return (
-    <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
+    <div className={`${getCardClasses('base')} ${LAYOUT_CONSTANTS.PADDING.card}`}>
       <div className="flex items-center">
         <div className="flex-shrink-0">
           <div
@@ -18,10 +21,8 @@ export const StatCard = ({ title, value, icon, bgColor }: StatCardProps) => {
         </div>
         <div className="ml-5 w-0 flex-1">
           <dl>
-            <dt className="truncate text-sm font-medium text-gray-500 dark:text-gray-400">
-              {title}
-            </dt>
-            <dd className="text-lg font-medium text-gray-900 dark:text-white">{value}</dd>
+            <dt className={`truncate ${getTextClasses('secondary')} font-medium`}>{title}</dt>
+            <dd className={`text-lg font-medium ${getTextClasses('primary')}`}>{value}</dd>
           </dl>
         </div>
       </div>

@@ -144,19 +144,21 @@ export default function LoginPage() {
             loadingText="Signing in..."
             className="flex w-full justify-center"
           >
-            Sign in
+            Sign In
           </FormButton>
         </div>
 
         <div className="text-center">
-          <FormButton
-            type="button"
-            variant="outline"
-            onClick={() => router.push('/')}
-            className="text-sm"
-          >
-            ← Back to Home
-          </FormButton>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Don&apos;t have an account?{' '}
+            <button
+              type="button"
+              onClick={() => router.push('/register')}
+              className="cursor-pointer font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              Sign Up
+            </button>
+          </p>
         </div>
       </form>
     </AuthPageLayout>

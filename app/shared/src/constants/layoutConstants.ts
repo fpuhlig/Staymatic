@@ -1,6 +1,6 @@
 // Layout constants for consistent UI across applications
 export const LAYOUT_CONSTANTS = {
-  // Container max widths
+  // Container max widths - optimized for different content types
   MAX_WIDTH: {
     sm: 'max-w-sm',
     md: 'max-w-md',
@@ -9,21 +9,29 @@ export const LAYOUT_CONSTANTS = {
     '2xl': 'max-w-2xl',
     '3xl': 'max-w-3xl',
     '4xl': 'max-w-4xl',
+    '5xl': 'max-w-5xl',
+    '6xl': 'max-w-6xl',
     '7xl': 'max-w-7xl',
+    // Content-specific widths - optimized for readability and usability on all screens
+    content: 'max-w-4xl', // For text-heavy pages (About, Help) - 896px
+    dashboard: 'max-w-5xl', // For dashboards and data-heavy pages - 1024px
+    gallery: 'max-w-6xl', // For property grids and galleries - 1152px
+    wide: 'max-w-7xl', // For navigation/footer and wide layouts - 1280px
   },
 
-  // Standard padding
+  // Standard padding - responsive and balanced
   PADDING: {
-    container: 'px-4 sm:px-6 lg:px-8',
+    container: 'px-4 sm:px-6 lg:px-8 xl:px-12',
     section: 'py-8 sm:py-12',
-    card: 'p-6',
-    form: 'p-8',
+    page: 'py-6 sm:py-8',
+    card: 'p-4 sm:p-6',
+    form: 'p-6 sm:p-8',
   },
 
   // Standard margins
   MARGIN: {
     section: 'mb-8',
-    header: 'mb-12',
+    header: 'mb-8 sm:mb-12',
     element: 'mb-6',
     small: 'mb-4',
   },
@@ -56,7 +64,15 @@ export const LAYOUT_CONSTANTS = {
 
 // Helper functions for layout (TDA - Tell, Don't Ask)
 export const layoutHelpers = {
-  getContainerClasses: (maxWidth: keyof typeof LAYOUT_CONSTANTS.MAX_WIDTH = '7xl') => {
+  getContainerClasses: (maxWidth: keyof typeof LAYOUT_CONSTANTS.MAX_WIDTH = 'dashboard') => {
+    return `mx-auto ${LAYOUT_CONSTANTS.MAX_WIDTH[maxWidth]} ${LAYOUT_CONSTANTS.PADDING.container}`;
+  },
+
+  getPageClasses: (maxWidth: keyof typeof LAYOUT_CONSTANTS.MAX_WIDTH = 'dashboard') => {
+    return `mx-auto ${LAYOUT_CONSTANTS.MAX_WIDTH[maxWidth]} ${LAYOUT_CONSTANTS.PADDING.container} ${LAYOUT_CONSTANTS.PADDING.page}`;
+  },
+
+  getPageWithSectionClasses: (maxWidth: keyof typeof LAYOUT_CONSTANTS.MAX_WIDTH = 'gallery') => {
     return `mx-auto ${LAYOUT_CONSTANTS.MAX_WIDTH[maxWidth]} ${LAYOUT_CONSTANTS.PADDING.container} ${LAYOUT_CONSTANTS.PADDING.section}`;
   },
 

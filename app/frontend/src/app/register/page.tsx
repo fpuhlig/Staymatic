@@ -189,10 +189,10 @@ export default function RegisterPage() {
             type="submit"
             disabled={isLoading}
             loading={isLoading}
-            loadingText="Creating account..."
+            loadingText="Signing up..."
             className="flex w-full justify-center"
           >
-            Create Account
+            Sign Up
           </FormButton>
         </div>
 
@@ -202,9 +202,9 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={() => router.push('/login')}
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+              className="cursor-pointer font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
             >
-              Sign in here
+              Sign In
             </button>
           </p>
         </div>

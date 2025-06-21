@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { LAYOUT_CONSTANTS } from '../../../shared/src/constants';
+import { getButtonClasses } from './common/ButtonStyles';
 
 interface EmptyStateProps {
   icon: React.ReactNode;
@@ -17,40 +19,25 @@ export const EmptyState = ({
   actionHref,
   onAction,
 }: EmptyStateProps) => {
-  const ActionComponent = () => {
-    if (actionHref) {
-      return (
-        <Link
-          href={actionHref}
-          className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700"
-        >
-          {actionLabel}
-        </Link>
-      );
-    }
-
-    if (onAction && actionLabel) {
-      return (
-        <button
-          onClick={onAction}
-          className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700"
-        >
-          {actionLabel}
-        </button>
-      );
-    }
-
-    return null;
-  };
+  const hasAction = actionLabel && (actionHref || onAction);
 
   return (
-    <div className="py-12 text-center">
+    <div className={`text-center ${LAYOUT_CONSTANTS.PADDING.section}`}>
       <div className="mx-auto mb-4 h-12 w-12 text-gray-400">{icon}</div>
       <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">{title}</h3>
       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{description}</p>
-      {actionLabel && (actionHref || onAction) && (
+
+      {hasAction && (
         <div className="mt-6">
-          <ActionComponent />
+          {actionHref ? (
+            <Link href={actionHref} className={getButtonClasses('primary', 'md')}>
+              {actionLabel}
+            </Link>
+          ) : (
+            <button onClick={onAction} className={getButtonClasses('primary', 'md')}>
+              {actionLabel}
+            </button>
+          )}
         </div>
       )}
     </div>
