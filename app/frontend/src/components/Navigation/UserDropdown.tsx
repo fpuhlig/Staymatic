@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import { signOut } from '../../lib/auth-client';
 import { useUser } from '../../lib/user-context';
 import { UserAvatar } from './UserAvatar';
+import { getButtonClasses } from '../common/ButtonStyles';
+import { getDropdownClasses, getTextClasses } from '../common/StyleUtilities';
 
 interface DropdownItem {
   label: string;
-  href?: string;
-  onClick?: () => void;
+  href: string;
   icon: React.ReactNode;
-  variant?: 'default' | 'danger';
 }
 
 export const UserDropdown = () => {
@@ -48,16 +48,16 @@ export const UserDropdown = () => {
 
   if (!user) {
     return (
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-2 sm:space-x-3">
         <button
           onClick={() => router.push('/register')}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+          className={getButtonClasses('primary', 'xs', 'sm:px-4 sm:py-2 sm:text-sm')}
         >
           Sign Up
         </button>
         <button
           onClick={() => router.push('/login')}
-          className="rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/20"
+          className={getButtonClasses('outline', 'xs', 'sm:px-4 sm:py-2 sm:text-sm')}
         >
           Sign In
         </button>
@@ -94,32 +94,11 @@ export const UserDropdown = () => {
         </svg>
       ),
     },
-    {
-      label: 'My Bookings',
-      onClick: () => {
-        // TODO: Implement bookings page
-        setIsOpen(false);
-      },
-      icon: (
-        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-          />
-        </svg>
-      ),
-    },
   ];
 
-  const handleItemClick = (item: DropdownItem) => {
-    if (item.href) {
-      router.push(item.href);
-      setIsOpen(false);
-    } else if (item.onClick) {
-      item.onClick();
-    }
+  const handleItemClick = (href: string) => {
+    router.push(href);
+    setIsOpen(false);
   };
 
   return (
@@ -131,10 +110,12 @@ export const UserDropdown = () => {
       >
         <UserAvatar user={user} />
 
-        {/* User Info (hidden on mobile) */}
-        <div className="hidden text-left md:block">
-          <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name || 'User'}</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+        {/* User Info (hidden on mobile and tablet) */}
+        <div className="hidden text-left lg:block">
+          <p className={`text-sm font-medium ${getTextClasses('primary')}`}>
+            {user.name || 'User'}
+          </p>
+          <p className={getTextClasses('secondary')}>{user.email}</p>
         </div>
 
         {/* Dropdown Arrow */}
@@ -152,13 +133,13 @@ export const UserDropdown = () => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 rounded-lg border border-gray-200 bg-white py-2 shadow-lg dark:border-gray-700 dark:bg-gray-800">
-          {/* User Info in Dropdown (mobile) */}
-          <div className="border-b border-gray-200 px-4 py-3 md:hidden dark:border-gray-700">
-            <p className="text-sm font-medium text-gray-900 dark:text-white">
+        <div className={getDropdownClasses('container')}>
+          {/* User Info in Dropdown (mobile and tablet) */}
+          <div className={`${getDropdownClasses('separator')} px-4 py-3 lg:hidden`}>
+            <p className={`text-sm font-medium ${getTextClasses('primary')}`}>
               {user.name || 'User'}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+            <p className={getTextClasses('secondary')}>{user.email}</p>
           </div>
 
           {/* Menu Items */}
@@ -166,8 +147,8 @@ export const UserDropdown = () => {
             {menuItems.map((item, index) => (
               <button
                 key={index}
-                onClick={() => handleItemClick(item)}
-                className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+                onClick={() => handleItemClick(item.href)}
+                className={getDropdownClasses('item')}
               >
                 <span className="mr-3">{item.icon}</span>
                 {item.label}
@@ -176,7 +157,7 @@ export const UserDropdown = () => {
           </div>
 
           {/* Sign Out */}
-          <div className="border-t border-gray-200 pt-1 dark:border-gray-700">
+          <div className={`${getDropdownClasses('separator')} pt-1`}>
             <button
               onClick={handleSignOut}
               className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20"

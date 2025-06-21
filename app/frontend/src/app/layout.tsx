@@ -16,10 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <body className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
         <UserProvider>
           <MainNavigation />
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </UserProvider>
       </body>
