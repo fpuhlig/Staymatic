@@ -85,7 +85,32 @@ docker compose -f docker-compose.dev.yml up --build -d
 - **Backend API**: http://localhost:3001
 - **API Documentation**: http://localhost:3001/api-docs
 
-### 4. Stop Services
+### 4. Populate with Test Data (Optional)
+
+To quickly populate your application with realistic test data, use the provided script:
+
+```bash
+# Make the script executable
+chmod +x create_test_data.sh
+
+# Run the script (requires the application to be running)
+./create_test_data.sh
+```
+
+This script will create:
+
+- **3 Test Users**: Maria Schmidt (Berlin), Hans Müller (Munich), Anna Weber (Hamburg)
+- **6 Properties**: 2 properties per user across different German cities
+- **Realistic Data**: Authentic descriptions, pricing, amenities, and high-quality images
+- **Image Galleries**: Multiple images per property for carousel functionality
+
+**Requirements:**
+
+- Application must be running (frontend on port 3000, backend on port 3001)
+- Script automatically handles user registration and authentication
+- All test data uses working Unsplash images
+
+### 5. Stop Services
 
 ```bash
 # Production
@@ -152,6 +177,7 @@ Staymatic/
 ├── docs/                        # Project documentation
 │   ├── assets/                  # Documentation assets
 │   └── *.md                     # Documentation files
+├── create_test_data.sh           # Test data generation script
 ├── docker-compose.dev.yml       # Development environment
 ├── docker-compose.prod.yml      # Production environment
 ├── package.json                 # Root workspace configuration
