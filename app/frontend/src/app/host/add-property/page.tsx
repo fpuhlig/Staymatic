@@ -13,11 +13,7 @@ export default function AddProperty() {
   };
 
   return (
-    <AuthGuard
-      requireAuth={true}
-      unauthorizedTitle="Please log in to add a property"
-      unauthorizedDescription="You need to be logged in to list properties on Staymatic."
-    >
+    <AuthGuard>
       <PageLayout
         title="Add New Property"
         description="Fill in the details to list your property on Staymatic"

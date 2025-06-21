@@ -62,12 +62,7 @@ export default function HostDashboard() {
   };
 
   return (
-    <AuthGuard
-      requireAuth={true}
-      loadingMessage="Checking authentication..."
-      unauthorizedTitle="Please log in to access your dashboard"
-      unauthorizedDescription="You need to be logged in to manage your properties."
-    >
+    <AuthGuard>
       <PageContainer maxWidth="dashboard">
         {/* Header */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

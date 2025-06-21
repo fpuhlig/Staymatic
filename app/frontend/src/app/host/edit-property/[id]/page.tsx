@@ -83,11 +83,7 @@ export default function EditProperty() {
   };
 
   return (
-    <AuthGuard
-      requireAuth={true}
-      unauthorizedTitle="Please log in to edit properties"
-      unauthorizedDescription="You need to be logged in to edit properties on Staymatic."
-    >
+    <AuthGuard>
       <PageLayout
         title="Edit Property"
         description="Update your property details"

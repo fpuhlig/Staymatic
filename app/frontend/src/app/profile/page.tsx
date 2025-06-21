@@ -154,12 +154,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <AuthGuard
-      requireAuth={true}
-      unauthorizedTitle="Please log in to view your profile"
-      unauthorizedDescription="You need to be logged in to manage your profile settings."
-    >
-      <PageContainer maxWidth="2xl">
+    <AuthGuard>
+      <PageContainer maxWidth="dashboard">
         <PageHeader
           title="Profile Settings"
           subtitle="Manage your account information and profile picture"
